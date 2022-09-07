@@ -1,17 +1,16 @@
-import mongoDbConnection from './../../utils/mongoDbConnection';
-import type { Stock } from '@global/types';
+import { getStocks, getSectors, getSubSectors, getSegments } from '@/lib/stocks';
 
-/** @type {import('./$types').PageServerLoad} */
 export async function load() {
-	const { getInstance } = mongoDbConnection;
-	const client = await getInstance();
-	const db = client.db('investments');
-	const collection = db.collection<Stock>('stocks');
+  const stocks = await getStocks();
 
-	const storedStocks = await collection.find({}).toArray();
+  const sectors = await getSectors();
+  const subSectors = await getSubSectors();
+  const segments = await getSegments();
 
-	console.log(storedStocks);
-	return {
-		title: 'New Svelte Kit 1!'
-	};
+  return {
+    stocks,
+    sectors,
+    subSectors,
+    segments
+  };
 }
