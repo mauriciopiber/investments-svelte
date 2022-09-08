@@ -1,23 +1,12 @@
-import { ApolloServer, gql } from "apollo-server";
+import { ApolloServer } from "apollo-server";
 import resolvers from "./resolvers/stocks";
-
-const typeDefs = gql`
-  type Stock {
-    ticket: String
-    company: String
-  }
-
-  type Query {
-    stock(ticket: String): Stock
-    stocks: [Stock]
-  }
-`;
+import typeDefs from "./typeDefs/stocks";
 
 const server = new ApolloServer({ typeDefs, resolvers });
 server.listen().then(() => {
   console.log(`
     Server is running!
     Listening on port 4000
-    Explore at https://studio.apollographql.com/sandbox
+    Explore at http://localhost:4000
   `);
 });
