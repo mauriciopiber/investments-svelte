@@ -10,11 +10,23 @@ import { syncWorksheet } from "./actions/sync-worksheet";
 import log from "./utils/log";
 import { syncCompanies } from "./actions/sync-companies";
 import { syncSectors } from "./actions/sync-sector";
+import type { StockFilters } from "./types";
+import { syncSegments } from "./actions/sync-segments";
+import { syncSubSectors } from "./actions/sync-sub-sectors";
+import { syncTickets } from "./actions/sync-tickets";
 
 const program = new Command();
 
 const defaultRange = 6;
 const defaultTarget = 1000;
+
+const defaultFilters: StockFilters = [
+  {
+    type: "min",
+    indicator: "marketValue",
+    value: 200 * 1000000000,
+  },
+];
 
 program
   .name("Stocks")
@@ -118,12 +130,24 @@ program
   .command("sync:companies")
   .description("Sync companies collection")
   .option("-v, --verbose", "Show informations about execution")
+  .addOption(
+    new Option(
+      "-f, --filters <filter...>",
+      "Filter @see DividendsFilter"
+    ).default(defaultFilters)
+  )
+  .addOption(
+    new Option(
+      "-r, --range",
+      "Range in years to be used to calculate average dividends by year"
+    ).default(defaultRange)
+  )
   .action(async (options) => {
-    const { verbose } = options;
+    const { verbose, filters, range } = options;
 
     log.init(verbose);
 
-    await syncCompanies();
+    await syncCompanies(filters, range);
     // Connection URL
   });
 
@@ -131,12 +155,99 @@ program
   .command("sync:sectors")
   .description("Sync sectors collection")
   .option("-v, --verbose", "Show informations about execution")
+  .addOption(
+    new Option(
+      "-f, --filters <filter...>",
+      "Filter @see DividendsFilter"
+    ).default(defaultFilters)
+  )
+  .addOption(
+    new Option(
+      "-r, --range",
+      "Range in years to be used to calculate average dividends by year"
+    ).default(defaultRange)
+  )
   .action(async (options) => {
-    const { verbose } = options;
+    const { verbose, filters, range } = options;
 
     log.init(verbose);
 
-    await syncSectors();
+    await syncSectors(filters, range);
+    // Connection URL
+  });
+
+program
+  .command("sync:sub-sectors")
+  .description("Sync sub sectors collection")
+  .option("-v, --verbose", "Show informations about execution")
+  .addOption(
+    new Option(
+      "-f, --filters <filter...>",
+      "Filter @see DividendsFilter"
+    ).default(defaultFilters)
+  )
+  .addOption(
+    new Option(
+      "-r, --range",
+      "Range in years to be used to calculate average dividends by year"
+    ).default(defaultRange)
+  )
+  .action(async (options) => {
+    const { verbose, filters, range } = options;
+
+    log.init(verbose);
+
+    await syncSubSectors(filters, range);
+    // Connection URL
+  });
+
+program
+  .command("sync:segments")
+  .description("Sync segments collection")
+  .option("-v, --verbose", "Show informations about execution")
+  .addOption(
+    new Option(
+      "-f, --filters <filter...>",
+      "Filter @see DividendsFilter"
+    ).default(defaultFilters)
+  )
+  .addOption(
+    new Option(
+      "-r, --range",
+      "Range in years to be used to calculate average dividends by year"
+    ).default(defaultRange)
+  )
+  .action(async (options) => {
+    const { verbose, filters, range } = options;
+
+    log.init(verbose);
+
+    await syncSegments(filters, range);
+    // Connection URL
+  });
+
+program
+  .command("sync:tickets")
+  .description("Sync tickets collection")
+  .option("-v, --verbose", "Show informations about execution")
+  .addOption(
+    new Option(
+      "-f, --filters <filter...>",
+      "Filter @see DividendsFilter"
+    ).default(defaultFilters)
+  )
+  .addOption(
+    new Option(
+      "-r, --range",
+      "Range in years to be used to calculate average dividends by year"
+    ).default(defaultRange)
+  )
+  .action(async (options) => {
+    const { verbose, filters, range } = options;
+
+    log.init(verbose);
+
+    await syncTickets(filters, range);
     // Connection URL
   });
 

@@ -1,25 +1,34 @@
-import { getStocks, getSectors, getSubSectors, getSegments } from '@/lib/stocks-mongo';
+import { fetchGraphql } from '@/utils/fetch';
 
 export async function load() {
   const queryStocks = `
-  query {
-    stocks {
-
-      ticket
+    query {
+      sectors {
+        name
+        slug
+        subSectors {
+          name
+          slug
+          segments {
+            name
+            slug
+            companies {
+              name
+              slug
+              tickets {
+                name
+                slug
+              }
+            }
+          }
+        }
+      }
     }
-  }
+  `;
 
-`;
-  const stocks = await getStocks();
-
-  const sectors = await getSectors();
-  const subSectors = await getSubSectors();
-  const segments = await getSegments();
+  const data = await fetchGraphql(queryStocks);
 
   return {
-    stocks,
-    sectors,
-    subSectors,
-    segments
+    sectors: data.sectors
   };
 }

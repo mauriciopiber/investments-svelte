@@ -1,17 +1,14 @@
 <script lang="ts">
-  export let data: {
-    title: string;
-    subSectors: string[];
-  };
-
-  const { title, subSectors } = data;
+  import type { SectorQuery } from '@pibernetwork/stocks-model/src/types';
+  export let data: { sector: SectorQuery };
+  const { sector } = data;
 </script>
 
-<h1>Sector {title}</h1>
+<h1>Sector {sector.name}</h1>
 
 <h2>Sub sectors</h2>
-{#each subSectors as subSector}
+{#each sector.subSectors as subSector}
   <div>
-    <a href="/stocks/sub-sectors/{subSector}">{subSector}</a>
+    <a href="/stocks/sub-sectors/{subSector.slug}">{subSector.name}</a>
   </div>
 {/each}

@@ -7,22 +7,9 @@ export async function load({ params }: Page) {
 
   const queryStocks = `
     query {
-
-      subSector(slug: "${slug}") {
+      ticket(slug: "${slug}") {
         name
         slug
-        segments {
-          name
-          slug
-          companies {
-            name
-            slug
-            tickets {
-              name
-              slug
-            }
-          }
-        }
       }
 
     }
@@ -30,9 +17,9 @@ export async function load({ params }: Page) {
 
   const data = await fetchGraphql(queryStocks);
 
-  const { subSector } = data;
+  const { ticket } = data;
 
   return {
-    subSector
+    ticket
   };
 }

@@ -1,17 +1,36 @@
-import { getCompanies } from '@/lib/stocks-mongo';
+import { fetchGraphql } from '@/utils/fetch';
 import type { Page } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ params }: Page) {
   const { slug } = params;
 
-  const companies = await getCompanies(slug);
+  const queryStocks = `
+    query {
 
-  // console.log(config);
-  // const sectors = await getSectors();
+
+      segment(slug: "${slug}") {
+        name
+        slug
+        companies {
+          name
+          slug
+          tickets {
+            name
+            slug
+          }
+        }
+      }
+
+
+    }
+  `;
+
+  const data = await fetchGraphql(queryStocks);
+
+  const { segment } = data;
 
   return {
-    title: slug,
-    companies
+    segment
   };
 }

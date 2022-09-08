@@ -1,12 +1,6 @@
-import type { Collection, WithId, MongoClient } from "mongodb";
+import type { Collection, WithId, MongoClient, Filter } from "mongodb";
 import mongoDbConnection from "../utils/mongoDbConnection";
-
-interface Company {
-  name: string;
-  slug: string;
-}
-
-type CompanyModel = WithId<Company>;
+import { Company, CompanyWithId } from "../types";
 
 export class CompanyRepository {
   collection: Collection<Company> | null = null;
@@ -31,12 +25,20 @@ export class CompanyRepository {
     await this.collection.insertMany(companies);
   }
 
-  async queryAll(): Promise<CompanyModel[]> {
+  async queryAll(filters: Filter<Company>): Promise<CompanyWithId[]> {
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Company Repository");
     }
-    return await this.collection.find({}).toArray();
+    return await this.collection.find(filters).toArray();
+  }
+
+  async queryOne(filters: Filter<Company>): Promise<WithId<Company> | null> {
+    await this.init();
+    if (!this.collection) {
+      throw new Error("Missing connection for Sector Repository");
+    }
+    return await this.collection.findOne(filters);
   }
 
   async close() {

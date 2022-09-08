@@ -1,17 +1,14 @@
 <script lang="ts">
-  export let data: {
-    title: string;
-    tickets: string[];
-  };
-
-  const { title, tickets } = data;
+  import type { CompanyQuery } from '@pibernetwork/stocks-model/src/types';
+  export let data: { company: CompanyQuery };
+  const { company } = data;
 </script>
 
-<h1>Company {title}</h1>
+<h1>Company {company.name}</h1>
 
 <h2>Tickets</h2>
-{#each tickets as ticket}
+{#each company.tickets as ticket}
   <div>
-    <a href="/stocks/ticket/{ticket}">{ticket}</a>
+    <a href="/stocks/tickets/{ticket.slug}">{ticket.name}</a>
   </div>
 {/each}

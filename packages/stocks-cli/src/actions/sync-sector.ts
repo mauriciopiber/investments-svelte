@@ -1,19 +1,10 @@
 import { loadStocks } from "src/stocks/stocks";
-import type { Stock } from "src/types";
+import type { Stock, StockFilters } from "src/types";
 import slug from "slug";
 import { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sector";
 
-export async function syncSectors() {
-  const stocks: Stock[] = await loadStocks(
-    [
-      {
-        type: "min",
-        indicator: "marketValue",
-        value: 200 * 1000000000,
-      },
-    ],
-    5
-  );
+export async function syncSectors(filters: StockFilters, rangeInYears: number) {
+  const stocks: Stock[] = await loadStocks(filters, rangeInYears);
 
   const uniqueSector = [...new Set(stocks.map((item) => item.sector))];
 

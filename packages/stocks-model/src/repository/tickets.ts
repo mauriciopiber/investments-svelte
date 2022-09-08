@@ -1,9 +1,9 @@
-import type { Collection, WithId, MongoClient, Filter } from "mongodb";
+import type { Collection, MongoClient, Filter } from "mongodb";
 import mongoDbConnection from "../utils/mongoDbConnection";
-import { Sector } from "./../types";
+import { Ticket, TicketWithId } from "./../types";
 
-export class SectorRepository {
-  collection: Collection<Sector> | null = null;
+export class TicketRepository {
+  collection: Collection<Ticket> | null = null;
   client: MongoClient | null = null;
 
   async init() {
@@ -11,29 +11,29 @@ export class SectorRepository {
       const { getInstance } = mongoDbConnection;
       this.client = await getInstance();
       const db = this.client.db("investments");
-      const collection = db.collection<Sector>("sectors");
+      const collection = db.collection<Ticket>("tickets");
       this.collection = collection;
     }
   }
 
-  async insertMany(sectors: Sector[]) {
+  async insertMany(segments: Ticket[]) {
     await this.init();
 
     if (!this.collection) {
-      throw new Error("Missing connection for Sector Repository");
+      throw new Error("Missing connection for Ticket Repository");
     }
-    await this.collection.insertMany(sectors);
+    await this.collection.insertMany(segments);
   }
 
-  async queryAll(filters: Filter<Sector>): Promise<Sector[]> {
+  async queryAll(filters: Filter<Ticket>): Promise<Ticket[]> {
     await this.init();
     if (!this.collection) {
-      throw new Error("Missing connection for Sector Repository");
+      throw new Error("Missing connection for Ticket Repository");
     }
     return await this.collection.find(filters).toArray();
   }
 
-  async queryOne(filters: Filter<Sector>): Promise<WithId<Sector> | null> {
+  async queryOne(filters: Filter<Ticket>): Promise<TicketWithId | null> {
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Sector Repository");
