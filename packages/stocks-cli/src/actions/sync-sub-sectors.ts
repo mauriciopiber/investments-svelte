@@ -7,9 +7,31 @@ import type {
   SubSector,
 } from "@pibernetwork/stocks-model/src/types";
 
-export async function syncSubSectors() {
-  const stockRepository = new StockRepository();
+const stockRepository = new StockRepository();
+const sectorRepository = new SectorRepository();
+const subSectorRepository = new SubSectorRepository();
 
+async function isInsertedSubSector(
+  sector: string,
+  subSector: string
+): Promise<boolean> {
+  const sectorDb = await sectorRepository.queryOne({
+    name: { $eq: sector },
+  });
+
+  if (!sectorDb) {
+    throw new Error("Sector is required but not found");
+  }
+
+  const subSectorDb = await subSectorRepository.queryOne({
+    name: { $eq: subSector },
+    sectorId: { $eq: sectorDb._id },
+  });
+
+  return subSectorDb !== null ? true : false;
+}
+
+export async function syncSubSectors() {
   const stocks: StockWithId[] = await stockRepository.queryAll({});
 
   const subSectors = stocks.map((stock) => ({
@@ -17,16 +39,13 @@ export async function syncSubSectors() {
     subSector: stock.subSector,
   }));
 
-  const sectorRepository = new SectorRepository();
-  const subSectorRepository = new SubSectorRepository();
-
-  const subSectorsInDb: string[] = [];
-
-  const subSectorsModels: SubSector[] = [];
   for (const { sector, subSector } of subSectors) {
-    if (subSectorsInDb.includes(subSector)) {
+    const uniqueSubSector = await isInsertedSubSector(sector, subSector);
+
+    if (uniqueSubSector) {
       continue;
     }
+
     const sectorModel = await sectorRepository.queryOne({
       name: { $eq: sector },
     });
@@ -45,13 +64,9 @@ export async function syncSubSectors() {
       },
     };
 
-    subSectorsInDb.push(subSector);
-
-    subSectorsModels.push(subSectorEntry);
-    // console.log(subSectorEntry);
+    await subSectorRepository.insertOne(subSectorEntry);
   }
   await sectorRepository.close();
 
-  await subSectorRepository.insertMany(subSectorsModels);
   await subSectorRepository.close();
 }

@@ -25,6 +25,15 @@ export class SectorRepository {
     await this.collection.insertMany(sectors);
   }
 
+  async insertOne(sector: Sector) {
+    await this.init();
+
+    if (!this.collection) {
+      throw new Error("Missing connection for Sector Repository");
+    }
+    await this.collection.insertOne(sector);
+  }
+
   async updateOne(_id: ObjectId, values: Partial<Sector>) {
     await this.init();
 

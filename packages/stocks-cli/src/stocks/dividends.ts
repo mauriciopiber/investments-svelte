@@ -27,6 +27,9 @@ export function calculateAverageDividends(
 }
 
 function calculateTotalIncome(incomes: StockDividends[]): number {
+  if (incomes.length <= 0) {
+    return 0;
+  }
   return incomes.reduce((totalDividends, dividends) => {
     const { value } = dividends;
     return totalDividends + value;
@@ -38,11 +41,28 @@ function calculateAverageIncome(
   rangeInYears: number,
   price: number
 ): AverageIncome {
+  if (isNaN(totalIncome) || !Number.isFinite(totalIncome)) {
+    throw new Error(`Total income is not a number -> ${totalIncome}}`);
+  }
+  if (isNaN(price) || !Number.isFinite(price)) {
+    throw new Error(`Total price is not a number -> ${price}`);
+  }
+
   const averageIncome = totalIncome / rangeInYears;
+
+  if (isNaN(averageIncome) || !Number.isFinite(averageIncome)) {
+    throw new Error(`Average income income is not a number -> ${price}`);
+  }
+
+  const averageYield = (price && (averageIncome * 100) / price / 100) || 0;
+
+  if (isNaN(averageYield) || !Number.isFinite(averageYield)) {
+    throw new Error(`Average yield is not a number -> ${totalIncome} ${price}`);
+  }
   return {
     averageIncome,
-    averageYield: (averageIncome * 100) / price / 100,
-    totalIncome: totalIncome,
+    averageYield,
+    totalIncome,
   };
 }
 

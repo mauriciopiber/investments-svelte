@@ -3,32 +3,33 @@ import { CompanyRepository } from "@pibernetwork/stocks-model/src/repository/com
 import { SegmentRepository } from "@pibernetwork/stocks-model/src/repository/segment";
 import { SubSectorRepository } from "@pibernetwork/stocks-model/src/repository/sub-sector";
 import { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sector";
-import type {
-  Company,
-  StockWithId,
-} from "@pibernetwork/stocks-model/src/types";
+import type { StockWithId } from "@pibernetwork/stocks-model/src/types";
 import { StockRepository } from "@pibernetwork/stocks-model/src/repository/stock";
+
+const segmentRepository = new SegmentRepository();
+const subSectorRepository = new SubSectorRepository();
+const sectorRepository = new SectorRepository();
+const companyRepository = new CompanyRepository();
+
+async function isInsertedCompany(name: string): Promise<boolean> {
+  const companyDb = await companyRepository.queryOne({
+    name: { $eq: name },
+  });
+
+  return companyDb !== null ? true : false;
+}
 
 export async function syncCompanies() {
   const stockRepository = new StockRepository();
 
   const stocks: StockWithId[] = await stockRepository.queryAll({});
-  const uniqueCompanies = [...new Set(stocks.map((item) => item.company))];
 
-  const segmentRepository = new SegmentRepository();
-  const subSectorRepository = new SubSectorRepository();
-  const sectorRepository = new SectorRepository();
+  for (const { sector, subSector, segment, company, name, code } of stocks) {
+    const insertedCompany = await isInsertedCompany(name);
 
-  const companiesModels: Company[] = [];
-
-  for (const company of uniqueCompanies) {
-    const firstCompanyStock = stocks.find((stock) => stock.company === company);
-
-    if (!firstCompanyStock) {
-      throw new Error();
+    if (insertedCompany) {
+      continue;
     }
-
-    const { segment, sector, subSector } = firstCompanyStock;
 
     const sectorModel = await sectorRepository.queryOne({
       name: { $eq: sector },
@@ -54,9 +55,11 @@ export async function syncCompanies() {
       throw new Error();
     }
 
-    companiesModels.push({
-      name: company,
-      slug: slug(company),
+    await companyRepository.insertOne({
+      company: company,
+      name: name,
+      code: code,
+      slug: slug(name),
       segmentId: segmentModel._id,
       subSectorId: subSectorModel._id,
       sectorId: sectorModel._id,
@@ -66,27 +69,6 @@ export async function syncCompanies() {
       },
     });
   }
-  // const companies = uniqueCompanies.map((company) => {
-  //   const firstCompanyStock = stocks.find((stock) => stock.company === company);
-
-  //   if (!firstCompanyStock) {
-  //     throw new Error();
-  //   }
-
-  //   const { segment, sector, subSector } = firstCompanyStock;
-
-  //   return {
-  //     name: company,
-  //     slug: slug(company),
-  //     segment,
-  //     sector,
-  //     subSector,
-  //   };
-  // });
-
-  const companyRepository = new CompanyRepository();
-
-  await companyRepository.insertMany(companiesModels);
 
   await companyRepository.close();
 

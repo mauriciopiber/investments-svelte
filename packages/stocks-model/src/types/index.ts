@@ -27,8 +27,9 @@ export interface Segment {
 export type SegmentWithId = WithId<Segment>;
 
 export interface Company {
+  company: string;
   name: string;
-  // code: string;
+  code: string;
   slug: string;
   sectorId: ObjectId;
   subSectorId: ObjectId;
@@ -100,7 +101,7 @@ export interface StockDividends {
   type: string;
 }
 
-type StockIndicators = StockValuationIndicators &
+export type StockIndicators = StockValuationIndicators &
   StockDebtIndicators &
   StockEfficienceIndicators &
   StockGrowIndicators &
@@ -266,6 +267,14 @@ export interface Stock extends PartialStock {
    * Stock company
    */
   company: string;
+  /**
+   * Stock company
+   */
+  code: string;
+  /**
+   * Stock company
+   */
+  name: string;
   /**
    * Stock sector
    */

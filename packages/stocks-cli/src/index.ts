@@ -190,11 +190,11 @@ program
     ).default(defaultRange)
   )
   .action(async (options) => {
-    const { verbose, filters, range } = options;
+    const { verbose } = options;
 
     log.init(verbose);
 
-    await syncSubSectors(filters, range);
+    await syncSubSectors();
     // Connection URL
   });
 
@@ -219,7 +219,7 @@ program
 
     log.init(verbose);
 
-    await syncSegments(filters, range);
+    await syncSegments();
     // Connection URL
   });
 
@@ -240,11 +240,11 @@ program
     ).default(defaultRange)
   )
   .action(async (options) => {
-    const { verbose, filters, range } = options;
+    const { verbose, range } = options;
 
     log.init(verbose);
 
-    await syncTickets(filters, range);
+    await syncTickets(range);
     // Connection URL
   });
 

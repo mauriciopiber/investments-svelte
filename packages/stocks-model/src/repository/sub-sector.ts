@@ -16,6 +16,15 @@ export class SubSectorRepository {
     }
   }
 
+  async insertOne(subSector: SubSector) {
+    await this.init();
+
+    if (!this.collection) {
+      throw new Error("Missing connection for Sub-sector Repository");
+    }
+    await this.collection.insertOne(subSector);
+  }
+
   async insertMany(SubSector: SubSector[]) {
     await this.init();
 

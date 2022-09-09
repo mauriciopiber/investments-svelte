@@ -1,1 +1,1 @@
-export * from "./stocks";
+export interface GlobalTypes {}

@@ -84,7 +84,7 @@ export async function syncIncome() {
 }
 
 function calculateIncome(incomes: PartialIncome[]): PartialIncome {
-  const totalIncomes = incomes.length;
+  const totalIncomes = incomes.length || 0;
 
   const totalYield = incomes.reduce(
     (amount, income) => amount + income.averageYield,
@@ -95,8 +95,24 @@ function calculateIncome(incomes: PartialIncome[]): PartialIncome {
     (amount, income) => amount + income.averageAmount,
     0
   );
-  const averageYield = totalYield / totalIncomes;
-  const averageAmount = totalAmount / totalIncomes;
+  const averageYield = (totalIncomes && totalYield / totalIncomes) || 0;
+  const averageAmount = (totalIncomes && totalAmount / totalIncomes) || 0;
+
+  if (isNaN(averageYield) || !Number.isFinite(averageYield)) {
+    throw new Error(
+      `Average yield is not a number -> ${averageYield} -> ${JSON.stringify(
+        incomes
+      )}`
+    );
+  }
+
+  if (isNaN(averageAmount) || !Number.isFinite(averageAmount)) {
+    throw new Error(
+      `Average yield is not a number -> ${averageYield} -> ${JSON.stringify(
+        incomes
+      )}`
+    );
+  }
 
   return { averageYield, averageAmount };
 }
@@ -116,6 +132,22 @@ function calculateIncomeFromTickets(tickets: TicketWithId[]): PartialIncome {
 
   const averageYield = ticketsYield / ticketsCount;
   const averageAmount = ticketsAmount / ticketsCount;
+
+  if (isNaN(averageYield) || !Number.isFinite(averageYield)) {
+    throw new Error(
+      `Average yield is not a number -> ${averageYield} -> ${JSON.stringify(
+        tickets
+      )}`
+    );
+  }
+
+  if (isNaN(averageAmount) || !Number.isFinite(averageAmount)) {
+    throw new Error(
+      `Average yield is not a number -> ${averageYield} -> ${JSON.stringify(
+        tickets
+      )}`
+    );
+  }
 
   return { averageYield, averageAmount };
 }

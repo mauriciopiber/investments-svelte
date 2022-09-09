@@ -22,6 +22,15 @@ export class SegmentRepository {
     }
   }
 
+  async insertOne(segment: Segment) {
+    await this.init();
+
+    if (!this.collection) {
+      throw new Error("Missing connection for Segment Repository");
+    }
+    await this.collection.insertOne(segment);
+  }
+
   async insertMany(segments: Segment[]) {
     await this.init();
 

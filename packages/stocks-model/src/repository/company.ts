@@ -31,6 +31,15 @@ export class CompanyRepository {
     await this.collection.insertMany(companies);
   }
 
+  async insertOne(company: Company) {
+    await this.init();
+
+    if (!this.collection) {
+      throw new Error("Missing connection for Company Repository");
+    }
+    await this.collection.insertOne(company);
+  }
+
   async updateOne(_id: ObjectId, values: Partial<Company>) {
     await this.init();
 
