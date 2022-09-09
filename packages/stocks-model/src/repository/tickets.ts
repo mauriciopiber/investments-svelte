@@ -1,6 +1,6 @@
 import type { Collection, MongoClient, Filter } from "mongodb";
 import mongoDbConnection from "../utils/mongoDbConnection";
-import { Ticket, TicketWithId } from "./../types";
+import type { Ticket, TicketWithId } from "./../types";
 
 export class TicketRepository {
   collection: Collection<Ticket> | null = null;
@@ -25,12 +25,15 @@ export class TicketRepository {
     await this.collection.insertMany(segments);
   }
 
-  async queryAll(filters: Filter<Ticket>): Promise<Ticket[]> {
+  async queryAll(filters: Filter<Ticket>): Promise<TicketWithId[]> {
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Ticket Repository");
     }
-    return await this.collection.find(filters).toArray();
+    return await this.collection
+      .find(filters)
+      .sort({ "income.range.averageYield": -1 })
+      .toArray();
   }
 
   async queryOne(filters: Filter<Ticket>): Promise<TicketWithId | null> {

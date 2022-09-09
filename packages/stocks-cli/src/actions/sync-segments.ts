@@ -1,16 +1,17 @@
-import { loadStocks } from "src/stocks/stocks";
-import type { Stock, StockFilters } from "src/types";
 import slug from "slug";
 import { SegmentRepository } from "@pibernetwork/stocks-model/src/repository/segment";
 import { SubSectorRepository } from "@pibernetwork/stocks-model/src/repository/sub-sector";
 import { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sector";
-import type { Segment } from "@pibernetwork/stocks-model/src/types";
+import type {
+  Segment,
+  StockWithId,
+} from "@pibernetwork/stocks-model/src/types";
+import { StockRepository } from "@pibernetwork/stocks-model/src/repository/stock";
 
-export async function syncSegments(
-  filters: StockFilters,
-  rangeInYears: number
-) {
-  const stocks: Stock[] = await loadStocks(filters, rangeInYears);
+export async function syncSegments() {
+  const stockRepository = new StockRepository();
+
+  const stocks: StockWithId[] = await stockRepository.queryAll({});
 
   const segmentsFromStocks = stocks.map((stock) => ({
     sector: stock.sector,
@@ -46,7 +47,11 @@ export async function syncSegments(
     }
 
     if (!sectorModel._id.equals(subSectorModel.sectorId)) {
-      throw new Error("Sector and Sub Sector do not match");
+      throw new Error(
+        `Sector ${JSON.stringify(sectorModel)} and Sub Sector ${JSON.stringify(
+          subSector
+        )} do not match`
+      );
     }
 
     segmentsInDb.push(segment);
@@ -55,6 +60,10 @@ export async function syncSegments(
       name: segment,
       slug: slug(segment),
       subSectorId: subSectorModel._id,
+      income: {
+        averageAmount: 0,
+        averageYield: 0,
+      },
     });
   }
 

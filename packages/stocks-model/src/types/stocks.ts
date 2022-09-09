@@ -1,5 +1,3 @@
-import type { StockPageData } from "./statusinvest";
-
 export interface StockDividends {
   paymentDate: string;
   value: number;
@@ -200,29 +198,6 @@ export interface Stock extends PartialStock {
    * Stock indicators
    */
   indicators: StockIndicators;
-
-  /**
-   * Average dividends
-   */
-  averageDividends: AverageDividends;
-}
-
-export interface AverageDividends {
-  averageYield: number;
-  averageValue: number;
 }
 
 export type StockIndicatorsKeys = keyof StockIndicators;
-
-export interface StockFilter {
-  type: "min" | "max";
-  value: number;
-  indicator: StockIndicatorsKeys;
-}
-
-export type StockFilters = StockFilter[];
-
-export interface StockWithPageData {
-  stock: PartialStock;
-  pageData: StockPageData;
-}

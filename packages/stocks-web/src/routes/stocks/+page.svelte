@@ -1,4 +1,6 @@
 <script lang="ts">
+  import Link from '@/components/Layout/Link.svelte';
+  import Income from '@/components/Stocks/Income.svelte';
   import type { SectorQuery } from '@pibernetwork/stocks-model/src/types';
 
   export let data: any;
@@ -6,29 +8,49 @@
   const { sectors } = data as { sectors: SectorQuery[] };
 </script>
 
-<div>
-  <h2>Sectors</h2>
+<div class="page">
+  <h2>Stocks</h2>
   {#each sectors as sector}
     <div class="section sector-item">
-      <a class="link" href={`/stocks/sectors/${sector.slug}`}>{sector.name}</a>
+      <Link href={`/stocks/sectors/${sector.slug}`}>{sector.name}</Link>
+      <Income
+        averageIncome={sector.income.averageAmount}
+        averageYield={sector.income.averageYield}
+      />
     </div>
     <div class="subsectors">
       {#each sector.subSectors as subSector}
         <div class="section subsector-item">
-          <a class="link" href={`/stocks/sub-sectors/${subSector.slug}`}>{subSector.name}</a>
+          <Link href={`/stocks/sub-sectors/${subSector.slug}`}>{subSector.name}</Link>
+          <Income
+            averageIncome={subSector.income.averageAmount}
+            averageYield={subSector.income.averageYield}
+          />
         </div>
         <div class="segments">
           {#each subSector.segments as segment}
             <div class="section segment-item">
-              <a class="link" href={`/stocks/segments/${segment.slug}`}>{segment.name}</a>
+              <Link href={`/stocks/segments/${segment.slug}`}>{segment.name}</Link>
+              <Income
+                averageIncome={segment.income.averageAmount}
+                averageYield={segment.income.averageYield}
+              />
             </div>
             {#each segment.companies as company}
               <div class="section company-item">
-                <a class="link" href={`/stocks/companies/${company.slug}`}>{company.name}</a>
+                <Link href={`/stocks/companies/${company.slug}`}>{company.name}</Link>
+                <Income
+                  averageIncome={company.income.averageAmount}
+                  averageYield={company.income.averageYield}
+                />
               </div>
               {#each company.tickets as ticket}
                 <div class="section ticket-item">
-                  <a class="link" href={`/stocks/ticket/${ticket.slug}`}>{ticket.name}</a>
+                  <Link href={`/stocks/ticket/${ticket.slug}`}>{ticket.name}</Link>
+                  <Income
+                    averageIncome={ticket.income.range.averageIncome}
+                    averageYield={ticket.income.range.averageYield}
+                  />
                 </div>
               {/each}
             {/each}
@@ -40,6 +62,9 @@
 </div>
 
 <style>
+  .page {
+    padding: 1rem;
+  }
   .section {
     padding: 0.5rem 1rem;
   }

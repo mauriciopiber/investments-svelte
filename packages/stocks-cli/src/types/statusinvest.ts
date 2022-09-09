@@ -93,4 +93,6 @@ export interface StockPageData {
   segment: string;
   indicators: StockPageIndicators;
   company: string;
+  name: string;
+  code: string;
 }

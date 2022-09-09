@@ -4,38 +4,36 @@ import { fetchGraphql } from '@/utils/fetch';
 export async function load() {
   const queryStocks = `
     query {
-      sectors {
+
+      subSectors {
         name
         slug
         income {
           averageYield
           averageAmount
         }
-        subSectors {
+        segments {
           name
           slug
-          segments {
+          companies {
             name
             slug
-            companies {
+            tickets {
               name
               slug
-              tickets {
-                name
-                slug
-              }
             }
           }
         }
       }
+
     }
   `;
 
   const data = await fetchGraphql(queryStocks);
 
-  const { sectors } = data;
+  const { subSectors } = data;
 
   return {
-    sectors
+    subSectors
   };
 }

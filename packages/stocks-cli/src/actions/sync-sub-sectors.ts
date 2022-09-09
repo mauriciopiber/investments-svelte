@@ -1,15 +1,16 @@
-import { loadStocks } from "src/stocks/stocks";
-import type { Stock, StockFilters } from "src/types";
 import slug from "slug";
 import { SubSectorRepository } from "@pibernetwork/stocks-model/src/repository/sub-sector";
 import { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sector";
-import type { SubSector } from "@pibernetwork/stocks-model/src/types";
+import { StockRepository } from "@pibernetwork/stocks-model/src/repository/stock";
+import type {
+  StockWithId,
+  SubSector,
+} from "@pibernetwork/stocks-model/src/types";
 
-export async function syncSubSectors(
-  filters: StockFilters,
-  rangeInYears: number
-) {
-  const stocks: Stock[] = await loadStocks(filters, rangeInYears);
+export async function syncSubSectors() {
+  const stockRepository = new StockRepository();
+
+  const stocks: StockWithId[] = await stockRepository.queryAll({});
 
   const subSectors = stocks.map((stock) => ({
     sector: stock.sector,
@@ -38,6 +39,10 @@ export async function syncSubSectors(
       name: subSector,
       slug: slug(subSector),
       sectorId: sectorModel._id,
+      income: {
+        averageAmount: 0,
+        averageYield: 0,
+      },
     };
 
     subSectorsInDb.push(subSector);

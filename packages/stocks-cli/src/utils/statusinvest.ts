@@ -1,6 +1,10 @@
 import type { StatusInvestDividends, StockPageData } from "src/types";
 
-import type { StockDividends } from "src/types/stock";
+import type {
+  StockDividends,
+  StockFilter,
+  StockFilters,
+} from "src/types/stock";
 import { decodeHTML } from "./decodeHTML";
 
 import { STATUS_INVEST_URL } from "../constants";
@@ -44,10 +48,42 @@ import {
   LPA,
 } from "../constants";
 import type { PartialStock } from "src/types/stock";
+import type { Stock } from "@pibernetwork/stocks-model/src/types";
+import { filterStocks } from "src/stocks/filters";
+import log from "./../utils/log";
 
-export const getObjectKeys = <T extends Record<string, unknown>>(
-  object: T
-): (keyof T)[] => Object.keys(object) as (keyof T)[];
+export async function loadStocks(filters: StockFilters): Promise<Stock[]> {
+  log.writeLog("Stocks - Load CSV");
+  const statusInvestStocks: PartialStock[] = await loadStatusInvestCSV();
+  log.writeLog("Stocks - Filter");
+  const filteredStocks = filterStocks(statusInvestStocks, filters);
+
+  const stocks: Stock[] = [];
+
+  log.writeLog("Stocks - Enrich");
+  for (const stock of filteredStocks) {
+    log.writeLog(`Stocks - Enrich - ${stock.ticket}`);
+    const enrichedStock: Stock = await enrichStock(stock);
+    stocks.push(enrichedStock);
+  }
+  log.writeLog("Stocks - Done");
+  return stocks;
+}
+
+async function enrichStock(stock: PartialStock): Promise<Stock> {
+  const { ticket } = stock;
+  const stockPageData = await parseStockPage(ticket);
+
+  const enrichedStock: Stock = {
+    ...stock,
+    ...stockPageData,
+    indicators: {
+      ...stock.indicators,
+      ...stockPageData.indicators,
+    },
+  };
+  return enrichedStock;
+}
 
 function getCSVStockValue(
   csvStock: StatusInvestCsvStock,
@@ -128,17 +164,20 @@ export async function loadStatusInvestCSV(): Promise<PartialStock[]> {
 export async function parseStockPage(ticket: string): Promise<StockPageData> {
   const parsedHTML: HTMLElement = await fetchTicketPage(ticket);
 
-  const dividendsList = parsePageDividendsData(parsedHTML, ticket);
-  const price = parsePageCurrentPrice(parsedHTML, ticket);
+  const dividendsList = parseDividendsData(parsedHTML, ticket);
+  const price = parseCurrentPrice(parsedHTML, ticket);
 
-  const sector = parsePageSector(parsedHTML);
-  const subSector = parsePageSubsector(parsedHTML);
-  const segment = parsePageSegment(parsedHTML);
+  const sector = parseSector(parsedHTML);
+  const subSector = parseSubsector(parsedHTML);
+  const segment = parseSegment(parsedHTML);
 
-  const vpa = parsePageVPA(parsedHTML);
-  const lpa = parsePageLPA(parsedHTML);
+  const vpa = parseVPA(parsedHTML);
+  const lpa = parseLPA(parsedHTML);
 
   const company = ticket.substring(0, 4);
+
+  const name = parseString(parsedHTML, ".company-description h4 span");
+  const code = parseString(parsedHTML, ".company-description h4 small");
 
   return {
     dividendsList,
@@ -151,7 +190,21 @@ export async function parseStockPage(ticket: string): Promise<StockPageData> {
       lpa,
     },
     company,
+    code,
+    name,
   };
+}
+
+function parseString(pageHTML: HTMLElement, selector: string): string {
+  const element: HTMLElement | null = pageHTML.querySelector(selector);
+
+  if (!element || !element.textContent) {
+    throw new Error(
+      `Unexpected error: Unable to parse value to selector ${selector}`
+    );
+  }
+
+  return element.textContent;
 }
 
 async function fetchTicketPage(ticket: string): Promise<HTMLElement> {
@@ -169,7 +222,7 @@ async function fetchTicketPage(ticket: string): Promise<HTMLElement> {
   return parsedHTML;
 }
 
-function parsePageVPA(pageHTML: HTMLElement): number {
+function parseVPA(pageHTML: HTMLElement): number {
   const sector = getTextByLabel(
     pageHTML,
     ".title.m-0.uppercase",
@@ -180,7 +233,7 @@ function parsePageVPA(pageHTML: HTMLElement): number {
   return decodedNumber(sector);
 }
 
-function parsePageLPA(pageHTML: HTMLElement): number {
+function parseLPA(pageHTML: HTMLElement): number {
   const sector = getTextByLabel(
     pageHTML,
     ".title.m-0.uppercase",
@@ -191,7 +244,7 @@ function parsePageLPA(pageHTML: HTMLElement): number {
   return decodedNumber(sector);
 }
 
-function parsePageDividendsData(
+function parseDividendsData(
   pageHTML: HTMLElement,
   ticket: string
 ): StockDividends[] {
@@ -216,11 +269,12 @@ function parsePageDividendsData(
     return {
       paymentDate: statusInvestDividend.pd,
       value: statusInvestDividend.v,
+      type: statusInvestDividend.etd,
     };
   });
 }
 
-function parsePageCurrentPrice(pageHTML: HTMLElement, ticket: string): number {
+function parseCurrentPrice(pageHTML: HTMLElement, ticket: string): number {
   const currentValueLabel = Array.from(pageHTML.querySelectorAll("h3")).find(
     (el) => el.textContent === "Valor atual"
   );
@@ -286,7 +340,7 @@ function getTextByLabel(
   return valueElement.textContent;
 }
 
-function parsePageSector(pageHTML: HTMLElement) {
+function parseSector(pageHTML: HTMLElement) {
   const sector = getTextByLabel(
     pageHTML,
     ".sub-value",
@@ -296,7 +350,7 @@ function parsePageSector(pageHTML: HTMLElement) {
 
   return sector;
 }
-function parsePageSubsector(pageHTML: HTMLElement) {
+function parseSubsector(pageHTML: HTMLElement) {
   const subSector = getTextByLabel(
     pageHTML,
     ".sub-value",
@@ -307,7 +361,7 @@ function parsePageSubsector(pageHTML: HTMLElement) {
   return subSector;
 }
 
-function parsePageSegment(pageHTML: HTMLElement) {
+function parseSegment(pageHTML: HTMLElement) {
   const segment = getTextByLabel(
     pageHTML,
     ".sub-value",

@@ -1,6 +1,12 @@
-import type { Collection, WithId, MongoClient, Filter } from "mongodb";
+import type {
+  Collection,
+  WithId,
+  MongoClient,
+  Filter,
+  ObjectId,
+} from "mongodb";
+import type { Company, CompanyWithId } from "../types";
 import mongoDbConnection from "../utils/mongoDbConnection";
-import { Company, CompanyWithId } from "../types";
 
 export class CompanyRepository {
   collection: Collection<Company> | null = null;
@@ -25,12 +31,25 @@ export class CompanyRepository {
     await this.collection.insertMany(companies);
   }
 
+  async updateOne(_id: ObjectId, values: Partial<Company>) {
+    await this.init();
+
+    if (!this.collection) {
+      throw new Error("Missing connection for Company Repository");
+    }
+
+    await this.collection.updateOne({ _id }, { $set: values });
+  }
+
   async queryAll(filters: Filter<Company>): Promise<CompanyWithId[]> {
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Company Repository");
     }
-    return await this.collection.find(filters).toArray();
+    return await this.collection
+      .find(filters)
+      .sort({ "income.averageYield": -1 })
+      .toArray();
   }
 
   async queryOne(filters: Filter<Company>): Promise<WithId<Company> | null> {

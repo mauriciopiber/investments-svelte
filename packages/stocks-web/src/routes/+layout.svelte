@@ -6,6 +6,8 @@
     <li><a href="/stocks/sectors">Sectors</a></li>
     <li><a href="/stocks/sub-sectors">Sub Sectors</a></li>
     <li><a href="/stocks/segments">Segments</a></li>
+    <li><a href="/stocks/companies">Companies</a></li>
+    <li><a href="/stocks/tickets">Tickets</a></li>
   </ul>
 </nav>
 <h1>Investment</h1>

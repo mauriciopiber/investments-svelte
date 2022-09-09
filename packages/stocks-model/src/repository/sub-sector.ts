@@ -1,6 +1,6 @@
-import type { Collection, WithId, MongoClient, Filter } from "mongodb";
+import type { Collection, ObjectId, MongoClient, Filter } from "mongodb";
 import mongoDbConnection from "../utils/mongoDbConnection";
-import type { SubSector } from "./../types";
+import type { SubSector, SubSectorWithId } from "./../types";
 
 export class SubSectorRepository {
   collection: Collection<SubSector> | null = null;
@@ -25,17 +25,28 @@ export class SubSectorRepository {
     await this.collection.insertMany(SubSector);
   }
 
-  async queryAll(filters: Filter<SubSector>): Promise<SubSector[]> {
+  async updateOne(_id: ObjectId, values: Partial<SubSector>) {
+    await this.init();
+
+    if (!this.collection) {
+      throw new Error("Missing connection for Company Repository");
+    }
+
+    await this.collection.updateOne({ _id }, { $set: values });
+  }
+
+  async queryAll(filters: Filter<SubSector>): Promise<SubSectorWithId[]> {
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Sub Sector Repository");
     }
-    return await this.collection.find(filters).toArray();
+    return await this.collection
+      .find(filters)
+      .sort({ "income.averageYield": -1 })
+      .toArray();
   }
 
-  async queryOne(
-    filters: Filter<SubSector>
-  ): Promise<WithId<SubSector> | null> {
+  async queryOne(filters: Filter<SubSector>): Promise<SubSectorWithId | null> {
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Sector Repository");

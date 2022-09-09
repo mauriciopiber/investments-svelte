@@ -10,6 +10,7 @@ import {
   SegmentWithId,
   CompanyWithId,
   TicketWithId,
+  SubSectorWithId,
 } from "@pibernetwork/stocks-model/src/types";
 
 const segmentRepository = new SegmentRepository();
@@ -24,7 +25,9 @@ export default {
       return await sectorRepository.queryOne({ slug: { $eq: args.slug } });
     },
     async sectors() {
-      return await sectorRepository.queryAll({});
+      const sectors = await sectorRepository.queryAll({});
+
+      return sectors;
     },
     async subSector(_: unknown, args: { slug: string }) {
       return await subSectorRepository.queryOne({ slug: { $eq: args.slug } });
@@ -56,12 +59,12 @@ export default {
       const subSectors = await subSectorRepository.queryAll({
         sectorId: { $eq: parent._id },
       });
-      console.log(subSectors);
+
       return subSectors;
     },
   },
   SubSector: {
-    async segments(parent: SegmentWithId) {
+    async segments(parent: SubSectorWithId) {
       const segments = await segmentRepository.queryAll({
         subSectorId: { $eq: parent._id },
       });
@@ -70,7 +73,7 @@ export default {
     },
   },
   Segment: {
-    async companies(parent: CompanyWithId) {
+    async companies(parent: SegmentWithId) {
       const companies = await companyRepository.queryAll({
         segmentId: { $eq: parent._id },
       });
@@ -78,11 +81,39 @@ export default {
     },
   },
   Company: {
-    async tickets(parent: TicketWithId) {
+    async tickets(parent: CompanyWithId) {
       const tickets = await ticketRepository.queryAll({
         companyId: { $eq: parent._id },
       });
       return tickets;
+    },
+    async segment(parent: CompanyWithId) {
+      const segment = await segmentRepository.queryOne({
+        _id: { $eq: parent.segmentId },
+      });
+
+      return segment;
+    },
+    async sector(parent: CompanyWithId) {
+      const sector = await sectorRepository.queryOne({
+        _id: { $eq: parent.sectorId },
+      });
+      return sector;
+    },
+    async subSector(parent: CompanyWithId) {
+      const subSector = await subSectorRepository.queryOne({
+        _id: { $eq: parent.subSectorId },
+      });
+      return subSector;
+    },
+  },
+  Ticket: {
+    async company(parent: TicketWithId) {
+      const company = await companyRepository.queryOne({
+        _id: { $eq: parent.companyId },
+      });
+
+      return company;
     },
   },
 };

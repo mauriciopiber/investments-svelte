@@ -1,13 +1,10 @@
 import { fetchGraphql } from '@/utils/fetch';
-import type { Page } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageLoad} */
-export async function load({ params }: Page) {
-  const { slug } = params;
-
+export async function load() {
   const queryStocks = `
     query {
-      ticket(slug: "${slug}") {
+      tickets {
         name
         slug
         price
@@ -38,34 +35,15 @@ export async function load({ params }: Page) {
             totalIncome
           }
         }
-        company {
-          name
-          slug
-          sector {
-            name
-            slug
-          }
-          subSector {
-            name
-            slug
-          }
-          segment {
-            name
-            slug
-          }
-        }
       }
-
     }
   `;
 
   const data = await fetchGraphql(queryStocks);
 
-  const { ticket } = data;
-
-  console.log(JSON.stringify(ticket));
+  const { tickets } = data;
 
   return {
-    ticket
+    tickets
   };
 }

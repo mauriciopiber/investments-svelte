@@ -1,10 +1,12 @@
-import type { Collection, WithId, MongoClient, Filter } from "mongodb";
+import type {
+  Collection,
+  WithId,
+  MongoClient,
+  Filter,
+  ObjectId,
+} from "mongodb";
+import type { SegmentWithId, Segment } from "../types";
 import mongoDbConnection from "../utils/mongoDbConnection";
-
-interface Segment {
-  name: string;
-  slug: string;
-}
 
 export class SegmentRepository {
   collection: Collection<Segment> | null = null;
@@ -29,15 +31,28 @@ export class SegmentRepository {
     await this.collection.insertMany(segments);
   }
 
-  async queryAll(filters: Filter<Segment>): Promise<Segment[]> {
+  async updateOne(_id: ObjectId, values: Partial<Segment>) {
+    await this.init();
+
+    if (!this.collection) {
+      throw new Error("Missing connection for Company Repository");
+    }
+
+    await this.collection.updateOne({ _id }, { $set: values });
+  }
+
+  async queryAll(filters: Filter<Segment>): Promise<SegmentWithId[]> {
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Segment Repository");
     }
-    return await this.collection.find(filters).toArray();
+    return await this.collection
+      .find(filters)
+      .sort({ "income.averageYield": -1 })
+      .toArray();
   }
 
-  async queryOne(filters: Filter<Segment>): Promise<WithId<Segment> | null> {
+  async queryOne(filters: Filter<Segment>): Promise<SegmentWithId | null> {
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Sector Repository");

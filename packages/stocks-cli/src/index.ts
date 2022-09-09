@@ -5,7 +5,6 @@ import { dividendsBySector } from "./actions/dividends-by-sector";
 import { updateProfile } from "./actions/profile";
 import { parseCommandFilters } from "./commands/filters";
 
-import { syncDb } from "./actions/sync-db";
 import { syncWorksheet } from "./actions/sync-worksheet";
 import log from "./utils/log";
 import { syncCompanies } from "./actions/sync-companies";
@@ -14,6 +13,8 @@ import type { StockFilters } from "./types";
 import { syncSegments } from "./actions/sync-segments";
 import { syncSubSectors } from "./actions/sync-sub-sectors";
 import { syncTickets } from "./actions/sync-tickets";
+import { syncIncome } from "./actions/sync-income";
+import { syncStocks } from "./actions/sync-stocks";
 
 const program = new Command();
 
@@ -21,11 +22,11 @@ const defaultRange = 6;
 const defaultTarget = 1000;
 
 const defaultFilters: StockFilters = [
-  {
-    type: "min",
-    indicator: "marketValue",
-    value: 200 * 1000000000,
-  },
+  // {
+  //   type: "min",
+  //   indicator: "marketValue",
+  //   value: 200 * 1000000000,
+  // },
 ];
 
 program
@@ -114,15 +115,22 @@ program
   });
 
 program
-  .command("sync:db")
-  .description("Sync database with data from external sources")
+  .command("sync:stocks")
+  .description("Sync database with crawler data")
   .option("-v, --verbose", "Show informations about execution")
+  .addOption(
+    new Option(
+      "-f, --filters <filter...>",
+      "Filter @see DividendsFilter"
+    ).default(defaultFilters)
+  )
+
   .action(async (options) => {
-    const { verbose } = options;
+    const { verbose, filters } = options;
 
     log.init(verbose);
 
-    await syncDb();
+    await syncStocks(filters);
     // Connection URL
   });
 
@@ -147,7 +155,7 @@ program
 
     log.init(verbose);
 
-    await syncCompanies(filters, range);
+    await syncCompanies();
     // Connection URL
   });
 
@@ -155,24 +163,13 @@ program
   .command("sync:sectors")
   .description("Sync sectors collection")
   .option("-v, --verbose", "Show informations about execution")
-  .addOption(
-    new Option(
-      "-f, --filters <filter...>",
-      "Filter @see DividendsFilter"
-    ).default(defaultFilters)
-  )
-  .addOption(
-    new Option(
-      "-r, --range",
-      "Range in years to be used to calculate average dividends by year"
-    ).default(defaultRange)
-  )
+
   .action(async (options) => {
-    const { verbose, filters, range } = options;
+    const { verbose } = options;
 
     log.init(verbose);
 
-    await syncSectors(filters, range);
+    await syncSectors();
     // Connection URL
   });
 
@@ -248,6 +245,20 @@ program
     log.init(verbose);
 
     await syncTickets(filters, range);
+    // Connection URL
+  });
+
+program
+  .command("sync:income")
+  .description("Sync income collection")
+  .option("-v, --verbose", "Show informations about execution")
+
+  .action(async (options) => {
+    const { verbose } = options;
+
+    log.init(verbose);
+
+    await syncIncome();
     // Connection URL
   });
 

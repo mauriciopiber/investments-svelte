@@ -1,18 +1,18 @@
-import { loadStocks } from "src/stocks/stocks";
-import type { Stock, StockFilters } from "src/types";
 import slug from "slug";
 import { CompanyRepository } from "@pibernetwork/stocks-model/src/repository/company";
 import { SegmentRepository } from "@pibernetwork/stocks-model/src/repository/segment";
 import { SubSectorRepository } from "@pibernetwork/stocks-model/src/repository/sub-sector";
 import { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sector";
-import type { Company } from "@pibernetwork/stocks-model/src/types";
+import type {
+  Company,
+  StockWithId,
+} from "@pibernetwork/stocks-model/src/types";
+import { StockRepository } from "@pibernetwork/stocks-model/src/repository/stock";
 
-export async function syncCompanies(
-  filters: StockFilters,
-  rangeInYears: number
-) {
-  const stocks: Stock[] = await loadStocks(filters, rangeInYears);
+export async function syncCompanies() {
+  const stockRepository = new StockRepository();
 
+  const stocks: StockWithId[] = await stockRepository.queryAll({});
   const uniqueCompanies = [...new Set(stocks.map((item) => item.company))];
 
   const segmentRepository = new SegmentRepository();
@@ -60,6 +60,10 @@ export async function syncCompanies(
       segmentId: segmentModel._id,
       subSectorId: subSectorModel._id,
       sectorId: sectorModel._id,
+      income: {
+        averageAmount: 0,
+        averageYield: 0,
+      },
     });
   }
   // const companies = uniqueCompanies.map((company) => {

@@ -1,9 +1,35 @@
 import { gql } from "apollo-server";
 
 const typeDefs = gql`
+  type IncomeAverage {
+    averageIncome: Float
+    averageYield: Float
+    totalIncome: Float
+  }
+
+  type IncomePartial {
+    averageAmount: Float
+    averageYield: Float
+  }
+
+  type Income {
+    startDate: String
+    endDate: String
+    rangeInYears: Float
+    incomeTotal: Float
+    incomeYield: Float
+    range: IncomeAverage
+    interest: IncomeAverage
+    dividends: IncomeAverage
+    others: IncomeAverage
+  }
+
   type Ticket {
     name: String
     slug: String
+    price: Float
+    company: Company
+    income: Income
   }
 
   type Company {
@@ -13,6 +39,7 @@ const typeDefs = gql`
     subSector: SubSector
     segment: Segment
     tickets: [Ticket]
+    income: IncomePartial
   }
 
   type Sector {
@@ -20,6 +47,7 @@ const typeDefs = gql`
     slug: String
     subSectors: [SubSector]
     tickets: [Ticket]
+    income: IncomePartial
   }
 
   type SubSector {
@@ -27,6 +55,7 @@ const typeDefs = gql`
     slug: String
     segments: [Segment]
     tickets: [Ticket]
+    income: IncomePartial
   }
 
   type Segment {
@@ -34,6 +63,7 @@ const typeDefs = gql`
     slug: String
     companies: [Company]
     tickets: [Ticket]
+    income: IncomePartial
   }
 
   type Query {
