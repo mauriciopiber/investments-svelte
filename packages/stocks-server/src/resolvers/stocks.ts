@@ -42,7 +42,16 @@ export default {
     async company(_: unknown, args: { slug: string }) {
       return await companyRepository.queryOne({ slug: { $eq: args.slug } });
     },
-    async companies() {
+    async companies(
+      _: unknown,
+      {
+        limit,
+        offset,
+        sort,
+      }: { limit: number; offset: number; sort: { key: string; order: number } }
+    ) {
+      const { key, order } = sort;
+      console.log(limit, offset, key, order);
       return await companyRepository.queryAll({});
     },
     async ticket(_: unknown, args: { slug: string }) {

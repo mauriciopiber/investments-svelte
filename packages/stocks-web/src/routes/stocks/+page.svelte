@@ -1,13 +1,14 @@
 <script lang="ts">
-  import { Breadcrumb, BreadcrumbItem, Tile } from 'carbon-components-svelte';
+  import { Breadcrumb, BreadcrumbItem, Tile, DataTable } from 'carbon-components-svelte';
 
   import Link from '@/components/Layout/Link.svelte';
   import Income from '@/components/Stocks/Income.svelte';
   import type { SectorQuery } from '@pibernetwork/stocks-model/src/types';
+  import Company from '@/components/Stocks/Company.svelte';
 
-  export let data: any;
+  export let data: { sectors: SectorQuery[] };
 
-  const { sectors } = data as { sectors: SectorQuery[] };
+  const { sectors } = data;
 </script>
 
 <Breadcrumb noTrailingSlash>
@@ -51,6 +52,7 @@
                     averageYield={company.income.averageYield}
                   />
                 </div>
+
                 {#each company.tickets as ticket}
                   <div class="section ticket-item">
                     <Link href={`/stocks/ticket/${ticket.slug}`}>{ticket.name}</Link>
