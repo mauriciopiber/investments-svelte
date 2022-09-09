@@ -8,6 +8,22 @@ export async function load() {
         name
         slug
         price
+        company {
+          name
+          slug
+          sector {
+            name
+            slug
+          }
+          subSector {
+            name
+            slug
+          }
+          segment {
+            name
+            slug
+          }
+        }
         income {
           startDate
           endDate
