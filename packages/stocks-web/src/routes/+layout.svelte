@@ -1,48 +1,62 @@
 <script>
   import 'carbon-components-svelte/css/white.css';
+  import {
+    Header,
+    HeaderNav,
+    HeaderNavItem,
+    HeaderNavMenu,
+    SideNav,
+    SideNavItems,
+    SideNavMenu,
+    SideNavMenuItem,
+    SideNavLink,
+    SideNavDivider,
+    SkipToContent,
+    Content,
+    Grid,
+    Row,
+    Column
+  } from 'carbon-components-svelte';
+  let isSideNavOpen = true;
+
+  $: {
+    console.log(isSideNavOpen);
+  }
 </script>
 
-<nav>
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="/wallet">Wallet</a></li>
-    <li><a href="/stocks">Stocks</a></li>
-    <li><a href="/stocks/sectors">Sectors</a></li>
-    <li><a href="/stocks/sub-sectors">Sub Sectors</a></li>
-    <li><a href="/stocks/segments">Segments</a></li>
-    <li><a href="/stocks/companies">Companies</a></li>
-    <li><a href="/stocks/tickets">Tickets</a></li>
-  </ul>
-</nav>
+<Header company="IBM" platformName="Carbon Svelte" bind:isSideNavOpen>
+  <!-- <svelte:fragment slot="skip-to-content">
+    <SkipToContent />
+  </svelte:fragment> -->
+  <HeaderNav>
+    <HeaderNavItem href="/" text="Home" />
+    <HeaderNavItem href="/" text="Wallet" />
+    <HeaderNavMenu text="Stocks">
+      <HeaderNavItem href="/stocks" text="Stocks" />
+      <HeaderNavItem href="/stocks/sectors" text="Sectors" />
+      <HeaderNavItem href="/stocks/sub-sectors" text="Sub sectors" />
+      <HeaderNavItem href="/stocks/segments" text="Segments" />
+      <HeaderNavItem href="/stocks/companies" text="Companies" />
+      <HeaderNavItem href="/stocks/tickets" text="Tickets" />
+    </HeaderNavMenu>
+  </HeaderNav>
+</Header>
 
-<slot />
+<SideNav bind:isOpen={isSideNavOpen}>
+  <SideNavItems>
+    <SideNavLink href="/" text="Home" />
+    <SideNavLink href="/" text="Wallet" />
+    <SideNavMenu text="Stocks">
+      <SideNavMenuItem href="/stocks" text="Stocks" />
+      <SideNavMenuItem href="/stocks/sectors" text="Sectors" />
+      <SideNavMenuItem href="/stocks/sub-sectors" text="Sub sectors" />
+      <SideNavMenuItem href="/stocks/segments" text="Segments" />
+      <SideNavMenuItem href="/stocks/companies" text="Companies" />
+      <SideNavMenuItem href="/stocks/tickets" text="Tickets" />
+    </SideNavMenu>
+  </SideNavItems>
+</SideNav>
 
-<style>
-  nav {
-    padding: 0;
-    margin: 0;
-  }
-  ul {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  li {
-    text-align: center;
-    flex-grow: 1;
-    background-color: #541094;
-  }
-
-  li:hover {
-    background-color: #401094;
-  }
-
-  a {
-    padding: 1rem;
-    display: block;
-    text-decoration: none;
-    color: #fff;
-  }
-</style>
+<Content>
+  <slot />
+</Content>

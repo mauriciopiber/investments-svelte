@@ -6,7 +6,8 @@
     Pagination,
     Toolbar,
     ToolbarContent,
-    ToolbarSearch
+    ToolbarSearch,
+    Tile
   } from 'carbon-components-svelte';
 
   import Rate from '@/components/Layout/Rate.svelte';
@@ -40,6 +41,10 @@
       value: 'Segment'
     },
     {
+      key: 'price',
+      value: 'Price'
+    },
+    {
       key: 'averageAmount',
       value: 'Average Amount'
     },
@@ -58,35 +63,41 @@
       sector: ticket.company.sector.name,
       subSector: ticket.company.subSector.name,
       averageAmount: ticket.income.range.averageIncome,
-      averageYield: ticket.income.range.averageYield
+      averageYield: ticket.income.range.averageYield,
+      price: ticket.price
     };
   });
 </script>
 
-<Breadcrumb noTrailingSlash>
-  <BreadcrumbItem href="/">Investments</BreadcrumbItem>
-  <BreadcrumbItem href="/stocks">Stocks</BreadcrumbItem>
-  <BreadcrumbItem href="/stocks/sectors">Sectors</BreadcrumbItem>
-  <BreadcrumbItem href="/stocks/sub-sectors">Sub Sectors</BreadcrumbItem>
-  <BreadcrumbItem href="/stocks/segments">Segments</BreadcrumbItem>
-  <BreadcrumbItem href="/stocks/companies">Companies</BreadcrumbItem>
-  <BreadcrumbItem href="/stocks/tickets" isCurrentPage>Tickets</BreadcrumbItem>
-</Breadcrumb>
-<h1>Tickets</h1>
-<DataTable sortable size="short" {headers} {rows} {pageSize} {page}>
-  <svelte:fragment slot="cell" let:cell>
-    {#if cell.key === 'averageAmount'}
-      <Currency value={cell.value} />
-    {:else if cell.key === 'averageYield'}
-      <Rate value={cell.value} />
-    {:else}
-      {cell.value}
-    {/if}
-  </svelte:fragment>
-  <Toolbar>
-    <ToolbarContent>
-      <ToolbarSearch persistent value="" shouldFilterRows bind:filteredRowIds />
-    </ToolbarContent>
-  </Toolbar>
-</DataTable>
-<Pagination bind:pageSize bind:page totalItems={filteredRowIds.length} pageSizeInputDisabled />
+<Tile>
+  <Breadcrumb noTrailingSlash>
+    <BreadcrumbItem href="/">Investments</BreadcrumbItem>
+    <BreadcrumbItem href="/stocks">Stocks</BreadcrumbItem>
+    <BreadcrumbItem href="/stocks/sectors">Sectors</BreadcrumbItem>
+    <BreadcrumbItem href="/stocks/sub-sectors">Sub Sectors</BreadcrumbItem>
+    <BreadcrumbItem href="/stocks/segments">Segments</BreadcrumbItem>
+    <BreadcrumbItem href="/stocks/companies">Companies</BreadcrumbItem>
+    <BreadcrumbItem href="/stocks/tickets" isCurrentPage>Tickets</BreadcrumbItem>
+  </Breadcrumb>
+</Tile>
+<Tile>
+  <h1>Tickets</h1>
+
+  <DataTable sortable size="short" {headers} {rows} {pageSize} {page}>
+    <svelte:fragment slot="cell" let:cell>
+      {#if cell.key === 'averageAmount' || cell.key === 'price'}
+        <Currency value={cell.value} />
+      {:else if cell.key === 'averageYield'}
+        <Rate value={cell.value} />
+      {:else}
+        {cell.value}
+      {/if}
+    </svelte:fragment>
+    <Toolbar>
+      <ToolbarContent>
+        <ToolbarSearch persistent value="" shouldFilterRows bind:filteredRowIds />
+      </ToolbarContent>
+    </Toolbar>
+  </DataTable>
+  <Pagination bind:pageSize bind:page totalItems={filteredRowIds.length} pageSizeInputDisabled />
+</Tile>
