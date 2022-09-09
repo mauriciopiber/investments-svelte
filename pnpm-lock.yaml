@@ -115,6 +115,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ^5.27.0
       '@typescript-eslint/parser': ^5.27.0
       carbon-components-svelte: ^0.70.6
+      carbon-icons-svelte: ^11.2.0
       eslint: ^8.16.0
       eslint-config-prettier: ^8.3.0
       eslint-plugin-svelte3: ^4.0.0
@@ -134,11 +135,12 @@ importers:
     devDependencies:
       '@global/types': link:../../global/types
       '@pibernetwork/stocks-model': link:../stocks-model
-      '@sveltejs/adapter-auto': 1.0.0-next.71
+      '@sveltejs/adapter-auto': 1.0.0-next.72
       '@sveltejs/kit': 1.0.0-next.477_svelte@3.50.0+vite@3.1.0
       '@typescript-eslint/eslint-plugin': 5.36.2_iurrlxgqcgk5svigzxakafpeuu
       '@typescript-eslint/parser': 5.36.2_yqf6kl63nyoq5megxukfnom5rm
       carbon-components-svelte: 0.70.6
+      carbon-icons-svelte: 11.2.0
       eslint: 8.23.0
       eslint-config-prettier: 8.5.0_eslint@8.23.0
       eslint-plugin-svelte3: 4.0.0_sc4laremvjv7grvyfrqmp3xv5q
@@ -555,12 +557,12 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@sveltejs/adapter-auto/1.0.0-next.71:
-    resolution: {integrity: sha512-Qsl82HcehWJbZztXgmU/nTPDeeIaB4jrOQpSvy3Pi8octs+rEf/CO87Wk06EP+M/zUzEHDNENMOx0DgWuHpj7Q==}
+  /@sveltejs/adapter-auto/1.0.0-next.72:
+    resolution: {integrity: sha512-SisfQ6adHkkmm6ANVq9V9hemowl9mSVQd+XoNDAhjgf1DtCdJEgpkdJDZ7xq7RB0lsTZTSiAp7c/LlV4lCSTMA==}
     dependencies:
       '@sveltejs/adapter-cloudflare': 1.0.0-next.32
       '@sveltejs/adapter-netlify': 1.0.0-next.76
-      '@sveltejs/adapter-vercel': 1.0.0-next.72
+      '@sveltejs/adapter-vercel': 1.0.0-next.73
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -583,8 +585,8 @@ packages:
       tiny-glob: 0.2.9
     dev: true
 
-  /@sveltejs/adapter-vercel/1.0.0-next.72:
-    resolution: {integrity: sha512-oNs8FQaYC2NnwDcvX/jc9MDNqXc9HxwGPQNkd+1vBpFVWZl9mShQgCcOMzfTOIH0ka984jYNa0ZawYYHex79xg==}
+  /@sveltejs/adapter-vercel/1.0.0-next.73:
+    resolution: {integrity: sha512-wYm80tDSkwa9YfXHCHqMFMHmGYsQjVWj2oLbQdijQ2k8dnQPq908Pla3IES1cLwtT+fIMbZyh3Xly7mt06FwJg==}
     dependencies:
       '@vercel/nft': 0.22.1
       esbuild: 0.14.54
@@ -1262,6 +1264,10 @@ packages:
     resolution: {integrity: sha512-Nnm7+hELWLP7NnyaN3J4aioxcKlibsYwUeC5+UBWYAV2MtCv4+BwqwGVS6Yrx85NRid+jd83DCm9PSfimoj40Q==}
     dependencies:
       flatpickr: 4.6.9
+    dev: true
+
+  /carbon-icons-svelte/11.2.0:
+    resolution: {integrity: sha512-nbqCEKoZA5EzT2Lr8vNYnfWcDl5GnFFLnbD861U32g9cNe7D7nmQKx4T+goFp5AoY60OyAgKUNJov8LwNEkhbg==}
     dev: true
 
   /chalk/4.1.2:
