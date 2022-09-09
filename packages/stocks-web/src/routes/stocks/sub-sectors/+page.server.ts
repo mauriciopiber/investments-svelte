@@ -12,6 +12,10 @@ export async function load() {
           averageYield
           averageAmount
         }
+        sector {
+          name
+          slug
+        }
         segments {
           name
           slug

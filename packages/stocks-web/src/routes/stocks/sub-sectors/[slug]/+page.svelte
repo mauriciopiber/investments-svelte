@@ -3,12 +3,16 @@
   import type { SubSectorQuery } from '@pibernetwork/stocks-model/src/types';
   export let data: { subSector: SubSectorQuery };
   const { subSector } = data;
+  console.log(subSector);
 </script>
 
 <Breadcrumb noTrailingSlash>
   <BreadcrumbItem href="/">Investments</BreadcrumbItem>
   <BreadcrumbItem href="/stocks">Stocks</BreadcrumbItem>
-  <BreadcrumbItem href={`/stocks/subsector/${subSector.slug}`} isCurrentPage
+  <BreadcrumbItem href={`/stocks/sectors/${subSector.sector.slug}`}
+    >{subSector.sector.name}</BreadcrumbItem
+  >
+  <BreadcrumbItem href={`/stocks/sub-sectors/${subSector.slug}`} isCurrentPage
     >{subSector.name}</BreadcrumbItem
   >
 </Breadcrumb>

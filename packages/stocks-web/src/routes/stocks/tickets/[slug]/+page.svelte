@@ -3,10 +3,30 @@
   import Rate from '@/components/Layout/Rate.svelte';
   import Currency from '@/components/Layout/Currency.svelte';
   import type { TicketQuery } from '@pibernetwork/stocks-model/src/types';
-  import { tick } from 'svelte';
+
   export let data: { ticket: TicketQuery };
   const { ticket } = data;
 </script>
+
+<Breadcrumb noTrailingSlash>
+  <BreadcrumbItem href="/">Investments</BreadcrumbItem>
+  <BreadcrumbItem href="/stocks">Stocks</BreadcrumbItem>
+  <BreadcrumbItem href={`/stocks/sectors/${ticket.company.sector.slug}`}
+    >{ticket.company.sector.name}</BreadcrumbItem
+  >
+  <BreadcrumbItem href={`/stocks/sub-sectors/${ticket.company.subSector.slug}`}
+    >{ticket.company.subSector.name}</BreadcrumbItem
+  >
+  <BreadcrumbItem href={`/stocks/segments/${ticket.company.segment.slug}`}
+    >{ticket.company.segment.name}</BreadcrumbItem
+  >
+  <BreadcrumbItem href={`/stocks/companies/${ticket.company.slug}`}
+    >{ticket.company.name}</BreadcrumbItem
+  >
+  <BreadcrumbItem href={`/stocks/tickets/${ticket.slug}`} isCurrentPage
+    >{ticket.name}</BreadcrumbItem
+  >
+</Breadcrumb>
 
 <h1>Ticket {ticket.name}</h1>
 

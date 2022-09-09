@@ -14,7 +14,7 @@
     <li><a href="/stocks/tickets">Tickets</a></li>
   </ul>
 </nav>
-<h1>Investment</h1>
+
 <slot />
 
 <style>

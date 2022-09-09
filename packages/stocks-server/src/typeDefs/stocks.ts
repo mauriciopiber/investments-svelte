@@ -56,6 +56,7 @@ const typeDefs = gql`
     segments: [Segment]
     tickets: [Ticket]
     income: IncomePartial
+    sector: Sector
   }
 
   type Segment {
@@ -64,6 +65,8 @@ const typeDefs = gql`
     companies: [Company]
     tickets: [Ticket]
     income: IncomePartial
+    sector: Sector
+    subSector: SubSector
   }
 
   type Query {

@@ -14,6 +14,18 @@ export async function load({ params }: Page) {
           name
           slug
         }
+        segment {
+          name
+          slug
+        }
+        sector {
+          name
+          slug
+        }
+        subSector {
+          name
+          slug
+        }
       }
     }
   `;

@@ -1,5 +1,3 @@
-import { Stock } from "@global/types";
-import mongoDbConnection from "../utils/mongoDbConnection";
 import { SegmentRepository } from "@pibernetwork/stocks-model/src/repository/segment";
 import { SubSectorRepository } from "@pibernetwork/stocks-model/src/repository/sub-sector";
 import { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sector";
@@ -64,6 +62,13 @@ export default {
     },
   },
   SubSector: {
+    async sector(parent: SubSectorWithId) {
+      const sector = await sectorRepository.queryOne({
+        _id: { $eq: parent.sectorId },
+      });
+
+      return sector;
+    },
     async segments(parent: SubSectorWithId) {
       const segments = await segmentRepository.queryAll({
         subSectorId: { $eq: parent._id },
@@ -78,6 +83,13 @@ export default {
         segmentId: { $eq: parent._id },
       });
       return companies;
+    },
+    async subSector(parent: SegmentWithId) {
+      const sector = await subSectorRepository.queryOne({
+        _id: { $eq: parent.subSectorId },
+      });
+
+      return sector;
     },
   },
   Company: {

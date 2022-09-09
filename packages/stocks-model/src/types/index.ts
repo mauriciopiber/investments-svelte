@@ -78,10 +78,12 @@ export interface SectorQuery extends Sector {
 
 export interface SubSectorQuery extends SubSector {
   segments: SegmentQuery[];
+  sector: SectorQuery;
 }
 
 export interface SegmentQuery extends Segment {
   companies: CompanyQuery[];
+  subSector: SubSectorQuery;
 }
 
 export interface CompanyQuery extends Company {

@@ -5,6 +5,22 @@
   const { company } = data;
 </script>
 
+<Breadcrumb noTrailingSlash>
+  <BreadcrumbItem href="/">Investments</BreadcrumbItem>
+  <BreadcrumbItem href="/stocks">Stocks</BreadcrumbItem>
+  <BreadcrumbItem href={`/stocks/sectors/${company.sector.slug}`}
+    >{company.sector.name}</BreadcrumbItem
+  >
+  <BreadcrumbItem href={`/stocks/sub-sectors/${company.subSector.slug}`}
+    >{company.subSector.name}</BreadcrumbItem
+  >
+  <BreadcrumbItem href={`/stocks/segments/${company.segment.slug}`}
+    >{company.segment.name}</BreadcrumbItem
+  >
+  <BreadcrumbItem href={`/stocks/companies/${company.slug}`} isCurrentPage
+    >{company.name}</BreadcrumbItem
+  >
+</Breadcrumb>
 <h1>Company {company.name}</h1>
 
 <h2>Tickets</h2>

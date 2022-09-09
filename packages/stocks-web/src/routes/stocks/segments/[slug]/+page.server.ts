@@ -12,6 +12,15 @@ export async function load({ params }: Page) {
       segment(slug: "${slug}") {
         name
         slug
+        subSector {
+          name
+          slug
+          sector {
+            name
+            slug
+          }
+
+        }
         companies {
           name
           slug

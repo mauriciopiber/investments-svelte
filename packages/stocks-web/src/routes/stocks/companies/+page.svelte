@@ -7,6 +7,15 @@
   const { companies } = data;
 </script>
 
+<Breadcrumb noTrailingSlash>
+  <BreadcrumbItem href="/">Investments</BreadcrumbItem>
+  <BreadcrumbItem href="/stocks">Stocks</BreadcrumbItem>
+  <BreadcrumbItem href="/stocks/sectors">Sectors</BreadcrumbItem>
+  <BreadcrumbItem href="/stocks/sub-sectors">Sub Sectors</BreadcrumbItem>
+  <BreadcrumbItem href="/stocks/segments">Segments</BreadcrumbItem>
+  <BreadcrumbItem href="/stocks/companies" isCurrentPage>Companies</BreadcrumbItem>
+</Breadcrumb>
+
 <h1>Companies</h1>
 {#each companies as company}
   <div>

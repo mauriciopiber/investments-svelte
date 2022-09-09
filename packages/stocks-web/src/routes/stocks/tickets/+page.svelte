@@ -7,6 +7,15 @@
   const { tickets } = data;
 </script>
 
+<Breadcrumb noTrailingSlash>
+  <BreadcrumbItem href="/">Investments</BreadcrumbItem>
+  <BreadcrumbItem href="/stocks">Stocks</BreadcrumbItem>
+  <BreadcrumbItem href="/stocks/sectors">Sectors</BreadcrumbItem>
+  <BreadcrumbItem href="/stocks/sub-sectors">Sub Sectors</BreadcrumbItem>
+  <BreadcrumbItem href="/stocks/segments">Segments</BreadcrumbItem>
+  <BreadcrumbItem href="/stocks/companies">Companies</BreadcrumbItem>
+  <BreadcrumbItem href="/stocks/tickets" isCurrentPage>Tickets</BreadcrumbItem>
+</Breadcrumb>
 <h1>Tickets</h1>
 {#each tickets as ticket}
   <div>
