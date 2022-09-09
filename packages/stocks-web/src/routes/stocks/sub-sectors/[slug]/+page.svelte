@@ -1,9 +1,17 @@
 <script lang="ts">
+  import { Breadcrumb, BreadcrumbItem } from 'carbon-components-svelte';
   import type { SubSectorQuery } from '@pibernetwork/stocks-model/src/types';
   export let data: { subSector: SubSectorQuery };
   const { subSector } = data;
 </script>
 
+<Breadcrumb noTrailingSlash>
+  <BreadcrumbItem href="/">Investments</BreadcrumbItem>
+  <BreadcrumbItem href="/stocks">Stocks</BreadcrumbItem>
+  <BreadcrumbItem href={`/stocks/subsector/${subSector.slug}`} isCurrentPage
+    >{subSector.name}</BreadcrumbItem
+  >
+</Breadcrumb>
 <h1>Sub sector {subSector.name}</h1>
 
 <h2>Segments</h2>

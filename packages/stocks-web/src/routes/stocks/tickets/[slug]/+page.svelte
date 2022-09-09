@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Breadcrumb, BreadcrumbItem } from 'carbon-components-svelte';
   import Rate from '@/components/Layout/Rate.svelte';
   import Currency from '@/components/Layout/Currency.svelte';
   import type { TicketQuery } from '@pibernetwork/stocks-model/src/types';

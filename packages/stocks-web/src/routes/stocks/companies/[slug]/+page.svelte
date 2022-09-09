@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Breadcrumb, BreadcrumbItem } from 'carbon-components-svelte';
   import type { CompanyQuery } from '@pibernetwork/stocks-model/src/types';
   export let data: { company: CompanyQuery };
   const { company } = data;

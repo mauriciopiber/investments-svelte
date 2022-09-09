@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Breadcrumb, BreadcrumbItem } from 'carbon-components-svelte';
   import Income from '@/components/Stocks/Income.svelte';
 
   import type { CompanyQuery } from '@pibernetwork/stocks-model/src/types';

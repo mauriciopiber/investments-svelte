@@ -114,6 +114,7 @@ importers:
       '@sveltejs/kit': 1.0.0-next.477
       '@typescript-eslint/eslint-plugin': ^5.27.0
       '@typescript-eslint/parser': ^5.27.0
+      carbon-components-svelte: ^0.70.6
       eslint: ^8.16.0
       eslint-config-prettier: ^8.3.0
       eslint-plugin-svelte3: ^4.0.0
@@ -137,6 +138,7 @@ importers:
       '@sveltejs/kit': 1.0.0-next.477_svelte@3.50.0+vite@3.1.0
       '@typescript-eslint/eslint-plugin': 5.36.2_iurrlxgqcgk5svigzxakafpeuu
       '@typescript-eslint/parser': 5.36.2_yqf6kl63nyoq5megxukfnom5rm
+      carbon-components-svelte: 0.70.6
       eslint: 8.23.0
       eslint-config-prettier: 8.5.0_eslint@8.23.0
       eslint-plugin-svelte3: 4.0.0_sc4laremvjv7grvyfrqmp3xv5q
@@ -1256,6 +1258,12 @@ packages:
     resolution: {integrity: sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==}
     engines: {node: '>=6'}
 
+  /carbon-components-svelte/0.70.6:
+    resolution: {integrity: sha512-Nnm7+hELWLP7NnyaN3J4aioxcKlibsYwUeC5+UBWYAV2MtCv4+BwqwGVS6Yrx85NRid+jd83DCm9PSfimoj40Q==}
+    dependencies:
+      flatpickr: 4.6.9
+    dev: true
+
   /chalk/4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
     engines: {node: '>=10'}
@@ -2251,6 +2259,10 @@ packages:
     dependencies:
       flatted: 3.2.7
       rimraf: 3.0.2
+
+  /flatpickr/4.6.9:
+    resolution: {integrity: sha512-F0azNNi8foVWKSF+8X+ZJzz8r9sE1G4hl06RyceIaLvyltKvDl6vqk9Lm/6AUUCi5HWaIjiUbk7UpeE/fOXOpw==}
+    dev: true
 
   /flatted/3.2.7:
     resolution: {integrity: sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==}

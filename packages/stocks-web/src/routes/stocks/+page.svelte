@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { Breadcrumb, BreadcrumbItem } from 'carbon-components-svelte';
+
   import Link from '@/components/Layout/Link.svelte';
   import Income from '@/components/Stocks/Income.svelte';
   import type { SectorQuery } from '@pibernetwork/stocks-model/src/types';
@@ -8,6 +10,10 @@
   const { sectors } = data as { sectors: SectorQuery[] };
 </script>
 
+<Breadcrumb noTrailingSlash>
+  <BreadcrumbItem href="/">Investments</BreadcrumbItem>
+  <BreadcrumbItem href="/stocks" isCurrentPage>Stocks</BreadcrumbItem>
+</Breadcrumb>
 <div class="page">
   <h2>Stocks</h2>
   {#each sectors as sector}
