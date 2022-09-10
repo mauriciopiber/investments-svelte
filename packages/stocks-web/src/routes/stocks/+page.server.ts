@@ -14,8 +14,6 @@ export async function load() {
   }
   `);
 
-  console.log(testQuery);
-
   return {
     sectors: data.sectors
   };

@@ -15,26 +15,25 @@
     "@global/types": "workspace:*",
     "@pibernetwork/stocks-model": "workspace:*",
     "@sveltejs/adapter-auto": "next",
-    "@sveltejs/kit": "1.0.0-next.477",
-    "@typescript-eslint/eslint-plugin": "^5.27.0",
-    "@typescript-eslint/parser": "^5.27.0",
+    "@sveltejs/kit": "1.0.0-next.480",
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
     "carbon-components-svelte": "^0.70.6",
     "carbon-icons-svelte": "^11.2.0",
-    "eslint": "^8.16.0",
-    "eslint-config-prettier": "^8.3.0",
+    "eslint": "^8.23.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-svelte3": "^4.0.0",
-    "prettier": "^2.6.2",
+    "prettier": "^2.7.1",
     "prettier-plugin-svelte": "^2.7.0",
-    "svelte": "^3.44.0",
-    "svelte-check": "^2.7.1",
-    "svelte-preprocess": "^4.10.6",
-    "tslib": "^2.3.1",
-    "typescript": "^4.7.4",
+    "svelte": "^3.50.1",
+    "svelte-check": "^2.9.0",
+    "svelte-preprocess": "^4.10.7",
+    "tslib": "^2.4.0",
+    "typescript": "^4.8.3",
     "vite": "^3.1.0"
   },
   "type": "module",
   "dependencies": {
-    "mongodb": "^4.9.1",
-    "sass": "^1.54.9"
+    "mongodb": "^4.9.1"
   }
 }

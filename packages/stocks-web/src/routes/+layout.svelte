@@ -13,10 +13,6 @@
     Content
   } from 'carbon-components-svelte';
   let isSideNavOpen = true;
-
-  $: {
-    console.log(isSideNavOpen);
-  }
 </script>
 
 <Header company="IBM" platformName="Carbon Svelte" bind:isSideNavOpen>

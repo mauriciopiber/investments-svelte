@@ -63,8 +63,6 @@ export async function load({ params }: Page) {
 
   const { ticket } = data;
 
-  console.log(JSON.stringify(ticket));
-
   return {
     ticket
   };

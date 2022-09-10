@@ -3,7 +3,6 @@
   import type { SubSectorQuery } from '@pibernetwork/stocks-model/src/types';
   export let data: { subSector: SubSectorQuery };
   const { subSector } = data;
-  console.log(subSector);
 </script>
 
 <Breadcrumb noTrailingSlash>
