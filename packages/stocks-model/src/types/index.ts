@@ -303,10 +303,14 @@ export interface Stock extends PartialStock {
 export type StockWithId = WithId<Stock>;
 
 export interface Portfolio {
-  ticket: string;
-  custody: number;
-  target: number;
+  ticketId: ObjectId;
+  current: number;
+  objective: number;
   averagePrice: number;
+}
+
+export interface PortfolioQuery extends Portfolio {
+  ticket: TicketQuery;
 }
 
 export type PortfolioWithId = WithId<Portfolio>;

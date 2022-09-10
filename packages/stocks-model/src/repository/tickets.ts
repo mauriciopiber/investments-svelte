@@ -16,6 +16,15 @@ export class TicketRepository extends MongoRepository<Ticket> {
     await this.collection.insertMany(segments);
   }
 
+  async insertOne(ticket: Ticket) {
+    await this.init();
+
+    if (!this.collection) {
+      throw new Error("Missing connection for Company Repository");
+    }
+    await this.collection.insertOne(ticket);
+  }
+
   async queryAll(filters: Filter<Ticket>): Promise<TicketWithId[]> {
     console.log("tickets - query all", filters);
     await this.init();

@@ -1,5 +1,6 @@
 import {
   CompanyWithId,
+  PortfolioWithId,
   SectorWithId,
   SegmentWithId,
   SubSectorWithId,
@@ -16,6 +17,7 @@ import { DataLoaders } from "src/types/dataloader";
 import { SubSectorRepository } from "@pibernetwork/stocks-model/src/repository/sub-sector";
 import { SegmentRepository } from "@pibernetwork/stocks-model/src/repository/segment";
 import { TicketRepository } from "@pibernetwork/stocks-model/src/repository/tickets";
+import { PortfolioRepository } from "@pibernetwork/stocks-model/src/repository/portfolio";
 
 export class DataloaderService {
   constructor(
@@ -23,7 +25,8 @@ export class DataloaderService {
     private sectorRepository: SectorRepository,
     private subSectorRepository: SubSectorRepository,
     private segmentRepository: SegmentRepository,
-    private ticketRepository: TicketRepository
+    private ticketRepository: TicketRepository,
+    private portfolioRepository: PortfolioRepository
   ) {}
 
   _mapResultToIds<T extends Document>(
@@ -36,6 +39,7 @@ export class DataloaderService {
       );
 
       if (!companyDb) {
+        console.log(companyIds, companies);
         throw new Error("Graphlql Error on map results to id");
       }
       return companyDb;
@@ -72,6 +76,13 @@ export class DataloaderService {
         async (keys: readonly ObjectId[]) => {
           const companies = await this.ticketRepository.queryAllByIds(keys);
           return this._mapResultToIds<TicketWithId>(keys, companies);
+        }
+      ),
+      portfoliosLoader: new DataLoader<ObjectId, PortfolioWithId>(
+        async (keys: readonly ObjectId[]) => {
+          const companies = await this.portfolioRepository.queryAllByIds(keys);
+          console.log(`Found ${companies.length} portfolios`);
+          return this._mapResultToIds<PortfolioWithId>(keys, companies);
         }
       ),
     };

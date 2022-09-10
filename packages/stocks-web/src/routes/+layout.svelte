@@ -21,7 +21,7 @@
   </svelte:fragment> -->
   <HeaderNav>
     <HeaderNavItem href="/" text="Home" />
-    <HeaderNavItem href="/wallet" text="Wallet" />
+    <HeaderNavItem href="/portfolio" text="Portfolio" />
     <HeaderNavMenu text="Stocks">
       <HeaderNavItem href="/stocks" text="Stocks" />
       <HeaderNavItem href="/stocks/sectors" text="Sectors" />
@@ -37,7 +37,7 @@
 <SideNav bind:isOpen={isSideNavOpen}>
   <SideNavItems>
     <SideNavLink href="/" text="Home" />
-    <SideNavLink href="/wallet" text="Wallet" />
+    <SideNavLink href="/portfolio" text="Portfolio" />
     <SideNavMenu text="Stocks">
       <SideNavMenuItem href="/stocks" text="Stocks" />
       <SideNavMenuItem href="/stocks/sectors" text="Sectors" />

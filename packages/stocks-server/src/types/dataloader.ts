@@ -5,6 +5,7 @@ import {
   SegmentWithId,
   SubSectorWithId,
   TicketWithId,
+  PortfolioWithId,
 } from "@pibernetwork/stocks-model/src/types";
 import { ObjectId } from "mongodb";
 
@@ -14,4 +15,5 @@ export interface DataLoaders {
   subSectorsLoader: DataLoader<ObjectId, SubSectorWithId>;
   segmentsLoader: DataLoader<ObjectId, SegmentWithId>;
   ticketsLoader: DataLoader<ObjectId, TicketWithId>;
+  portfoliosLoader: DataLoader<ObjectId, PortfolioWithId>;
 }

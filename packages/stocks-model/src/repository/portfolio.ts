@@ -1,4 +1,4 @@
-import type { Collection, MongoClient, Filter } from "mongodb";
+import type { Collection, MongoClient, Filter, ObjectId } from "mongodb";
 import type { Portfolio, PortfolioWithId } from "../types";
 import { MongoRepository } from "../abstracts/repository";
 
@@ -14,6 +14,29 @@ export class PortfolioRepository extends MongoRepository<Portfolio> {
       throw new Error("Missing connection for Portfolio Repository");
     }
     await this.collection.insertMany(segments);
+  }
+
+  async queryAllByIds(ids: readonly ObjectId[]): Promise<PortfolioWithId[]> {
+    console.log("portfolios - query by ids", ids.length);
+    await this.init();
+    if (!this.collection) {
+      throw new Error("Missing connection for Company Repository");
+    }
+    return await this.collection
+      .find({
+        _id: { $in: ids },
+      })
+      .sort({ "income.averageYield": -1 })
+      .toArray();
+  }
+
+  async insertOne(portfolio: Portfolio) {
+    await this.init();
+
+    if (!this.collection) {
+      throw new Error("Missing connection for Company Repository");
+    }
+    await this.collection.insertOne(portfolio);
   }
 
   async queryAll(filters: Filter<Portfolio>): Promise<PortfolioWithId[]> {

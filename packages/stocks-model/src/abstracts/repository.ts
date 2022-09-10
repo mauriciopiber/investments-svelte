@@ -19,7 +19,7 @@ export abstract class MongoRepository<T extends Document> {
 
   async init() {
     if (typeof this.connection !== "string") {
-      throw new Error("Missing connection");
+      throw new Error(`Missing connection ${this.connection}`);
     }
     if (!this.collectionName) {
       throw new Error("Missing collection name");

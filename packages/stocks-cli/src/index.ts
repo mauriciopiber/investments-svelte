@@ -17,6 +17,7 @@ import { syncStocks } from "./actions/sync-stocks";
 import dotenv from "dotenv";
 import { dropDatabase } from "./actions/drop-database";
 import { syncDatabase } from "./actions/sync-database";
+import { syncPortfolio } from "./actions/sync-portfolio";
 
 dotenv.config();
 const program = new Command();
@@ -266,6 +267,15 @@ program
     log.init(verbose);
 
     await syncIncome();
+    // Connection URL
+  });
+
+program
+  .command("sync:portfolio")
+  .description("Sync portfolio collection")
+
+  .action(async () => {
+    await syncPortfolio();
     // Connection URL
   });
 

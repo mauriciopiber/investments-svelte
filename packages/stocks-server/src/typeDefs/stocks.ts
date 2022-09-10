@@ -69,6 +69,13 @@ const typeDefs = gql`
     subSector: SubSector
   }
 
+  type Portfolio {
+    ticket: Ticket
+    objective: Int
+    current: Int
+    averagePrice: Float
+  }
+
   input Sort {
     key: String
     order: Int
@@ -77,6 +84,8 @@ const typeDefs = gql`
   type Query {
     ticket(slug: String): Ticket
     tickets: [Ticket]
+    portfolios: [Portfolio]
+    portfolio(slug: String): Portfolio
     company(slug: String): Company
     companies(limit: Int, offset: Int, sort: Sort): [Company]
     sector(slug: String): Sector

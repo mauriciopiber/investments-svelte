@@ -3,14 +3,17 @@ import { SubSectorRepository } from "@pibernetwork/stocks-model/src/repository/s
 import { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sector";
 import { CompanyRepository } from "@pibernetwork/stocks-model/src/repository/company";
 import { TicketRepository } from "@pibernetwork/stocks-model/src/repository/tickets";
+import { PortfolioRepository } from "@pibernetwork/stocks-model/src/repository/portfolio";
 import {
   SectorWithId,
   SegmentWithId,
   CompanyWithId,
   TicketWithId,
   SubSectorWithId,
+  PortfolioWithId,
 } from "@pibernetwork/stocks-model/src/types";
 import { DataloaderService } from "./../utils/dataloader";
+import { ObjectId } from "mongodb";
 
 const segmentRepository = new SegmentRepository(
   process.env.DATABASE_CONNECTION
@@ -23,17 +26,26 @@ const companyRepository = new CompanyRepository(
   process.env.DATABASE_CONNECTION
 );
 const ticketRepository = new TicketRepository(process.env.DATABASE_CONNECTION);
+const portfolioRepository = new PortfolioRepository(
+  process.env.DATABASE_CONNECTION
+);
 
 const dataLoaders = new DataloaderService(
   companyRepository,
   sectorRepository,
   subSectorRepository,
   segmentRepository,
-  ticketRepository
+  ticketRepository,
+  portfolioRepository
 );
 
-const { companiesLoader, sectorsLoader, segmentsLoader, subSectorsLoader } =
-  dataLoaders.getLoaders();
+const {
+  companiesLoader,
+  sectorsLoader,
+  segmentsLoader,
+  subSectorsLoader,
+  ticketsLoader,
+} = dataLoaders.getLoaders();
 
 export default {
   Query: {
@@ -68,6 +80,12 @@ export default {
     },
     async tickets() {
       return await ticketRepository.queryAll({});
+    },
+    async portfolios() {
+      return await portfolioRepository.queryAll({});
+    },
+    async portfolio(_: unknown, args: { _id: ObjectId }) {
+      return await portfolioRepository.queryOne({ _id: { $eq: args._id } });
     },
   },
   Sector: {
@@ -122,6 +140,11 @@ export default {
   Ticket: {
     async company(parent: TicketWithId) {
       return companiesLoader.load(parent.companyId);
+    },
+  },
+  Portfolio: {
+    async ticket(parent: PortfolioWithId) {
+      return ticketsLoader.load(parent.ticketId);
     },
   },
 };
