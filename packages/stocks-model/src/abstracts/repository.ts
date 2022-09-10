@@ -8,17 +8,15 @@ export abstract class MongoRepository<T extends Document> {
   collectionName: string | null = null;
 
   constructor(connection: string | null | undefined) {
-    console.log("constructor", connection);
     this.connection = connection;
   }
 
   async init() {
     if (typeof this.connection !== "string") {
-      console.log(this.connection);
-      throw new Error("Missing connection 123");
+      throw new Error("Missing connection");
     }
     if (!this.collectionName) {
-      throw new Error("Missing collection name 123");
+      throw new Error("Missing collection name");
     }
     if (!this.collection) {
       const { getInstance } = mongoDbConnection;
@@ -27,5 +25,13 @@ export abstract class MongoRepository<T extends Document> {
       const collection = db.collection<T>(this.collectionName);
       this.collection = collection;
     }
+  }
+
+  async deleteMany() {
+    await this.init();
+    if (!this.collection) {
+      throw new Error("Missing connection");
+    }
+    return await this.collection.deleteMany({});
   }
 }

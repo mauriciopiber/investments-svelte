@@ -15,6 +15,8 @@ import { syncTickets } from "./actions/sync-tickets";
 import { syncIncome } from "./actions/sync-income";
 import { syncStocks } from "./actions/sync-stocks";
 import dotenv from "dotenv";
+import { dropDatabase } from "./actions/drop-database";
+import { syncDatabase } from "./actions/sync-database";
 
 dotenv.config();
 const program = new Command();
@@ -268,10 +270,19 @@ program
   });
 
 program
-  .command("sync:worksheet")
-  .description("Sync worksheet with data from database")
+  .command("drop")
+  .description("Drop all")
+  .option("-s, --stocks", "Delete stocks")
+  .action(async (options) => {
+    await dropDatabase(options.stocks);
+    // Connection URL
+  });
+
+program
+  .command("sync:database")
+  .description("Sync database")
   .action(async () => {
-    await syncWorksheet();
+    await syncDatabase();
     // Connection URL
   });
 program.parse(process.argv);
