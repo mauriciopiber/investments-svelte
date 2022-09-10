@@ -57,7 +57,7 @@ export async function loadStocks(filters: StockFilters): Promise<Stock[]> {
   const stocks: Stock[] = [];
 
   log.writeLog("Stocks - Enrich");
-  for (const stock of filteredStocks) {
+  for (const stock of [...filteredStocks.slice(0, 2)]) {
     log.writeLog(`Stocks - Enrich - ${stock.ticket}`);
     const enrichedStock: Stock = await enrichStock(stock);
     stocks.push(enrichedStock);

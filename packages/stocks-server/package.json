@@ -22,6 +22,7 @@
     "apollo-server-express": "^3.10.2",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
+    "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "graphql": "^16.6.0",
     "mongodb": "^4.9.1"

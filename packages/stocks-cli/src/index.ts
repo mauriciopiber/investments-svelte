@@ -15,7 +15,9 @@ import { syncSubSectors } from "./actions/sync-sub-sectors";
 import { syncTickets } from "./actions/sync-tickets";
 import { syncIncome } from "./actions/sync-income";
 import { syncStocks } from "./actions/sync-stocks";
+import dotenv from "dotenv";
 
+dotenv.config();
 const program = new Command();
 
 const defaultRange = 6;
@@ -33,6 +35,10 @@ program
   .name("Stocks")
   .description("CLI to analyze stocks on Brazilian Market")
   .version("0.1.0");
+
+program.name("dotenv").action(() => {
+  console.log(process.env.DATABASE_CONNECTION);
+});
 
 program
   .command("wallet")

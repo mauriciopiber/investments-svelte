@@ -1,7 +1,10 @@
 // Connection URL
 import { MongoClient } from "mongodb";
 
-const url = "mongodb://localhost:27017";
+// const url = "mongodb://localhost:27017";
+
+const url =
+  "mongodb+srv://admin:l1FoqvBI6p6SODhQ@cluster0.gab9x12.mongodb.net/?retryWrites=true&w=majority";
 
 type GetInstance = () => Promise<MongoClient>;
 

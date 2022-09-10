@@ -21,7 +21,7 @@ export default {
   Query: {
     async status() {
       return {
-        message: `Connected. No data found.`,
+        message: `Connected. No data found. ${process.env.DATABASE_CONNECTION}`,
       };
       // try {
       //   const sector = await sectorRepository.queryOne({});

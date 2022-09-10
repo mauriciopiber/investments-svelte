@@ -7,6 +7,7 @@
     "@finsweet/tsconfig": "^1.1.0",
     "@global/types": "workspace:*",
     "@google-cloud/local-auth": "^2.1.0",
+    "@pibernetwork/stocks-model": "workspace:*",
     "@types/google-spreadsheet": "^3.3.0",
     "@types/json2csv": "^5.0.3",
     "@types/node": "^18.7.13",
@@ -17,6 +18,7 @@
     "cross-env": "^7.0.3",
     "csvtojson": "^2.0.10",
     "dayjs": "^1.11.5",
+    "dotenv": "^16.0.2",
     "esbuild": "^0.15.5",
     "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.5.0",
@@ -28,8 +30,7 @@
     "node-html-parser": "5.4.2-0",
     "prettier": "^2.7.1",
     "slug": "^8.0.0",
-    "typescript": "^4.8.2",
-    "@pibernetwork/stocks-model": "workspace:*"
+    "typescript": "^4.8.2"
   },
   "type": "module",
   "main": "src/index.ts",

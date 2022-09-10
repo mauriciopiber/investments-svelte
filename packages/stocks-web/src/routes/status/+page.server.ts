@@ -17,6 +17,7 @@ query {
       status: 'Missing SERVER_URL'
     };
   }
+  console.log(SERVER_URL);
   try {
     const request = await fetch(SERVER_URL, {
       method: 'POST',
