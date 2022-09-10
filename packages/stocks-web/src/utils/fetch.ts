@@ -1,5 +1,7 @@
+import { SERVER_URL } from '$lib/Env';
+
 export async function fetchGraphql(query: string) {
-  const request = await fetch('http://localhost:4000/graphql', {
+  const request = await fetch(SERVER_URL, {
     method: 'POST',
     headers: {
       ['Content-Type']: 'application/json'
