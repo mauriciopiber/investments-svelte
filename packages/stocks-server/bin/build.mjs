@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import esbuild from "esbuild";
 
-const buildDirectory = "dist";
+const buildDirectory = "public";
 const production = process.env.NODE_ENV === "production";
 
 // Config entrypoint files
