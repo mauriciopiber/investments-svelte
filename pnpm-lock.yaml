@@ -97,35 +97,39 @@ importers:
       '@finsweet/tsconfig': ^1.1.0
       '@pibernetwork/stocks-model': workspace:*
       '@types/cors': ^2.8.12
+      '@types/express': ^4.17.13
       '@types/node': ^18.7.15
       '@typescript-eslint/eslint-plugin': ^5.36.2
       '@typescript-eslint/parser': ^5.36.2
       apollo-server: ^3.10.2
-      class-validator: ^0.13.2
+      apollo-server-core: ^3.10.2
+      apollo-server-express: ^3.10.2
       cors: ^2.8.5
       cross-env: ^7.0.3
       esbuild: ^0.15.5
       eslint: ^8.23.0
       eslint-config-prettier: ^8.5.0
       eslint-plugin-prettier: ^4.2.1
+      express: ^4.18.1
       graphql: ^16.6.0
       mongodb: ^4.9.1
       nodemon: ^2.0.19
       prettier: ^2.7.1
-      reflect-metadata: ^0.1.13
       ts-node: ^10.9.1
       typescript: ^4.8.3
     dependencies:
       '@pibernetwork/stocks-model': link:../stocks-model
       '@types/cors': 2.8.12
+      '@types/express': 4.17.13
       '@types/node': 18.7.15
       apollo-server: 3.10.2_graphql@16.6.0
-      class-validator: 0.13.2
+      apollo-server-core: 3.10.2_graphql@16.6.0
+      apollo-server-express: 3.10.2_ikriz6xqtzcvohrhb2pcry7o6y
       cors: 2.8.5
       cross-env: 7.0.3
+      express: 4.18.1
       graphql: 16.6.0
       mongodb: 4.9.1
-      reflect-metadata: 0.1.13
     devDependencies:
       '@finsweet/eslint-config': 1.1.5_qpug5r755k5tnnvrq5rhaddnnq
       '@finsweet/tsconfig': 1.1.0
@@ -404,23 +408,23 @@ packages:
       tslib: 2.4.0
     dev: false
 
-  /@graphql-tools/merge/8.3.5_graphql@16.6.0:
-    resolution: {integrity: sha512-NunMCiYNK5GVJewhqQKsUnTFKSsScmZX6Lvf/LLxCDwczMH2Xi4ifRtb2GSQaX1+TYV4Rj/BAE8VUvO3tKIUhQ==}
+  /@graphql-tools/merge/8.3.6_graphql@16.6.0:
+    resolution: {integrity: sha512-uUBokxXi89bj08P+iCvQk3Vew4vcfL5ZM6NTylWi8PIpoq4r5nJ625bRuN8h2uubEdRiH8ntN9M4xkd/j7AybQ==}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
     dependencies:
-      '@graphql-tools/utils': 8.11.0_graphql@16.6.0
+      '@graphql-tools/utils': 8.12.0_graphql@16.6.0
       graphql: 16.6.0
       tslib: 2.4.0
     dev: false
 
-  /@graphql-tools/mock/8.7.5_graphql@16.6.0:
-    resolution: {integrity: sha512-bmXXRoQE/v+zXjLdcpW4zF5ufKZG9uLlDH0qsYpasEDbgGS35DIrhqgOx3T23AynlsWzrWyMgiAiTz3/s0GAKw==}
+  /@graphql-tools/mock/8.7.6_graphql@16.6.0:
+    resolution: {integrity: sha512-cQGPyY6dF4x28552zjAg9En2WWVury62u1/xzipCNUSCdKRVOsAupTNBcAGdMjsKPLcGzzk1cPA8dP0DUfNqzg==}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
     dependencies:
-      '@graphql-tools/schema': 9.0.3_graphql@16.6.0
-      '@graphql-tools/utils': 8.11.0_graphql@16.6.0
+      '@graphql-tools/schema': 9.0.4_graphql@16.6.0
+      '@graphql-tools/utils': 8.12.0_graphql@16.6.0
       fast-json-stable-stringify: 2.1.0
       graphql: 16.6.0
       tslib: 2.4.0
@@ -438,20 +442,20 @@ packages:
       value-or-promise: 1.0.11
     dev: false
 
-  /@graphql-tools/schema/9.0.3_graphql@16.6.0:
-    resolution: {integrity: sha512-nMnrvhxZ/NxpEjiyO72L9ZKbhRlFTwan60v0otYde+tS2Ww/c7y4FL9fQTXev5ZNnSeV/WAeybpis2pMNfTbOA==}
+  /@graphql-tools/schema/9.0.4_graphql@16.6.0:
+    resolution: {integrity: sha512-B/b8ukjs18fq+/s7p97P8L1VMrwapYc3N2KvdG/uNThSazRRn8GsBK0Nr+FH+mVKiUfb4Dno79e3SumZVoHuOQ==}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
     dependencies:
-      '@graphql-tools/merge': 8.3.5_graphql@16.6.0
-      '@graphql-tools/utils': 8.11.0_graphql@16.6.0
+      '@graphql-tools/merge': 8.3.6_graphql@16.6.0
+      '@graphql-tools/utils': 8.12.0_graphql@16.6.0
       graphql: 16.6.0
       tslib: 2.4.0
       value-or-promise: 1.0.11
     dev: false
 
-  /@graphql-tools/utils/8.11.0_graphql@16.6.0:
-    resolution: {integrity: sha512-4lkc+F/hsQTjNnnfFh7lzrhRmRm1y2ARfKA6RD5FbTJO58JadirNbkY5u4lsVEPBZHiivHqAiQ/pIBhGMyEMcQ==}
+  /@graphql-tools/utils/8.12.0_graphql@16.6.0:
+    resolution: {integrity: sha512-TeO+MJWGXjUTS52qfK4R8HiPoF/R7X+qmgtOYd8DTH0l6b+5Y/tlg5aGeUJefqImRq7nvi93Ms40k/Uz4D5CWw==}
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
     dependencies:
@@ -1170,7 +1174,7 @@ packages:
       '@apollo/utils.usagereporting': 1.0.0_graphql@16.6.0
       '@apollographql/apollo-tools': 0.5.4_graphql@16.6.0
       '@apollographql/graphql-playground-html': 1.6.29
-      '@graphql-tools/mock': 8.7.5_graphql@16.6.0
+      '@graphql-tools/mock': 8.7.6_graphql@16.6.0
       '@graphql-tools/schema': 8.5.1_graphql@16.6.0
       '@josephg/resolvable': 1.0.1
       apollo-datasource: 3.3.2
@@ -1463,13 +1467,6 @@ packages:
     resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
     engines: {node: '>=10'}
     dev: true
-
-  /class-validator/0.13.2:
-    resolution: {integrity: sha512-yBUcQy07FPlGzUjoLuUfIOXzgynnQPPruyK1Ge2B74k9ROwnle1E+NxLWnUv5OLU8hA/qL5leAE9XnXq3byaBw==}
-    dependencies:
-      libphonenumber-js: 1.10.13
-      validator: 13.7.0
-    dev: false
 
   /color-convert/2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
@@ -2960,10 +2957,6 @@ packages:
       prelude-ls: 1.2.1
       type-check: 0.4.0
 
-  /libphonenumber-js/1.10.13:
-    resolution: {integrity: sha512-b74iyWmwb4GprAUPjPkJ11GTC7KX4Pd3onpJfKxYyY8y9Rbb4ERY47LvCMEDM09WD3thiLDMXtkfDK/AX+zT7Q==}
-    dev: false
-
   /locate-path/6.0.0:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
     engines: {node: '>=10'}
@@ -3464,10 +3457,6 @@ packages:
     dependencies:
       picomatch: 2.3.1
     dev: true
-
-  /reflect-metadata/0.1.13:
-    resolution: {integrity: sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==}
-    dev: false
 
   /regexparam/2.0.1:
     resolution: {integrity: sha512-zRgSaYemnNYxUv+/5SeoHI0eJIgTL/A2pUtXUPLHQxUldagouJ9p+K6IbIZ/JiQuCEv2E2B1O11SjVQy3aMCkw==}
@@ -4070,11 +4059,6 @@ packages:
   /v8-compile-cache-lib/3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
     dev: true
-
-  /validator/13.7.0:
-    resolution: {integrity: sha512-nYXQLCBkpJ8X6ltALua9dRrZDHVYxjJ1wgskNt1lH9fzGjs3tgojGSCBjmEPwkWS1y29+DrizMTW19Pr9uB2nw==}
-    engines: {node: '>= 0.10'}
-    dev: false
 
   /value-or-promise/1.0.11:
     resolution: {integrity: sha512-41BrgH+dIbCFXClcSapVs5M6GkENd3gQOJpEfPDNa71LsUGMXDL0jMWpI/Rh7WhX+Aalfz2TTS3Zt5pUsbnhLg==}
