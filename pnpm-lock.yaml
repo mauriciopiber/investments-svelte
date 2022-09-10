@@ -103,6 +103,7 @@ importers:
       apollo-server: ^3.10.2
       class-validator: ^0.13.2
       cors: ^2.8.5
+      cross-env: ^7.0.3
       esbuild: ^0.15.5
       eslint: ^8.23.0
       eslint-config-prettier: ^8.5.0
@@ -121,6 +122,7 @@ importers:
       apollo-server: 3.10.2_graphql@16.6.0
       class-validator: 0.13.2
       cors: 2.8.5
+      cross-env: 7.0.3
       graphql: 16.6.0
       mongodb: 4.9.1
       reflect-metadata: 0.1.13
