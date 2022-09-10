@@ -8,6 +8,8 @@ export async function fetchGraphql(query: string) {
       query
     })
   });
+
+  console.log(request.status);
   const response = await request.json();
 
   const { data, errors } = response;

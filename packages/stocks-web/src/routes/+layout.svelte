@@ -30,6 +30,7 @@
       <HeaderNavItem href="/stocks/companies" text="Companies" />
       <HeaderNavItem href="/stocks/tickets" text="Tickets" />
     </HeaderNavMenu>
+    <HeaderNavItem href="/status" text="Status" />
   </HeaderNav>
 </Header>
 
@@ -45,6 +46,7 @@
       <SideNavMenuItem href="/stocks/companies" text="Companies" />
       <SideNavMenuItem href="/stocks/tickets" text="Tickets" />
     </SideNavMenu>
+    <SideNavLink href="/status" text="Status" />
   </SideNavItems>
 </SideNav>
 
