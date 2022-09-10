@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint --ignore-path .gitignore ./src && prettier --check ./src",
     "check": "tsc --noEmit",
-    "format": "prettier --write ./src"
+    "format": "prettier --write ./src",
+    "validate": "pnpm run format && pnpm run lint && pnpm run check"
   },
   "keywords": [],
   "author": "",

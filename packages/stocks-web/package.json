@@ -9,7 +9,8 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --check . && eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "validate": "pnpm run format && pnpm run lint && pnpm run check"
   },
   "devDependencies": {
     "@pibernetwork/stocks-model": "workspace:*",

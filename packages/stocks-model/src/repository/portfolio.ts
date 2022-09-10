@@ -1,25 +1,25 @@
 import type { Collection, MongoClient, Filter } from "mongodb";
-import type { Ticket, TicketWithId } from "./../types";
-import { MongoRepository } from "./../abstracts/repository";
+import type { Portfolio, PortfolioWithId } from "../types";
+import { MongoRepository } from "../abstracts/repository";
 
-export class TicketRepository extends MongoRepository<Ticket> {
-  collection: Collection<Ticket> | null = null;
+export class PortfolioRepository extends MongoRepository<Portfolio> {
+  collection: Collection<Portfolio> | null = null;
   client: MongoClient | null = null;
-  collectionName = "tickets";
+  collectionName = "portfolios";
 
-  async insertMany(segments: Ticket[]) {
+  async insertMany(segments: Portfolio[]) {
     await this.init();
 
     if (!this.collection) {
-      throw new Error("Missing connection for Ticket Repository");
+      throw new Error("Missing connection for Portfolio Repository");
     }
     await this.collection.insertMany(segments);
   }
 
-  async queryAll(filters: Filter<Ticket>): Promise<TicketWithId[]> {
+  async queryAll(filters: Filter<Portfolio>): Promise<PortfolioWithId[]> {
     await this.init();
     if (!this.collection) {
-      throw new Error("Missing connection for Ticket Repository");
+      throw new Error("Missing connection for Portfolio Repository");
     }
     return await this.collection
       .find(filters)
@@ -27,7 +27,7 @@ export class TicketRepository extends MongoRepository<Ticket> {
       .toArray();
   }
 
-  async queryOne(filters: Filter<Ticket>): Promise<TicketWithId | null> {
+  async queryOne(filters: Filter<Portfolio>): Promise<PortfolioWithId | null> {
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Sector Repository");

@@ -1,7 +1,7 @@
 import type { Stock } from "@pibernetwork/stocks-model/src/types";
 
 export interface WalletStock {
-  ticket: string;
+  ticketId: string;
   custody: number;
   target: number;
   averagePrice: number;

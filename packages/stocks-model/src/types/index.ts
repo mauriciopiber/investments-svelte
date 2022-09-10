@@ -300,3 +300,12 @@ export interface Stock extends PartialStock {
 }
 
 export type StockWithId = WithId<Stock>;
+
+export interface Portfolio {
+  ticket: string;
+  custody: number;
+  target: number;
+  averagePrice: number;
+}
+
+export type PortfolioWithId = WithId<Portfolio>;

@@ -69,17 +69,12 @@ const typeDefs = gql`
     subSector: SubSector
   }
 
-  type Status {
-    message: String
-  }
-
   input Sort {
     key: String
     order: Int
   }
 
   type Query {
-    status: Status
     ticket(slug: String): Ticket
     tickets: [Ticket]
     company(slug: String): Company

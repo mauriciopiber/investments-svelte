@@ -25,26 +25,6 @@ const ticketRepository = new TicketRepository(process.env.DATABASE_CONNECTION);
 
 export default {
   Query: {
-    async status() {
-      try {
-        const sector = await sectorRepository.queryOne({});
-
-        if (sector) {
-          return {
-            message: `Connected. Sector ${sector._id} found.`,
-          };
-        }
-
-        return {
-          message: `Connected. No data found.`,
-        };
-      } catch (e) {
-        console.log(e);
-        return {
-          message: `Error: ${JSON.stringify(e)}`,
-        };
-      }
-    },
     async sector(_: unknown, args: { slug: string }) {
       return await sectorRepository.queryOne({ slug: { $eq: args.slug } });
     },
@@ -68,17 +48,7 @@ export default {
     async company(_: unknown, args: { slug: string }) {
       return await companyRepository.queryOne({ slug: { $eq: args.slug } });
     },
-    async companies(
-      _: unknown,
-      {
-        limit,
-        offset,
-        sort,
-      }: { limit: number; offset: number; sort: { key: string; order: number } }
-    ) {
-      const { key, order } = sort;
-      // eslint-disable-next-line no-console
-      console.log(limit, offset, key, order);
+    async companies() {
       return await companyRepository.queryAll({});
     },
     async ticket(_: unknown, args: { slug: string }) {
