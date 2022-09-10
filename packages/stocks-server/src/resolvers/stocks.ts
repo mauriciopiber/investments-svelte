@@ -24,9 +24,16 @@ const companyRepository = new CompanyRepository(
 );
 const ticketRepository = new TicketRepository(process.env.DATABASE_CONNECTION);
 
-const dataLoaders = new DataloaderService(companyRepository);
+const dataLoaders = new DataloaderService(
+  companyRepository,
+  sectorRepository,
+  subSectorRepository,
+  segmentRepository,
+  ticketRepository
+);
 
-const { companiesLoader } = dataLoaders.getLoaders();
+const { companiesLoader, sectorsLoader, segmentsLoader, subSectorsLoader } =
+  dataLoaders.getLoaders();
 
 export default {
   Query: {
@@ -73,12 +80,8 @@ export default {
     },
   },
   SubSector: {
-    async sector(parent: SubSectorWithId) {
-      const sector = await sectorRepository.queryOne({
-        _id: { $eq: parent.sectorId },
-      });
-
-      return sector;
+    async sector(parent: CompanyWithId) {
+      return sectorsLoader.load(parent.sectorId);
     },
     async segments(parent: SubSectorWithId) {
       const segments = await segmentRepository.queryAll({
@@ -96,11 +99,7 @@ export default {
       return companies;
     },
     async subSector(parent: SegmentWithId) {
-      const sector = await subSectorRepository.queryOne({
-        _id: { $eq: parent.subSectorId },
-      });
-
-      return sector;
+      return subSectorsLoader.load(parent.subSectorId);
     },
   },
   Company: {
@@ -111,34 +110,18 @@ export default {
       return tickets;
     },
     async segment(parent: CompanyWithId) {
-      const segment = await segmentRepository.queryOne({
-        _id: { $eq: parent.segmentId },
-      });
-
-      return segment;
+      return segmentsLoader.load(parent.segmentId);
     },
     async sector(parent: CompanyWithId) {
-      const sector = await sectorRepository.queryOne({
-        _id: { $eq: parent.sectorId },
-      });
-      return sector;
+      return sectorsLoader.load(parent.sectorId);
     },
     async subSector(parent: CompanyWithId) {
-      const subSector = await subSectorRepository.queryOne({
-        _id: { $eq: parent.subSectorId },
-      });
-      return subSector;
+      return subSectorsLoader.load(parent.subSectorId);
     },
   },
   Ticket: {
     async company(parent: TicketWithId) {
       return companiesLoader.load(parent.companyId);
-      // console.log(companiesLoader);
-      // const company = await companyRepository.queryOne({
-      //   _id: { $eq: parent.companyId },
-      // });
-
-      // return company;
     },
   },
 };

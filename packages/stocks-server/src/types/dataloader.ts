@@ -1,7 +1,17 @@
 import DataLoader from "dataloader";
-import { Company } from "@pibernetwork/stocks-model/src/types";
+import {
+  CompanyWithId,
+  SectorWithId,
+  SegmentWithId,
+  SubSectorWithId,
+  TicketWithId,
+} from "@pibernetwork/stocks-model/src/types";
 import { ObjectId } from "mongodb";
 
 export interface DataLoaders {
-  companiesLoader: DataLoader<ObjectId, Company>;
+  companiesLoader: DataLoader<ObjectId, CompanyWithId>;
+  sectorsLoader: DataLoader<ObjectId, SectorWithId>;
+  subSectorsLoader: DataLoader<ObjectId, SubSectorWithId>;
+  segmentsLoader: DataLoader<ObjectId, SegmentWithId>;
+  ticketsLoader: DataLoader<ObjectId, TicketWithId>;
 }

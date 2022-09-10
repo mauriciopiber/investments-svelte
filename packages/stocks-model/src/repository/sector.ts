@@ -36,6 +36,20 @@ export class SectorRepository extends MongoRepository<Sector> {
     await this.collection.updateOne({ _id }, { $set: values });
   }
 
+  async queryAllByIds(ids: readonly ObjectId[]): Promise<SectorWithId[]> {
+    console.log("sectors - query by ids", ids.length);
+    await this.init();
+    if (!this.collection) {
+      throw new Error("Missing connection for Company Repository");
+    }
+    return await this.collection
+      .find({
+        _id: { $in: ids },
+      })
+      .sort({ "income.averageYield": -1 })
+      .toArray();
+  }
+
   async queryAll(filters: Filter<Sector>): Promise<SectorWithId[]> {
     console.log("sectors - query all", filters);
     await this.init();

@@ -44,7 +44,7 @@ export class CompanyRepository extends MongoRepository<Company> {
   }
 
   async queryAllByIds(ids: readonly ObjectId[]): Promise<CompanyWithId[]> {
-    console.log("company - query by ids", ids);
+    console.log("company - query by ids", ids.length);
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Company Repository");

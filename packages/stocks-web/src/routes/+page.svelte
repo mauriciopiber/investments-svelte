@@ -15,6 +15,7 @@
       <Column sm={16} md={8} lg={8} xlg={8} max={4}>
         <h2>Server</h2>
         <Tile>
+          <Checkbox labelText="Add data loaders" disabled checked />
           <Checkbox labelText="Add sort functionality" disabled />
           <Checkbox labelText="Add page functionality" disabled />
           <Checkbox labelText="Add filters functionality" disabled />

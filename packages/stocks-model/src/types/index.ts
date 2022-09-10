@@ -310,7 +310,3 @@ export interface Portfolio {
 }
 
 export type PortfolioWithId = WithId<Portfolio>;
-
-export interface DataLoaders {
-  companiesLoader: DataLoader<ObjectId, Company>;
-}

@@ -1,5 +1,11 @@
 import mongoDbConnection from "../utils/mongoDbConnection";
-import type { Collection, MongoClient, Document } from "mongodb";
+import type {
+  Collection,
+  MongoClient,
+  Document,
+  WithId,
+  ObjectId,
+} from "mongodb";
 
 export abstract class MongoRepository<T extends Document> {
   connection: string | null | undefined;

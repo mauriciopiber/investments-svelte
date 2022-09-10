@@ -1,4 +1,4 @@
-import type { Collection, MongoClient, Filter } from "mongodb";
+import type { Collection, MongoClient, Filter, ObjectId } from "mongodb";
 import type { Ticket, TicketWithId } from "./../types";
 import { MongoRepository } from "./../abstracts/repository";
 
@@ -35,6 +35,20 @@ export class TicketRepository extends MongoRepository<Ticket> {
       throw new Error("Missing connection for Sector Repository");
     }
     return await this.collection.findOne(filters);
+  }
+
+  async queryAllByIds(ids: readonly ObjectId[]): Promise<TicketWithId[]> {
+    console.log(`${this.collectionName} - query by ids`, ids.length);
+    await this.init();
+    if (!this.collection) {
+      throw new Error("Missing connection for Company Repository");
+    }
+    return await this.collection
+      .find({
+        _id: { $in: ids },
+      })
+      .sort({ "income.averageYield": -1 })
+      .toArray();
   }
 
   async close() {
