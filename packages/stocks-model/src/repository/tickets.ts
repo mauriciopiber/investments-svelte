@@ -17,6 +17,7 @@ export class TicketRepository extends MongoRepository<Ticket> {
   }
 
   async queryAll(filters: Filter<Ticket>): Promise<TicketWithId[]> {
+    console.log("tickets - query all", filters);
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Ticket Repository");
@@ -28,6 +29,7 @@ export class TicketRepository extends MongoRepository<Ticket> {
   }
 
   async queryOne(filters: Filter<Ticket>): Promise<TicketWithId | null> {
+    console.log("tickets - query one", filters);
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Sector Repository");

@@ -13,17 +13,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dataloader": "^2.1.0",
     "mongodb": "^4.9.1"
   },
   "devDependencies": {
-    "@finsweet/tsconfig": "^1.1.0",
-    "typescript": "^4.8.3",
-    "prettier": "^2.7.1",
     "@finsweet/eslint-config": "^1.1.5",
+    "@finsweet/tsconfig": "^1.1.0",
     "@typescript-eslint/eslint-plugin": "^5.36.2",
     "@typescript-eslint/parser": "^5.36.2",
     "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.2.1"
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.3"
   }
 }

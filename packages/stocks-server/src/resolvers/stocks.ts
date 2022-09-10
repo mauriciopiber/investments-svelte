@@ -10,6 +10,7 @@ import {
   TicketWithId,
   SubSectorWithId,
 } from "@pibernetwork/stocks-model/src/types";
+import { DataloaderService } from "./../utils/dataloader";
 
 const segmentRepository = new SegmentRepository(
   process.env.DATABASE_CONNECTION
@@ -22,6 +23,10 @@ const companyRepository = new CompanyRepository(
   process.env.DATABASE_CONNECTION
 );
 const ticketRepository = new TicketRepository(process.env.DATABASE_CONNECTION);
+
+const dataLoaders = new DataloaderService(companyRepository);
+
+const { companiesLoader } = dataLoaders.getLoaders();
 
 export default {
   Query: {
@@ -127,11 +132,13 @@ export default {
   },
   Ticket: {
     async company(parent: TicketWithId) {
-      const company = await companyRepository.queryOne({
-        _id: { $eq: parent.companyId },
-      });
+      return companiesLoader.load(parent.companyId);
+      // console.log(companiesLoader);
+      // const company = await companyRepository.queryOne({
+      //   _id: { $eq: parent.companyId },
+      // });
 
-      return company;
+      // return company;
     },
   },
 };

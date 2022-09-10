@@ -1,3 +1,4 @@
+import type DataLoader from "dataloader";
 import type { ObjectId, WithId } from "mongodb";
 
 export interface Sector {
@@ -309,3 +310,7 @@ export interface Portfolio {
 }
 
 export type PortfolioWithId = WithId<Portfolio>;
+
+export interface DataLoaders {
+  companiesLoader: DataLoader<ObjectId, Company>;
+}

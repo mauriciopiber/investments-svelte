@@ -36,6 +36,7 @@ export class SegmentRepository extends MongoRepository<Segment> {
   }
 
   async queryAll(filters: Filter<Segment>): Promise<SegmentWithId[]> {
+    console.log("segments - query all", filters);
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Segment Repository");
@@ -47,6 +48,7 @@ export class SegmentRepository extends MongoRepository<Segment> {
   }
 
   async queryOne(filters: Filter<Segment>): Promise<SegmentWithId | null> {
+    console.log("segments - query one", filters);
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Sector Repository");

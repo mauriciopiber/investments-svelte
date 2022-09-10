@@ -72,6 +72,7 @@ importers:
       '@finsweet/tsconfig': ^1.1.0
       '@typescript-eslint/eslint-plugin': ^5.36.2
       '@typescript-eslint/parser': ^5.36.2
+      dataloader: ^2.1.0
       eslint: ^8.23.0
       eslint-config-prettier: ^8.5.0
       eslint-plugin-prettier: ^4.2.1
@@ -79,6 +80,7 @@ importers:
       prettier: ^2.7.1
       typescript: ^4.8.3
     dependencies:
+      dataloader: 2.1.0
       mongodb: 4.9.1
     devDependencies:
       '@finsweet/eslint-config': 1.1.5_qpug5r755k5tnnvrq5rhaddnnq
@@ -106,6 +108,7 @@ importers:
       apollo-server-express: ^3.10.2
       cors: ^2.8.5
       cross-env: ^7.0.3
+      dataloader: ^2.1.0
       dotenv: ^16.0.2
       esbuild: ^0.15.5
       eslint: ^8.23.0
@@ -128,6 +131,7 @@ importers:
       apollo-server-express: 3.10.2_ikriz6xqtzcvohrhb2pcry7o6y
       cors: 2.8.5
       cross-env: 7.0.3
+      dataloader: 2.1.0
       dotenv: 16.0.2
       express: 4.18.1
       graphql: 16.6.0
@@ -1974,6 +1978,10 @@ packages:
     resolution: {integrity: sha512-Vr3mLBA8qWmcuschSLAOogKgQ/Jwxulv3RNE4FXnYWRGujzrRWQI4m12fQqRkwX06C0KanhLr4hK+GydchZsaA==}
     engines: {node: '>= 12'}
     dev: true
+
+  /dataloader/2.1.0:
+    resolution: {integrity: sha512-qTcEYLen3r7ojZNgVUaRggOI+KM7jrKxXeSHhogh/TWxYMeONEMqY+hmkobiYQozsGIyg9OYVzO4ZIfoB4I0pQ==}
+    dev: false
 
   /dayjs/1.11.5:
     resolution: {integrity: sha512-CAdX5Q3YW3Gclyo5Vpqkgpj8fSdLQcRuzfX6mC6Phy0nfJ0eGYOeS7m4mt2plDWLAtA4TqTakvbboHvUxfe4iA==}

@@ -43,7 +43,22 @@ export class CompanyRepository extends MongoRepository<Company> {
     await this.collection.updateOne({ _id }, { $set: values });
   }
 
+  async queryAllByIds(ids: readonly ObjectId[]): Promise<CompanyWithId[]> {
+    console.log("company - query by ids", ids);
+    await this.init();
+    if (!this.collection) {
+      throw new Error("Missing connection for Company Repository");
+    }
+    return await this.collection
+      .find({
+        _id: { $in: ids },
+      })
+      .sort({ "income.averageYield": -1 })
+      .toArray();
+  }
+
   async queryAll(filters: Filter<Company>): Promise<CompanyWithId[]> {
+    console.log("company - query all", filters);
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Company Repository");
@@ -55,6 +70,7 @@ export class CompanyRepository extends MongoRepository<Company> {
   }
 
   async queryOne(filters: Filter<Company>): Promise<WithId<Company> | null> {
+    console.log("company - query one", filters);
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Sector Repository");
