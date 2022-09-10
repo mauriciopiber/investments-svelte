@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Grid, Row, Column, Checkbox, Tile, TileGroup } from 'carbon-components-svelte';
+  import { Grid, Row, Column, Checkbox, Tile } from 'carbon-components-svelte';
 </script>
 
 <h1>Investments</h1>

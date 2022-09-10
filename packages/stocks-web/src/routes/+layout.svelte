@@ -10,12 +10,7 @@
     SideNavMenu,
     SideNavMenuItem,
     SideNavLink,
-    SideNavDivider,
-    SkipToContent,
-    Content,
-    Grid,
-    Row,
-    Column
+    Content
   } from 'carbon-components-svelte';
   let isSideNavOpen = true;
 

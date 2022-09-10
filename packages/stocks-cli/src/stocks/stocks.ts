@@ -1,6 +1,6 @@
 import { loadStatusInvestCSV, parseStockPage } from "src/utils/statusinvest";
-import type { StockFilters, PartialStock } from "src/types";
-import type { Stock } from "@pibernetwork/stocks-model/src/types";
+import type { StockFilters } from "src/types";
+import type { Stock, PartialStock } from "@pibernetwork/stocks-model/src/types";
 import { filterStocks } from "./filters";
 import log from "./../utils/log";
 

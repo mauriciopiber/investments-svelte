@@ -1,6 +1,7 @@
 import { writeSpreadsheet } from "src/utils/spreadsheet";
-import type { GoalReport, StockFilter, SheetHeaders, Stock } from "src/types";
+import type { GoalReport, StockFilter, SheetHeaders } from "src/types";
 import { loadStocks } from "src/stocks/stocks";
+import type { Stock } from "@pibernetwork/stocks-model/src/types";
 
 export async function dividendsByGoal(
   filters: StockFilter[],

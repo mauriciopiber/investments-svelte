@@ -3,17 +3,17 @@ import type { UserConfig } from 'vite';
 import path from 'path';
 
 const config: UserConfig = {
-	resolve: {
-		alias: {
-			'@': path.resolve(__dirname, './src')
-		}
-	},
-	server: {
-		fs: {
-			allow: ['packages', 'global']
-		}
-	},
-	plugins: [sveltekit()]
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src')
+    }
+  },
+  server: {
+    fs: {
+      allow: ['packages', 'global']
+    }
+  },
+  plugins: [sveltekit()]
 };
 
 export default config;

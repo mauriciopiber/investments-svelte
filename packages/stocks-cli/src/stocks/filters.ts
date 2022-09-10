@@ -1,4 +1,5 @@
-import type { StockFilter, StockIndicatorsKeys, PartialStock } from "src/types";
+import type { PartialStock } from "@pibernetwork/stocks-model/src/types";
+import type { StockFilter, StockIndicatorsKeys } from "src/types";
 
 function applyMaxFilter(
   stocks: PartialStock[],

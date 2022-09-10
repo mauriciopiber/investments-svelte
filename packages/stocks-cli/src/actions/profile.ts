@@ -1,7 +1,7 @@
 import { parseRate } from "$utils/parseRate";
 import dayjs from "dayjs";
 
-import { writeSpreadsheet } from "src/utils/spreadsheet";
+import { getRows, writeSpreadsheet } from "src/utils/spreadsheet";
 import { loadWalletStocks } from "src/stocks/stocks";
 import type { SheetHeaders, ProfileReport, WalletAsset } from "src/types";
 

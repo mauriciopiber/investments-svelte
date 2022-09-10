@@ -1,7 +1,7 @@
 // Connection URL
-import { MongoClient } from "mongodb";
+import { MongoClient } from 'mongodb';
 
-const url = "mongodb://localhost:27017";
+const url = 'mongodb://localhost:27017';
 
 type GetInstance = () => Promise<MongoClient>;
 
@@ -25,7 +25,7 @@ function singleMongoDb(): MongoDbSingleton {
   }
 
   return {
-    getInstance,
+    getInstance
   };
 }
 

@@ -1,6 +1,7 @@
 import { writeSpreadsheet } from "$utils/spreadsheet";
-import type { SheetHeaders, SheetRow, Stock } from "src/types";
-import mongoDbConnection from "../utils/mongoDbConnection";
+import type { Stock } from "@pibernetwork/stocks-model/src/types";
+import type { SheetHeaders, SheetRow } from "src/types";
+import mongoDbConnection from "@pibernetwork/stocks-model/src/utils/mongoDbConnection";
 
 type SyncWorkspaceReport = Pick<Stock, "ticket">;
 

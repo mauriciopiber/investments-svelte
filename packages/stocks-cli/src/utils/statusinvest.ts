@@ -1,10 +1,6 @@
 import type { StatusInvestDividends, StockPageData } from "src/types";
 
-import type {
-  StockDividends,
-  StockFilter,
-  StockFilters,
-} from "src/types/stock";
+import type { StockDividends, StockFilters } from "src/types/stock";
 import { decodeHTML } from "./decodeHTML";
 
 import { STATUS_INVEST_URL } from "../constants";
@@ -47,8 +43,8 @@ import {
   // LIQUIDEZ_MEDIA_DIARIA,
   LPA,
 } from "../constants";
-import type { PartialStock } from "src/types/stock";
-import type { Stock } from "@pibernetwork/stocks-model/src/types";
+
+import type { Stock, PartialStock } from "@pibernetwork/stocks-model/src/types";
 import { filterStocks } from "src/stocks/filters";
 import log from "./../utils/log";
 

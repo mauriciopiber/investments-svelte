@@ -1,7 +1,8 @@
-import type { StockFilter, SheetHeaders, StockMapItem, Stock } from "src/types";
+import type { StockFilter, SheetHeaders, StockMapItem } from "src/types";
 import { writeSpreadsheet } from "src/utils/spreadsheet";
 import { splitAndGroupDividends } from "src/stocks/sectors";
 import { loadStocks } from "src/stocks/stocks";
+import type { Stock } from "@pibernetwork/stocks-model/src/types";
 
 export async function dividendsBySector(
   filters: StockFilter[],

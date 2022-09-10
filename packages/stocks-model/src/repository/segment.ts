@@ -1,10 +1,4 @@
-import type {
-  Collection,
-  WithId,
-  MongoClient,
-  Filter,
-  ObjectId,
-} from "mongodb";
+import type { Collection, MongoClient, Filter, ObjectId } from "mongodb";
 import type { SegmentWithId, Segment } from "../types";
 import mongoDbConnection from "../utils/mongoDbConnection";
 

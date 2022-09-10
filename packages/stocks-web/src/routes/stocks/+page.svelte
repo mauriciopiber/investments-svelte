@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { Breadcrumb, BreadcrumbItem, Tile, DataTable } from 'carbon-components-svelte';
+  import { Breadcrumb, BreadcrumbItem, Tile } from 'carbon-components-svelte';
 
   import Link from '@/components/Layout/Link.svelte';
   import Income from '@/components/Stocks/Income.svelte';
   import type { SectorQuery } from '@pibernetwork/stocks-model/src/types';
-  import Company from '@/components/Stocks/Company.svelte';
 
   export let data: { sectors: SectorQuery[] };
 
@@ -72,9 +71,6 @@
 </Tile>
 
 <style>
-  .page {
-    padding: 1rem;
-  }
   .section {
     padding: 0.5rem 1rem;
   }
@@ -93,8 +89,5 @@
 
   .ticket-item {
     padding: 0.5rem 10rem;
-  }
-  .link {
-    padding: 1rem;
   }
 </style>
