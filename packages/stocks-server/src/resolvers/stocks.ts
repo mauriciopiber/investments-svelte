@@ -20,23 +20,26 @@ const ticketRepository = new TicketRepository();
 export default {
   Query: {
     async status() {
-      try {
-        const sector = await sectorRepository.queryOne({});
+      return {
+        message: `Connected. No data found.`,
+      };
+      // try {
+      //   const sector = await sectorRepository.queryOne({});
 
-        if (sector) {
-          return {
-            message: `Connected. Sector ${sector._id} found.`,
-          };
-        }
+      //   if (sector) {
+      //     return {
+      //       message: `Connected. Sector ${sector._id} found.`,
+      //     };
+      //   }
 
-        return {
-          message: `Connected. No data found.`,
-        };
-      } catch (e) {
-        return {
-          message: `Error: ${JSON.stringify(e)}`,
-        };
-      }
+      //   return {
+      //     message: `Connected. No data found.`,
+      //   };
+      // } catch (e) {
+      //   return {
+      //     message: `Error: ${JSON.stringify(e)}`,
+      //   };
+      // }
     },
     async sector(_: unknown, args: { slug: string }) {
       return await sectorRepository.queryOne({ slug: { $eq: args.slug } });
