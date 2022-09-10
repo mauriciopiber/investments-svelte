@@ -8,14 +8,10 @@ importers:
     devDependencies:
       '@changesets/cli': 2.24.4
 
-  global/types:
-    specifiers: {}
-
   packages/stocks-cli:
     specifiers:
       '@finsweet/eslint-config': ^1.1.5
       '@finsweet/tsconfig': ^1.1.0
-      '@global/types': workspace:*
       '@google-cloud/local-auth': ^2.1.0
       '@pibernetwork/stocks-model': workspace:*
       '@types/google-spreadsheet': ^3.3.0
@@ -44,7 +40,6 @@ importers:
     dependencies:
       '@finsweet/eslint-config': 1.1.5_3hngbf2h6q6d4hlyzwqkqzewo4
       '@finsweet/tsconfig': 1.1.0
-      '@global/types': link:../../global/types
       '@google-cloud/local-auth': 2.1.0
       '@pibernetwork/stocks-model': link:../stocks-model
       '@types/google-spreadsheet': 3.3.0
@@ -153,7 +148,6 @@ importers:
 
   packages/stocks-web:
     specifiers:
-      '@global/types': workspace:*
       '@pibernetwork/stocks-model': workspace:*
       '@sveltejs/adapter-auto': next
       '@sveltejs/kit': 1.0.0-next.480
@@ -176,7 +170,6 @@ importers:
     dependencies:
       mongodb: 4.9.1
     devDependencies:
-      '@global/types': link:../../global/types
       '@pibernetwork/stocks-model': link:../stocks-model
       '@sveltejs/adapter-auto': 1.0.0-next.72
       '@sveltejs/kit': 1.0.0-next.480_svelte@3.50.1+vite@3.1.0
