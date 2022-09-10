@@ -15,13 +15,13 @@
   let isSideNavOpen = true;
 </script>
 
-<Header company="IBM" platformName="Carbon Svelte" bind:isSideNavOpen>
+<Header company="PBR" platformName="Stocks" bind:isSideNavOpen>
   <!-- <svelte:fragment slot="skip-to-content">
     <SkipToContent />
   </svelte:fragment> -->
   <HeaderNav>
     <HeaderNavItem href="/" text="Home" />
-    <HeaderNavItem href="/" text="Wallet" />
+    <HeaderNavItem href="/wallet" text="Wallet" />
     <HeaderNavMenu text="Stocks">
       <HeaderNavItem href="/stocks" text="Stocks" />
       <HeaderNavItem href="/stocks/sectors" text="Sectors" />
@@ -36,7 +36,7 @@
 <SideNav bind:isOpen={isSideNavOpen}>
   <SideNavItems>
     <SideNavLink href="/" text="Home" />
-    <SideNavLink href="/" text="Wallet" />
+    <SideNavLink href="/wallet" text="Wallet" />
     <SideNavMenu text="Stocks">
       <SideNavMenuItem href="/stocks" text="Stocks" />
       <SideNavMenuItem href="/stocks/sectors" text="Sectors" />
