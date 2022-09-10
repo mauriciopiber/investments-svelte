@@ -1,5 +1,6 @@
 {
   "version": 2,
   "name": "stocks-server",
+  "builds": { "src": "dist/*.js", "use": "@vercel/node" },
   "routes": [{ "src": "/(.*)", "dest": "/dist/index.js" }]
 }
