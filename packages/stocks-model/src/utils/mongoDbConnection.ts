@@ -5,6 +5,12 @@ const url = "mongodb://localhost:27017";
 
 type GetInstance = () => Promise<MongoClient>;
 
+const config = {
+  connectTimeoutMS: 5000,
+  socketTimeoutMS: 5000,
+  useUnifiedTopology: true,
+};
+
 interface MongoDbSingleton {
   getInstance: GetInstance;
 }
@@ -17,7 +23,7 @@ function singleMongoDb(): MongoDbSingleton {
       return connectionInstance;
     }
 
-    const client = new MongoClient(url);
+    const client = new MongoClient(url, config);
     await client.connect();
 
     connectionInstance = client;

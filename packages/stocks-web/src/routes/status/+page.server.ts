@@ -2,9 +2,8 @@
 export async function load() {
   const queryStocks = `
 query {
-  sectors {
-    name
-    slug
+  status {
+    message
   }
 }
   `;
@@ -31,14 +30,14 @@ query {
       };
     }
 
-    const { sectors } = data;
+    const { status } = data;
+    const { message } = status;
 
     return {
       title: 'Status',
-      status: `Found ${sectors.length} sectors`
+      status: `Found Service with message: ${message}`
     };
   } catch (e) {
-    console.log(e);
     return {
       title: 'Status',
       status: `Fetch Error ${JSON.stringify(e)}`
