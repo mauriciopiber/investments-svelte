@@ -7,9 +7,11 @@ import type {
   SubSector,
 } from "@pibernetwork/stocks-model/src/types";
 
-const stockRepository = new StockRepository();
-const sectorRepository = new SectorRepository();
-const subSectorRepository = new SubSectorRepository();
+const stockRepository = new StockRepository(process.env.DATABASE_CONNECTION);
+const sectorRepository = new SectorRepository(process.env.DATABASE_CONNECTION);
+const subSectorRepository = new SubSectorRepository(
+  process.env.DATABASE_CONNECTION
+);
 
 async function isInsertedSubSector(
   sector: string,

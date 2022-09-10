@@ -6,21 +6,14 @@ import type {
   ObjectId,
 } from "mongodb";
 import type { Company, CompanyWithId } from "../types";
-import mongoDbConnection from "../utils/mongoDbConnection";
 
-export class CompanyRepository {
+import { MongoRepository } from "./../abstracts/repository";
+
+export class CompanyRepository extends MongoRepository<Company> {
   collection: Collection<Company> | null = null;
   client: MongoClient | null = null;
 
-  async init() {
-    if (!this.collection) {
-      const { getInstance } = mongoDbConnection;
-      this.client = await getInstance();
-      const db = this.client.db("investments");
-      const collection = db.collection<Company>("companies");
-      this.collection = collection;
-    }
-  }
+  collectionName = "companies";
 
   async insertMany(companies: Company[]) {
     await this.init();

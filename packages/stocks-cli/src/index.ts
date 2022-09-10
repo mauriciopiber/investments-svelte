@@ -5,7 +5,6 @@ import { dividendsBySector } from "./actions/dividends-by-sector";
 import { updateProfile } from "./actions/profile";
 import { parseCommandFilters } from "./commands/filters";
 
-import { syncWorksheet } from "./actions/sync-worksheet";
 import log from "./utils/log";
 import { syncCompanies } from "./actions/sync-companies";
 import { syncSectors } from "./actions/sync-sector";

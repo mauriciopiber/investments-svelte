@@ -10,11 +10,21 @@ import type {
 } from "@pibernetwork/stocks-model/src/types";
 
 export async function syncIncome() {
-  const segmentRepository = new SegmentRepository();
-  const subSectorRepository = new SubSectorRepository();
-  const sectorRepository = new SectorRepository();
-  const companyRepository = new CompanyRepository();
-  const ticketRepository = new TicketRepository();
+  const segmentRepository = new SegmentRepository(
+    process.env.DATABASE_CONNECTION
+  );
+  const subSectorRepository = new SubSectorRepository(
+    process.env.DATABASE_CONNECTION
+  );
+  const sectorRepository = new SectorRepository(
+    process.env.DATABASE_CONNECTION
+  );
+  const companyRepository = new CompanyRepository(
+    process.env.DATABASE_CONNECTION
+  );
+  const ticketRepository = new TicketRepository(
+    process.env.DATABASE_CONNECTION
+  );
 
   const sectors = await sectorRepository.queryAll({});
 

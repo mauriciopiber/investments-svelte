@@ -1,20 +1,12 @@
 import type { Collection, ObjectId, MongoClient, Filter } from "mongodb";
-import mongoDbConnection from "../utils/mongoDbConnection";
 import type { Sector, SectorWithId } from "./../types";
 
-export class SectorRepository {
+import { MongoRepository } from "./../abstracts/repository";
+
+export class SectorRepository extends MongoRepository<Sector> {
   collection: Collection<Sector> | null = null;
   client: MongoClient | null = null;
-
-  async init() {
-    if (!this.collection) {
-      const { getInstance } = mongoDbConnection;
-      this.client = await getInstance();
-      const db = this.client.db("investments");
-      const collection = db.collection<Sector>("sectors");
-      this.collection = collection;
-    }
-  }
+  collectionName = "sectors";
 
   async insertMany(sectors: Sector[]) {
     await this.init();

@@ -1,20 +1,11 @@
 import type { Collection, MongoClient, Filter, ObjectId } from "mongodb";
 import type { SegmentWithId, Segment } from "../types";
-import mongoDbConnection from "../utils/mongoDbConnection";
+import { MongoRepository } from "./../abstracts/repository";
 
-export class SegmentRepository {
+export class SegmentRepository extends MongoRepository<Segment> {
   collection: Collection<Segment> | null = null;
   client: MongoClient | null = null;
-
-  async init() {
-    if (!this.collection) {
-      const { getInstance } = mongoDbConnection;
-      this.client = await getInstance();
-      const db = this.client.db("investments");
-      const collection = db.collection<Segment>("segments");
-      this.collection = collection;
-    }
-  }
+  collectionName = "segments";
 
   async insertOne(segment: Segment) {
     await this.init();

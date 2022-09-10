@@ -10,9 +10,11 @@ import type {
 import slug from "slug";
 import { calculateDividendsV2 } from "src/stocks/dividends";
 
-const stockRepository = new StockRepository();
-const companyRepository = new CompanyRepository();
-const ticketRepository = new TicketRepository();
+const stockRepository = new StockRepository(process.env.DATABASE_CONNECTION);
+const companyRepository = new CompanyRepository(
+  process.env.DATABASE_CONNECTION
+);
+const ticketRepository = new TicketRepository(process.env.DATABASE_CONNECTION);
 
 export async function syncTickets(rangeInYears: number) {
   const stocks: StockWithId[] = await stockRepository.queryAll({});

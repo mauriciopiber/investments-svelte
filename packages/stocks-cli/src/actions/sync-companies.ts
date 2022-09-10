@@ -6,10 +6,16 @@ import { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sect
 import type { StockWithId } from "@pibernetwork/stocks-model/src/types";
 import { StockRepository } from "@pibernetwork/stocks-model/src/repository/stock";
 
-const segmentRepository = new SegmentRepository();
-const subSectorRepository = new SubSectorRepository();
-const sectorRepository = new SectorRepository();
-const companyRepository = new CompanyRepository();
+const segmentRepository = new SegmentRepository(
+  process.env.DATABASE_CONNECTION
+);
+const subSectorRepository = new SubSectorRepository(
+  process.env.DATABASE_CONNECTION
+);
+const sectorRepository = new SectorRepository(process.env.DATABASE_CONNECTION);
+const companyRepository = new CompanyRepository(
+  process.env.DATABASE_CONNECTION
+);
 
 async function isInsertedCompany(name: string): Promise<boolean> {
   const companyDb = await companyRepository.queryOne({
@@ -20,7 +26,7 @@ async function isInsertedCompany(name: string): Promise<boolean> {
 }
 
 export async function syncCompanies() {
-  const stockRepository = new StockRepository();
+  const stockRepository = new StockRepository(process.env.DATABASE_CONNECTION);
 
   const stocks: StockWithId[] = await stockRepository.queryAll({});
 

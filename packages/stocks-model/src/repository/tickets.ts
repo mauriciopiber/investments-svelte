@@ -1,20 +1,11 @@
 import type { Collection, MongoClient, Filter } from "mongodb";
-import mongoDbConnection from "../utils/mongoDbConnection";
 import type { Ticket, TicketWithId } from "./../types";
+import { MongoRepository } from "./../abstracts/repository";
 
-export class TicketRepository {
+export class TicketRepository extends MongoRepository<Ticket> {
   collection: Collection<Ticket> | null = null;
   client: MongoClient | null = null;
-
-  async init() {
-    if (!this.collection) {
-      const { getInstance } = mongoDbConnection;
-      this.client = await getInstance();
-      const db = this.client.db("investments");
-      const collection = db.collection<Ticket>("tickets");
-      this.collection = collection;
-    }
-  }
+  collectionName = "tickets";
 
   async insertMany(segments: Ticket[]) {
     await this.init();

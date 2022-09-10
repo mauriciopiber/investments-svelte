@@ -1,20 +1,12 @@
 import type { Collection, ObjectId, MongoClient, Filter } from "mongodb";
-import mongoDbConnection from "../utils/mongoDbConnection";
 import type { Stock, StockWithId } from "./../types";
+import { MongoRepository } from "./../abstracts/repository";
 
-export class StockRepository {
+export class StockRepository extends MongoRepository<Stock> {
   collection: Collection<Stock> | null = null;
   client: MongoClient | null = null;
 
-  async init() {
-    if (!this.collection) {
-      const { getInstance } = mongoDbConnection;
-      this.client = await getInstance();
-      const db = this.client.db("investments");
-      const collection = db.collection<Stock>("stocks");
-      this.collection = collection;
-    }
-  }
+  collectionName = "stocks";
 
   async insertMany(sectors: Stock[]) {
     await this.init();

@@ -1,20 +1,12 @@
 import type { Collection, ObjectId, MongoClient, Filter } from "mongodb";
-import mongoDbConnection from "../utils/mongoDbConnection";
-import type { SubSector, SubSectorWithId } from "./../types";
 
-export class SubSectorRepository {
+import type { SubSector, SubSectorWithId } from "./../types";
+import { MongoRepository } from "./../abstracts/repository";
+
+export class SubSectorRepository extends MongoRepository<SubSector> {
   collection: Collection<SubSector> | null = null;
   client: MongoClient | null = null;
-
-  async init() {
-    if (!this.collection) {
-      const { getInstance } = mongoDbConnection;
-      this.client = await getInstance();
-      const db = this.client.db("investments");
-      const collection = db.collection<SubSector>("subsectors");
-      this.collection = collection;
-    }
-  }
+  collectionName = "subsectors";
 
   async insertOne(subSector: SubSector) {
     await this.init();

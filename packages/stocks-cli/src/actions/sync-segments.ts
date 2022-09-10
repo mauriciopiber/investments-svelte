@@ -5,9 +5,13 @@ import { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sect
 import type { StockWithId } from "@pibernetwork/stocks-model/src/types";
 import { StockRepository } from "@pibernetwork/stocks-model/src/repository/stock";
 
-const segmentRepository = new SegmentRepository();
-const subSectorRepository = new SubSectorRepository();
-const sectorRepository = new SectorRepository();
+const segmentRepository = new SegmentRepository(
+  process.env.DATABASE_CONNECTION
+);
+const subSectorRepository = new SubSectorRepository(
+  process.env.DATABASE_CONNECTION
+);
+const sectorRepository = new SectorRepository(process.env.DATABASE_CONNECTION);
 
 async function isInsertedSegment(
   sector: string,
@@ -40,7 +44,7 @@ async function isInsertedSegment(
 }
 
 export async function syncSegments() {
-  const stockRepository = new StockRepository();
+  const stockRepository = new StockRepository(process.env.DATABASE_CONNECTION);
 
   const stocks: StockWithId[] = await stockRepository.queryAll({});
 

@@ -6,7 +6,7 @@ import { StockRepository } from "@pibernetwork/stocks-model/src/repository/stock
 export async function syncStocks(filters: StockFilters) {
   const stocks: Stock[] = await loadStocks(filters);
 
-  const stockRepository = new StockRepository();
+  const stockRepository = new StockRepository(process.env.DATABASE_CONNECTION);
 
   await stockRepository.insertMany(stocks);
 

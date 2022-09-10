@@ -3,8 +3,8 @@ import { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sect
 import { StockRepository } from "@pibernetwork/stocks-model/src/repository/stock";
 import type { StockWithId } from "@pibernetwork/stocks-model/src/types";
 
-const stockRepository = new StockRepository();
-const sectorRepository = new SectorRepository();
+const stockRepository = new StockRepository(process.env.DATABASE_CONNECTION);
+const sectorRepository = new SectorRepository(process.env.DATABASE_CONNECTION);
 
 async function isInsertedSector(sector: string): Promise<boolean> {
   const sectorDb = await sectorRepository.queryOne({
