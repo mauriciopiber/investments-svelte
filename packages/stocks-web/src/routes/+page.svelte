@@ -2,7 +2,7 @@
   import { Grid, Row, Column, Checkbox, Tile } from 'carbon-components-svelte';
 </script>
 
-<h1>Investments</h1>
+<h1>Investments {`:)`}</h1>
 
 <Tile>
   <Grid>
