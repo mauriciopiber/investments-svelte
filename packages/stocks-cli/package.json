@@ -1,11 +1,10 @@
 {
   "name": "@pibernetwork/stocks-cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "dependencies": {
     "@finsweet/eslint-config": "^1.1.5",
     "@finsweet/tsconfig": "^1.1.0",
-    "@global/types": "workspace:*",
     "@google-cloud/local-auth": "^2.1.0",
     "@pibernetwork/stocks-model": "workspace:*",
     "@types/google-spreadsheet": "^3.3.0",

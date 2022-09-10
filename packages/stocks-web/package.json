@@ -1,6 +1,6 @@
 {
   "name": "@pibernetwork/stocks-web",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "dev": "vite dev",
@@ -12,7 +12,6 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
-    "@global/types": "workspace:*",
     "@pibernetwork/stocks-model": "workspace:*",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "1.0.0-next.480",
