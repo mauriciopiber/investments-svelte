@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
+    "rootDir": ".",
+    "baseUrl": "./",
     "target": "es2018",
     "lib": ["es2018", "ESNext"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "module": "commonjs",
-    "rootDir": "src",
+
     "resolveJsonModule": true,
     "allowJs": true,
     "outDir": "build",

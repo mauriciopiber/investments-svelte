@@ -51,6 +51,7 @@ export default {
       }: { limit: number; offset: number; sort: { key: string; order: number } }
     ) {
       const { key, order } = sort;
+      // eslint-disable-next-line no-console
       console.log(limit, offset, key, order);
       return await companyRepository.queryAll({});
     },
