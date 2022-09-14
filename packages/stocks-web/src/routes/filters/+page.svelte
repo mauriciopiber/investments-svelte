@@ -1,32 +1,26 @@
 <script lang="ts">
   import type { Filter } from '@pibernetwork/stocks-model/src/types';
-  import { Grid, Row, Column, Tile } from 'carbon-components-svelte';
+  import MultiRangeSlider from '@/components/Form/MultiRangeSlider.svelte';
+
   export let data: { filters: Filter[] };
   const { filters } = data;
 </script>
 
-<Grid>
+<div class="grid grid-cols-4">
   {#each filters as filter}
-    <Row>
-      <Column>
-        <Tile>
-          <Row>
-            <Column>
-              {filter.key}
-            </Column>
-          </Row>
-          <Row>
-            <Column>{filter.range.min}</Column>
-            <Column>{filter.range.max}</Column>
-          </Row>
-        </Tile>
-      </Column>
-    </Row>
+    <div class="m-4 border-2 border-black border-solid rounded-md">
+      <div>
+        <div>
+          <div class="m-2 text-sm overflow-hidden text-center">
+            {filter.key}
+          </div>
+        </div>
+        <div>
+          <MultiRangeSlider max={filter.range.max} min={filter.range.min} />
+          <!-- <div>{filter.range.min}</div>
+          <div>{filter.range.max}</div> -->
+        </div>
+      </div>
+    </div>
   {/each}
-</Grid>
-
-<style>
-  :global(.bx--tile) {
-    border: 1px solid black;
-  }
-</style>
+</div>

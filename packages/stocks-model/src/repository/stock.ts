@@ -113,17 +113,23 @@ export class StockRepository extends MongoRepository<StockSource> {
     return filters;
   }
 
+  excludeStocks = {
+    $match: {
+      pessoaFisica: { $gt: 1000 },
+      liquidezMediaDiaria: { $gt: 1000 * 100 },
+      patrimonioLiquido: { $ne: null, $gt: 0 },
+      currentPrice: { $ne: null, $gt: 0 },
+      valorDeFirma: { $ne: null, $gt: 0 },
+      valorDeMercado: { $ne: null, $gt: 0 },
+      freeFloat: { $ne: null, $gt: 0, $lte: 100 },
+    },
+  };
+
   async getRange(key: StockFilterTypes) {
     const orderByMin = await this.queryAggregate([
+      this.excludeStocks,
       {
         $match: {
-          pessoaFisica: { $gt: 1000 },
-          liquidezMediaDiaria: { $gt: 1000 * 100 },
-          patrimonioLiquido: { $ne: null, $gt: 0 },
-          currentPrice: { $ne: null, $gt: 0 },
-          valorDeFirma: { $ne: null, $gt: 0 },
-          valorDeMercado: { $ne: null, $gt: 0 },
-          freeFloat: { $ne: null, $gt: 0 },
           [key]: { $ne: null },
         },
       },
@@ -136,15 +142,10 @@ export class StockRepository extends MongoRepository<StockSource> {
     ]);
 
     const orderByMax = await this.queryAggregate([
+      this.excludeStocks,
       {
         $match: {
-          pessoaFisica: { $gt: 1000 },
-          liquidezMediaDiaria: { $gt: 1000 * 100 },
-          patrimonioLiquido: { $ne: null, $gt: 0 },
-          currentPrice: { $ne: null, $gt: 0 },
-          valorDeFirma: { $ne: null, $gt: 0 },
-          valorDeMercado: { $ne: null, $gt: 0 },
-          freeFloat: { $ne: null, $gt: 0 },
+          [key]: { $ne: null },
         },
       },
       {

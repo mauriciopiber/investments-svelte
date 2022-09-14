@@ -1,24 +1,10 @@
 <script>
-  import 'carbon-components-svelte/css/white.css';
-  import {
-    Header,
-    HeaderNav,
-    HeaderNavItem,
-    HeaderNavMenu,
-    SideNav,
-    SideNavItems,
-    SideNavMenu,
-    SideNavMenuItem,
-    SideNavLink,
-    Content
-  } from 'carbon-components-svelte';
-  let isSideNavOpen = true;
+  import '../app.css';
 </script>
 
+<!--
 <Header company="PBR" platformName="Stocks" bind:isSideNavOpen>
-  <!-- <svelte:fragment slot="skip-to-content">
-    <SkipToContent />
-  </svelte:fragment> -->
+
   <HeaderNav>
     <HeaderNavItem href="/" text="Home" />
     <HeaderNavItem href="/portfolio" text="Portfolio" />
@@ -33,9 +19,9 @@
     <HeaderNavItem href="/status" text="Status" />
     <HeaderNavItem href="/filters" text="Filters" />
   </HeaderNav>
-</Header>
+</Header> -->
 
-<SideNav bind:isOpen={isSideNavOpen}>
+<!-- <SideNav bind:isOpen={isSideNavOpen}>
   <SideNavItems>
     <SideNavLink href="/" text="Home" />
     <SideNavLink href="/portfolio" text="Portfolio" />
@@ -50,8 +36,8 @@
     <SideNavLink href="/status" text="Status" />
     <SideNavLink href="/filters" text="Filters" />
   </SideNavItems>
-</SideNav>
+</SideNav> -->
 
-<Content>
-  <slot />
-</Content>
+<!-- <Content>
+</Content> -->
+<slot />
