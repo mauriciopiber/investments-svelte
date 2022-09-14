@@ -32,13 +32,10 @@ query {
             name
             slug
             income {
-
               range {
                 averageIncome
                 averageYield
-
               }
-
             }
           }
         }

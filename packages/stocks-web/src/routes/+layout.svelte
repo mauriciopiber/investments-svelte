@@ -31,6 +31,7 @@
       <HeaderNavItem href="/stocks/tickets" text="Tickets" />
     </HeaderNavMenu>
     <HeaderNavItem href="/status" text="Status" />
+    <HeaderNavItem href="/filters" text="Filters" />
   </HeaderNav>
 </Header>
 
@@ -47,6 +48,7 @@
       <SideNavMenuItem href="/stocks/tickets" text="Tickets" />
     </SideNavMenu>
     <SideNavLink href="/status" text="Status" />
+    <SideNavLink href="/filters" text="Filters" />
   </SideNavItems>
 </SideNav>
 

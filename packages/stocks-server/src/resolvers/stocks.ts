@@ -4,6 +4,7 @@ import { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sect
 import { CompanyRepository } from "@pibernetwork/stocks-model/src/repository/company";
 import { TicketRepository } from "@pibernetwork/stocks-model/src/repository/tickets";
 import { PortfolioRepository } from "@pibernetwork/stocks-model/src/repository/portfolio";
+import { StockRepository } from "@pibernetwork/stocks-model/src/repository/stock";
 import {
   SectorWithId,
   SegmentWithId,
@@ -29,6 +30,8 @@ const ticketRepository = new TicketRepository(process.env.DATABASE_CONNECTION);
 const portfolioRepository = new PortfolioRepository(
   process.env.DATABASE_CONNECTION
 );
+
+const stockRepository = new StockRepository(process.env.DATABASE_CONNECTION);
 
 const dataLoaders = new DataloaderService(
   companyRepository,
@@ -56,6 +59,9 @@ export default {
       const sectors = await sectorRepository.queryAll({});
 
       return sectors;
+    },
+    async filters() {
+      return await stockRepository.getFilterRanges();
     },
     async subSector(_: unknown, args: { slug: string }) {
       return await subSectorRepository.queryOne({ slug: { $eq: args.slug } });

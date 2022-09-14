@@ -1,4 +1,3 @@
-import type DataLoader from "dataloader";
 import type { ObjectId, WithId } from "mongodb";
 
 export interface Sector {
@@ -314,3 +313,151 @@ export interface PortfolioQuery extends Portfolio {
 }
 
 export type PortfolioWithId = WithId<Portfolio>;
+
+type NullableNumber = number | null;
+
+export interface StockSource {
+  ticket: string;
+  url: string;
+  currentPrice?: number | null;
+  /**
+   * Stock company
+   */
+  company?: string;
+  /**
+   * Stock company
+   */
+  code?: string;
+  /**
+   * Stock company
+   */
+  name?: string;
+  /**
+   * Stock sector
+   */
+  sector?: string;
+  /**
+   * Stock subsector
+   */
+  subSector?: string;
+  /**
+   * Stock segment
+   */
+  segment?: string;
+
+  minMonth?: NullableNumber;
+  maxMonth?: NullableNumber;
+  minYear?: NullableNumber;
+  maxYear?: NullableNumber;
+
+  tagAlong?: NullableNumber;
+
+  // Média ultimos 30 dias
+  liquidezMediaDiaria?: NullableNumber;
+
+  participacaoIbov?: NullableNumber;
+
+  // valuation
+  dividendsYield?: NullableNumber;
+
+  precoAtualPorLucroPorAcao?: NullableNumber;
+
+  pegRatio?: NullableNumber;
+
+  precoAtualPorValorPatrimonialPorAcao?: NullableNumber;
+
+  valorDeFirmaPorEBITDA?: NullableNumber;
+
+  valorDeFirmaPorEBIT?: NullableNumber;
+
+  precoAtualPorEBITDA?: NullableNumber;
+
+  precoAtualPorEBIT?: NullableNumber;
+
+  patrimonioLiquidoPorNumeroDeAcoes?: NullableNumber;
+
+  precoAtualPorAtivos?: NullableNumber;
+
+  lucroLiquidoPorNumeroDeAcoes?: NullableNumber;
+
+  precoAtualPorReceitaLiquidaPorAcao?: NullableNumber;
+
+  precoAtualPorAtivoCirculanteMenosPassivoCirculante?: NullableNumber;
+
+  precoAtualPorAtivosCirculanesLiquidosPorAcao?: NullableNumber;
+
+  dividaLiquidaPorPatrimonioLiquido?: NullableNumber;
+
+  dividaLiquidaPorEBITDA?: NullableNumber;
+
+  dividaLiquidaPorEBIT?: NullableNumber;
+
+  patrimonioLiquidoPorAtivos?: NullableNumber;
+
+  passivosPorAtivos?: NullableNumber;
+
+  ativoCirculantePorPassivoCirculante?: NullableNumber;
+
+  lucroBrutoPorReceitaLiquida?: NullableNumber;
+
+  EBITDAPorReceitaLiquida?: NullableNumber;
+
+  EBITPorReceitaLiquida?: NullableNumber;
+
+  lucroLiquidoPorReceitaLiquida?: NullableNumber;
+
+  lucroLiquidoPorPatrimonioLiquido?: NullableNumber;
+
+  lucroLiquidoPorAtivoTotal?: NullableNumber;
+
+  ebitMenosImpostosPorPatrimonioLiquidoMaisEndividamento?: NullableNumber;
+
+  receitaLiquidaPorTotalMedioDeAtivos?: NullableNumber;
+
+  compoundAnnualGrowthRateReceita5Anos?: NullableNumber;
+
+  compoundAnnualGrowthRateLucro5Anos?: NullableNumber;
+
+  patrimonioLiquido?: NullableNumber;
+
+  ativos?: NullableNumber;
+
+  ativoCirculante?: NullableNumber;
+
+  dividaBruta?: NullableNumber;
+
+  disponibilidade?: NullableNumber;
+  dividaLiquida?: NullableNumber;
+  valorDeMercado?: NullableNumber;
+  valorDeFirma?: NullableNumber;
+  quantidadeDePapeis?: NullableNumber;
+
+  segmentoDeListagem?: string | null;
+
+  freeFloat?: NullableNumber;
+
+  investidores?: NullableNumber;
+
+  instituicional?: NullableNumber;
+  pessoaJuridica?: NullableNumber;
+  pessoaFisica?: NullableNumber;
+
+  dividends: StockDividends[];
+}
+
+export type StockFilterTypes = keyof StockSource;
+
+export type StockFilter = {
+  [key in StockFilterTypes]: {
+    min: number;
+    max: number;
+  };
+};
+
+export interface Filter {
+  key: StockFilterTypes;
+  range: {
+    min: number;
+    max: number;
+  };
+}

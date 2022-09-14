@@ -18,6 +18,7 @@ import dotenv from "dotenv";
 import { dropDatabase } from "./actions/drop-database";
 import { syncDatabase } from "./actions/sync-database";
 import { syncPortfolio } from "./actions/sync-portfolio";
+import { queryStocks } from "./actions/query-stocks";
 
 dotenv.config();
 const program = new Command();
@@ -276,6 +277,15 @@ program
 
   .action(async () => {
     await syncPortfolio();
+    // Connection URL
+  });
+
+program
+  .command("query:stocks")
+  .description("Query stocks")
+
+  .action(async () => {
+    await queryStocks();
     // Connection URL
   });
 

@@ -81,7 +81,18 @@ const typeDefs = gql`
     order: Int
   }
 
+  type Range {
+    min: Float
+    max: Float
+  }
+
+  type FilterRange {
+    key: String
+    range: Range
+  }
+
   type Query {
+    filters: [FilterRange]
     ticket(slug: String): Ticket
     tickets: [Ticket]
     portfolios: [Portfolio]
