@@ -1,24 +1,12 @@
 <script lang="ts">
-  import {
-    DataTable,
-    Pagination,
-    Toolbar,
-    ToolbarContent,
-    ToolbarSearch,
-    Tile
-  } from 'carbon-components-svelte';
-
-  import Rate from '@/components/Layout/Rate.svelte';
-  import Currency from '@/components/Layout/Currency.svelte';
   import type { TicketQuery } from '@pibernetwork/stocks-model/src/types';
   import Breadcrumb from '@/components/Breadcrumb/Breadcrumb.svelte';
+  import DataTable from '@/components/DataTable/DataTable.svelte';
+  import type { Header, Row } from '@/types';
   export let data: { tickets: TicketQuery[] };
   const { tickets } = data;
 
-  let pageSize = 25;
-  let page = 1;
-  let filteredRowIds: string[] = [];
-  const headers = [
+  const headers: Header[] = [
     {
       key: 'name',
       value: 'Name'
@@ -53,17 +41,35 @@
     }
   ];
 
-  const rows = tickets.map((ticket) => {
+  const rows: Row[] = tickets.map((ticket) => {
     return {
-      id: ticket.slug,
-      name: ticket.name,
-      company: ticket.company.name,
-      segment: ticket.company.segment.name,
-      sector: ticket.company.sector.name,
-      subSector: ticket.company.subSector.name,
-      averageAmount: ticket.income.range.averageIncome,
-      averageYield: ticket.income.range.averageYield,
-      price: ticket.price
+      id: { value: ticket.slug },
+      name: { value: ticket.name },
+
+      sector: {
+        value: ticket.company.sector.name,
+        href: `/stocks/sectors/${ticket.company.sector.slug}`,
+        type: 'link'
+      },
+      subSector: {
+        value: ticket.company.subSector.name,
+        href: `/stocks/sub-sectors/${ticket.company.subSector.slug}`,
+        type: 'link'
+      },
+      segment: {
+        value: ticket.company.segment.name,
+        href: `/stocks/segments/${ticket.company.segment.slug}`,
+        type: 'link'
+      },
+      company: {
+        type: 'link',
+        href: `/stocks/companies/${ticket.company.slug}`,
+        value: ticket.company.name
+      },
+
+      averageAmount: { value: ticket.income.range.averageIncome, type: 'currency' },
+      averageYield: { value: ticket.income.range.averageYield, type: 'rate' },
+      price: { value: ticket.price, type: 'currency' }
     };
   });
 </script>
@@ -103,24 +109,4 @@
   ]}
 />
 
-<Tile>
-  <h1>Tickets</h1>
-
-  <DataTable sortable size="short" {headers} {rows} {pageSize} {page}>
-    <svelte:fragment slot="cell" let:cell>
-      {#if cell.key === 'averageAmount' || cell.key === 'price'}
-        <Currency value={cell.value} />
-      {:else if cell.key === 'averageYield'}
-        <Rate value={cell.value} />
-      {:else}
-        {cell.value}
-      {/if}
-    </svelte:fragment>
-    <Toolbar>
-      <ToolbarContent>
-        <ToolbarSearch persistent value="" shouldFilterRows bind:filteredRowIds />
-      </ToolbarContent>
-    </Toolbar>
-  </DataTable>
-  <Pagination bind:pageSize bind:page totalItems={filteredRowIds.length} pageSizeInputDisabled />
-</Tile>
+<DataTable {headers} {rows} />

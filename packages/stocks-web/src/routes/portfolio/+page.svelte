@@ -7,7 +7,6 @@
     Toolbar,
     ToolbarContent,
     ToolbarSearch,
-    Tile,
     Link
   } from 'carbon-components-svelte';
 
