@@ -5,6 +5,7 @@ import type {
   Document,
   WithId,
   ObjectId,
+  Filter,
 } from "mongodb";
 
 export abstract class MongoRepository<T extends Document> {

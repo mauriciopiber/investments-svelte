@@ -1,7 +1,5 @@
 <script lang="ts">
   import {
-    Breadcrumb,
-    BreadcrumbItem,
     DataTable,
     Pagination,
     Toolbar,
@@ -13,6 +11,7 @@
   import Rate from '@/components/Layout/Rate.svelte';
   import Currency from '@/components/Layout/Currency.svelte';
   import type { TicketQuery } from '@pibernetwork/stocks-model/src/types';
+  import Breadcrumb from '@/components/Breadcrumb/Breadcrumb.svelte';
   export let data: { tickets: TicketQuery[] };
   const { tickets } = data;
 
@@ -69,17 +68,41 @@
   });
 </script>
 
-<Tile>
-  <Breadcrumb noTrailingSlash>
-    <BreadcrumbItem href="/">Investments</BreadcrumbItem>
-    <BreadcrumbItem href="/stocks">Stocks</BreadcrumbItem>
-    <BreadcrumbItem href="/stocks/sectors">Sectors</BreadcrumbItem>
-    <BreadcrumbItem href="/stocks/sub-sectors">Sub Sectors</BreadcrumbItem>
-    <BreadcrumbItem href="/stocks/segments">Segments</BreadcrumbItem>
-    <BreadcrumbItem href="/stocks/companies">Companies</BreadcrumbItem>
-    <BreadcrumbItem href="/stocks/tickets" isCurrentPage>Tickets</BreadcrumbItem>
-  </Breadcrumb>
-</Tile>
+<Breadcrumb
+  pages={[
+    {
+      href: '/',
+      title: 'Investments',
+      isRoot: true
+    },
+    {
+      href: '/stocks',
+      title: 'Stocks'
+    },
+    {
+      href: '/stocks/sectors',
+      title: 'Sectors'
+    },
+    {
+      href: '/stocks/sub-sectors',
+      title: 'Sub Sectors'
+    },
+    {
+      href: '/stocks/segments',
+      title: 'Segments'
+    },
+    {
+      href: '/stocks/companies',
+      title: 'Companies'
+    },
+    {
+      href: '/stocks/tickets',
+      title: 'Tickets',
+      isCurrentPage: true
+    }
+  ]}
+/>
+
 <Tile>
   <h1>Tickets</h1>
 
