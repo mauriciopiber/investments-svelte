@@ -13,6 +13,8 @@ import {
   SubSectorWithId,
   PortfolioWithId,
   InputFilter,
+  Indicator,
+  IndicatorGroup,
 } from "@pibernetwork/stocks-model/src/types";
 import { DataloaderService } from "./../utils/dataloader";
 import { ObjectId } from "mongodb";
@@ -51,6 +53,37 @@ const {
 
 export default {
   Query: {
+    async indicatorsGroups() {
+      const indicators: IndicatorGroup[] = [
+        {
+          name: "Price",
+          indicators: [
+            {
+              key: "currentPrice",
+              label: "Current Price",
+            },
+            {
+              key: "minMonth",
+              label: "Min Month",
+            },
+            {
+              key: "maxMonth",
+              label: "Max Month",
+            },
+            {
+              key: "minYear",
+              label: "Min Year",
+            },
+            {
+              key: "maxYear",
+              label: "Max Year",
+            },
+          ],
+        },
+      ];
+
+      return indicators;
+    },
     async search(_: unknown, args: InputFilter) {
       const { input } = args;
 
@@ -78,8 +111,6 @@ export default {
           $and: andQuery,
         }) ||
         {};
-
-      console.log(JSON.stringify(query2));
 
       const tickets: TicketWithId[] = await ticketRepository.queryAll(query2);
 

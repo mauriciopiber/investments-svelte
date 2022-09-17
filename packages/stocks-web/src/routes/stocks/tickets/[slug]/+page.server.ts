@@ -11,6 +11,10 @@ export async function load({ params }: Page) {
         name
         slug
         currentPrice
+        maxMonth
+        minMonth
+        maxYear
+        minYear
         income {
           startDate
           endDate
@@ -55,15 +59,23 @@ export async function load({ params }: Page) {
           }
         }
       }
+      indicatorsGroups {
+        name
+        indicators {
+          label
+          key
+        }
 
+      }
     }
   `;
 
   const data = await fetchGraphql(queryStocks);
 
-  const { ticket } = data;
+  const { ticket, indicatorsGroups } = data;
 
   return {
-    ticket
+    ticket,
+    indicatorsGroups
   };
 }

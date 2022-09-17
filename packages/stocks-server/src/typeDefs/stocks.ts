@@ -30,6 +30,10 @@ const typeDefs = gql`
     currentPrice: Float
     company: Company
     income: Income
+    maxMonth: Float
+    minMonth: Float
+    maxYear: Float
+    minYear: Float
   }
 
   type Company {
@@ -106,7 +110,18 @@ const typeDefs = gql`
     tickets: [Ticket]
   }
 
+  type IndicatorGroup {
+    name: String
+    indicators: [Indicator]
+  }
+
+  type Indicator {
+    label: String
+    key: String
+  }
+
   type Query {
+    indicatorsGroups: [IndicatorGroup]
     search(input: [Search]): SearchResponse
     filters: [FilterRange]
     ticket(slug: String): Ticket

@@ -2,11 +2,11 @@
   import Breadcrumb from '@/components/Breadcrumb/Breadcrumb.svelte';
   import Rate from '@/components/Layout/Rate.svelte';
   import Currency from '@/components/Layout/Currency.svelte';
-  import type { TicketQuery } from '@pibernetwork/stocks-model/src/types';
+  import type { IndicatorGroup, TicketQuery } from '@pibernetwork/stocks-model/src/types';
   import type { BreadcrumbConfig } from '@/types';
 
-  export let data: { ticket: TicketQuery };
-  const { ticket } = data;
+  export let data: { ticket: TicketQuery; indicatorsGroups: IndicatorGroup[] };
+  const { ticket, indicatorsGroups } = data;
 
   const { company } = ticket;
   const { sector, subSector, segment } = company;
@@ -29,6 +29,21 @@
 <Breadcrumb config={breadcrumb} />
 <h1>Ticket {ticket.name}</h1>
 
+{#each indicatorsGroups as indicatorGroup}
+  <div>
+    <div>{indicatorGroup.name}</div>
+    <div>
+      {#each indicatorGroup.indicators as indicator}
+        <div>
+          <div>{indicator.label}</div>
+          <div>{ticket[indicator.key]}</div>
+        </div>
+      {/each}
+    </div>
+  </div>
+{/each}
+
+{JSON.stringify(indicatorsGroups)}
 <div>
   <h2>{ticket.company.name}</h2>
 </div>
