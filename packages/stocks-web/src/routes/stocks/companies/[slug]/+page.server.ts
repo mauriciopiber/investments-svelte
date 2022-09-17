@@ -13,6 +13,12 @@ export async function load({ params }: Page) {
         tickets {
           name
           slug
+          income {
+            range {
+              averageIncome
+            averageYield
+            }
+          }
         }
         segment {
           name

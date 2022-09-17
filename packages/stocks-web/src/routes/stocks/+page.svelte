@@ -1,23 +1,23 @@
 <script lang="ts">
-  import { Breadcrumb, BreadcrumbItem, Tile } from 'carbon-components-svelte';
+  import Breadcrumb from '@/components/Breadcrumb/Breadcrumb.svelte';
 
   import Link from '@/components/Layout/Link.svelte';
   import Income from '@/components/Stocks/Income.svelte';
+  import type { BreadcrumbConfig } from '@/types';
   import type { SectorQuery } from '@pibernetwork/stocks-model/src/types';
 
   export let data: { sectors: SectorQuery[] };
 
   const { sectors } = data;
+
+  const breadcrumb: BreadcrumbConfig = [{ key: 'investments' }, { key: 'stocks' }];
 </script>
 
-<Breadcrumb noTrailingSlash>
-  <BreadcrumbItem href="/">Investments</BreadcrumbItem>
-  <BreadcrumbItem href="/stocks" isCurrentPage>Stocks</BreadcrumbItem>
-</Breadcrumb>
-<Tile>
+<Breadcrumb config={breadcrumb} />
+<div>
   <h2>Stocks</h2>
   {#each sectors as sector}
-    <Tile>
+    <div>
       <div class="section sector-item">
         <Link href={`/stocks/sectors/${sector.slug}`}>{sector.name}</Link>
         <Income
@@ -65,10 +65,10 @@
             {/each}
           </div>
         {/each}
-      </div></Tile
-    >
+      </div>
+    </div>
   {/each}
-</Tile>
+</div>
 
 <style>
   .section {

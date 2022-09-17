@@ -1,66 +1,56 @@
 <script lang="ts">
-  import {
-    Breadcrumb,
-    BreadcrumbItem,
-    DataTable,
-    Pagination,
-    Toolbar,
-    ToolbarContent,
-    ToolbarSearch,
-    Link
-  } from 'carbon-components-svelte';
-  import Rate from '@/components/Layout/Rate.svelte';
-  import Currency from '@/components/Layout/Currency.svelte';
-  import CenterCircle from 'carbon-icons-svelte/lib/CenterCircle.svelte';
+  import Breadcrumb from '@/components/Breadcrumb/Breadcrumb.svelte';
+
   import type { SectorQuery } from '@pibernetwork/stocks-model/src/types';
+  import type { BreadcrumbConfig, Header, Rows } from '@/types';
+  import DataTable from '@/components/DataTable/DataTable.svelte';
   export let data: { sectors: SectorQuery[] };
   const { sectors } = data;
 
-  let pageSize = 25;
-  let page = 1;
-  let filteredRowIds: string[] = [];
-  const headers = [
-    {
-      key: 'slug',
-      value: ''
-    },
+  const headers: Header = [
     {
       key: 'name',
-      value: 'Name'
+      label: 'Name',
+      type: 'link'
     },
     {
       key: 'subSectors',
-      value: '# SubSector'
+      label: '# SubSector'
     },
 
     {
       key: 'averageAmount',
-      value: 'Average Amount'
+      label: 'Average Amount',
+      type: 'currency'
     },
     {
       key: 'averageYield',
-      value: 'Average Yield'
+      label: 'Average Yield',
+      type: 'rate'
     }
   ];
 
-  const rows = sectors.map((sector) => {
+  const rows: Rows = sectors.map((sector) => {
     return {
-      id: sector.slug,
-      name: sector.name,
+      name: { value: sector.name, href: `/stocks/sectors/${sector.slug}` },
       slug: sector.slug,
       subSectors: sector.subSectors.length,
       averageAmount: sector.income.averageAmount,
       averageYield: sector.income.averageYield
     };
   });
+
+  const breadcrumb: BreadcrumbConfig = [
+    { key: 'investments' },
+    { key: 'stocks' },
+    { key: 'sectors' }
+  ];
 </script>
 
-<Breadcrumb noTrailingSlash>
-  <BreadcrumbItem href="/">Investments</BreadcrumbItem>
-  <BreadcrumbItem href="/stocks">Stocks</BreadcrumbItem>
-  <BreadcrumbItem href="/stocks/sectors" isCurrentPage>Sectors</BreadcrumbItem>
-</Breadcrumb>
+<Breadcrumb config={breadcrumb} />
+<DataTable {headers} {rows} />
 
+<!--
 <h1>Sectors</h1>
 <DataTable sortable size="short" {headers} {rows} {pageSize} {page}>
   <svelte:fragment slot="cell" let:cell>
@@ -80,4 +70,4 @@
     </ToolbarContent>
   </Toolbar>
 </DataTable>
-<Pagination bind:pageSize bind:page totalItems={filteredRowIds.length} pageSizeInputDisabled />
+<Pagination bind:pageSize bind:page totalItems={filteredRowIds.length} pageSizeInputDisabled /> -->

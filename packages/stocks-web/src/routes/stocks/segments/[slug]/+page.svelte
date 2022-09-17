@@ -1,28 +1,51 @@
 <script lang="ts">
-  import { Breadcrumb, BreadcrumbItem } from 'carbon-components-svelte';
+  import Breadcrumb from '@/components/Breadcrumb/Breadcrumb.svelte';
+  import DataTable from '@/components/DataTable/DataTable.svelte';
+  import type { BreadcrumbConfig, Header, Rows } from '@/types';
   import type { SegmentQuery } from '@pibernetwork/stocks-model/src/types';
   export let data: { segment: SegmentQuery };
   const { segment } = data;
+
+  const { subSector, companies } = segment;
+
+  const { sector } = subSector;
+
+  const breadcrumb: BreadcrumbConfig = [
+    { key: 'investments' },
+    { key: 'stocks' },
+    { key: 'sector', slug: sector.slug, label: sector.name },
+    { key: 'sub-sector', slug: subSector.slug, label: subSector.name },
+    { key: 'segment', slug: segment.slug, label: segment.name }
+  ];
+
+  const headers: Header = [
+    {
+      key: 'company',
+      label: 'Company',
+      type: 'link'
+    },
+
+    {
+      key: 'averageAmount',
+      label: 'Average Amount',
+      type: 'currency'
+    },
+    {
+      key: 'averageYield',
+      label: 'Average Yield',
+      type: 'rate'
+    }
+  ];
+
+  const rows: Rows = companies.map((company) => {
+    return {
+      company: { value: company.name, href: `/stocks/companies/${company.slug}` },
+      averageAmount: company.income.averageAmount,
+      averageYield: company.income.averageYield
+    };
+  });
 </script>
 
-<Breadcrumb noTrailingSlash>
-  <BreadcrumbItem href="/">Investments</BreadcrumbItem>
-  <BreadcrumbItem href="/stocks">Stocks</BreadcrumbItem>
-  <BreadcrumbItem href={`/stocks/sectors/${segment.subSector.sector.slug}`}
-    >{segment.subSector.sector.name}</BreadcrumbItem
-  >
-  <BreadcrumbItem href={`/stocks/sub-sectors/${segment.subSector.slug}`}
-    >{segment.subSector.name}</BreadcrumbItem
-  >
-  <BreadcrumbItem href={`/stocks/segments/${segment.slug}`} isCurrentPage
-    >{segment.name}</BreadcrumbItem
-  >
-</Breadcrumb>
-<h1>Segment {segment.name}</h1>
+<Breadcrumb config={breadcrumb} />
 
-<h2>Companies</h2>
-{#each segment.companies as company}
-  <div>
-    <a href="/stocks/companies/{company.slug}">{company.name}</a>
-  </div>
-{/each}
+<DataTable {headers} {rows} />

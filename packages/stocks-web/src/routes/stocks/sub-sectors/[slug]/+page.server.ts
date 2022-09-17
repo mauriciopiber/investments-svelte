@@ -11,6 +11,7 @@ export async function load({ params }: Page) {
       subSector(slug: "${slug}") {
         name
         slug
+
         sector {
           name
           slug
@@ -18,14 +19,11 @@ export async function load({ params }: Page) {
         segments {
           name
           slug
-          companies {
-            name
-            slug
-            tickets {
-              name
-              slug
-            }
+          income {
+            averageAmount
+            averageYield
           }
+
         }
       }
 

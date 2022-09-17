@@ -1,28 +1,47 @@
 <script lang="ts">
-  import { Breadcrumb, BreadcrumbItem } from 'carbon-components-svelte';
-  import Income from '@/components/Stocks/Income.svelte';
+  import Breadcrumb from '@/components/Breadcrumb/Breadcrumb.svelte';
+  import DataTable from '@/components/DataTable/DataTable.svelte';
+  import type { BreadcrumbConfig, Header, Rows } from '@/types';
 
   import type { CompanyQuery } from '@pibernetwork/stocks-model/src/types';
   export let data: { companies: CompanyQuery[] };
   const { companies } = data;
+
+  const breadcrumb: BreadcrumbConfig = [
+    { key: 'investments' },
+    { key: 'stocks' },
+    { key: 'sectors' },
+    { key: 'sub-sectors' },
+    { key: 'segments' },
+    { key: 'companies' }
+  ];
+
+  const headers: Header = [
+    {
+      key: 'company',
+      label: 'Company',
+      type: 'link'
+    },
+    {
+      key: 'averageAmount',
+      label: 'Average Amount',
+      type: 'currency'
+    },
+    {
+      key: 'averageYield',
+      label: 'Average Yield',
+      type: 'rate'
+    }
+  ];
+
+  const rows: Rows = companies.map((company) => {
+    return {
+      company: { value: company.name, href: `/stocks/companies/${company.slug}` },
+      averageAmount: company.income.averageAmount,
+      averageYield: company.income.averageYield
+    };
+  });
 </script>
 
-<Breadcrumb noTrailingSlash>
-  <BreadcrumbItem href="/">Investments</BreadcrumbItem>
-  <BreadcrumbItem href="/stocks">Stocks</BreadcrumbItem>
-  <BreadcrumbItem href="/stocks/sectors">Sectors</BreadcrumbItem>
-  <BreadcrumbItem href="/stocks/sub-sectors">Sub Sectors</BreadcrumbItem>
-  <BreadcrumbItem href="/stocks/segments">Segments</BreadcrumbItem>
-  <BreadcrumbItem href="/stocks/companies" isCurrentPage>Companies</BreadcrumbItem>
-</Breadcrumb>
-
-<h1>Companies</h1>
-{#each companies as company}
-  <div>
-    <a href="/stocks/companies/{company.slug}">{company.name}</a>
-    <Income
-      averageIncome={company.income.averageAmount}
-      averageYield={company.income.averageYield}
-    />
-  </div>
-{/each}
+<Breadcrumb config={breadcrumb} />
+<DataTable {headers} {rows} />

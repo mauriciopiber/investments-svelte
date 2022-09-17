@@ -13,6 +13,10 @@ export async function load({ params }: Page) {
         subSectors {
           name
           slug
+          income {
+            averageAmount
+            averageYield
+          }
           segments {
             name
             slug

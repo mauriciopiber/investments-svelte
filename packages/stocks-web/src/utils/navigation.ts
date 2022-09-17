@@ -82,6 +82,12 @@ function getItem(
         href: HOME_URL
       };
     }
+    case 'portfolio': {
+      return {
+        label: PORTFOLIO_LABEL,
+        href: PORTFOLIO_URL
+      };
+    }
     case 'stocks': {
       return {
         label: STOCKS_LABEL,

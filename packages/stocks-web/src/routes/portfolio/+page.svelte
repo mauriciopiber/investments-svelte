@@ -1,72 +1,67 @@
 <script lang="ts">
-  import {
-    Breadcrumb,
-    BreadcrumbItem,
-    DataTable,
-    Pagination,
-    Toolbar,
-    ToolbarContent,
-    ToolbarSearch,
-    Link
-  } from 'carbon-components-svelte';
+  import Breadcrumb from '@/components/Breadcrumb/Breadcrumb.svelte';
+  import DataTable from '@/components/DataTable/DataTable.svelte';
+  import type { BreadcrumbConfig, Header, Rows } from '@/types';
 
-  import Rate from '@/components/Layout/Rate.svelte';
-  import Currency from '@/components/Layout/Currency.svelte';
   import type { PortfolioQuery } from '@pibernetwork/stocks-model/src/types';
   export let data: { portfolios: PortfolioQuery[] };
   const { portfolios } = data;
 
-  let pageSize = 25;
-  let page = 1;
-  let filteredRowIds: string[] = [];
-  const headers = [
+  const headers: Header = [
     {
       key: 'name',
-      value: 'Name'
+      label: 'Name'
     },
     {
       key: 'price',
-      value: 'Price'
+      label: 'Price',
+      type: 'currency'
     },
     {
       key: 'current',
-      value: 'Current'
+      label: 'Current'
     },
     {
       key: 'currentAmount',
-      value: 'Current Amount'
+      label: 'Current Amount',
+      type: 'currency'
     },
     {
       key: 'objective',
-      value: 'Objective'
+      label: 'Objective'
     },
     {
       key: 'objectiveMissing',
-      value: 'Objective Missing'
+      label: 'Objective Missing'
     },
     {
       key: 'objectiveAmount',
-      value: 'Objective Amount'
+      label: 'Objective Amount',
+      type: 'currency'
     },
     {
       key: 'company',
-      value: 'Company'
+      label: 'Company',
+      type: 'link'
     },
     {
       key: 'sector',
-      value: 'Sector'
+      label: 'Sector',
+      type: 'link'
     },
     {
       key: 'subSector',
-      value: 'Sub Sector'
+      label: 'Sub Sector',
+      type: 'link'
     },
     {
       key: 'segment',
-      value: 'Segment'
+      label: 'Segment',
+      type: 'link'
     }
   ];
 
-  const rows = portfolios.map((portfolio) => {
+  const rows: Rows = portfolios.map((portfolio) => {
     const { ticket, current, objective } = portfolio;
 
     const objectiveMissing = objective - current;
@@ -79,62 +74,24 @@
       objective,
       objectiveMissing,
       objectiveAmount: objectiveMissing * ticket.price,
-      company: ticket.company,
-      segment: ticket.company.segment,
-      sector: ticket.company.sector,
-      subSector: ticket.company.subSector
+      company: { value: ticket.company.name, href: `/stocks/companies/${ticket.company.slug}` },
+      segment: {
+        value: ticket.company.segment.name,
+        href: `/stocks/segments/${ticket.company.segment.slug}`
+      },
+      sector: {
+        value: ticket.company.sector.name,
+        href: `/stocks/sectors/${ticket.company.sector.slug}`
+      },
+      subSector: {
+        value: ticket.company.subSector.name,
+        href: `/stocks/sub-sectors/${ticket.company.subSector.slug}`
+      }
     };
   });
+  const breadcrumb: BreadcrumbConfig = [{ key: 'investments' }, { key: 'portfolio' }];
 </script>
 
-<Breadcrumb noTrailingSlash>
-  <BreadcrumbItem href="/">Investments</BreadcrumbItem>
-  <BreadcrumbItem href="/portfolio" isCurrentPage>Portfolio</BreadcrumbItem>
-</Breadcrumb>
+<Breadcrumb config={breadcrumb} />
 
-<DataTable sortable size="short" {headers} {rows} {pageSize} {page}>
-  <svelte:fragment slot="cell" let:cell>
-    {#if cell.key === 'price' || cell.key === 'currentAmount' || cell.key === 'objectiveAmount'}
-      <Currency value={cell.value} />
-    {:else if cell.key === 'company'}
-      <Link href={`/stocks/companies/${cell.value.slug}`}
-        ><span class="link">{cell.value.name}</span><Rate
-          value={cell.value.income.averageYield}
-        /></Link
-      >
-    {:else if cell.key === 'sector'}
-      <Link href={`/stocks/sectors/${cell.value.slug}`}
-        ><span class="link">{cell.value.name}</span><Rate
-          value={cell.value.income.averageYield}
-        /></Link
-      >
-    {:else if cell.key === 'subSector'}
-      <Link href={`/stocks/sub-sectors/${cell.value.slug}`}
-        ><span class="link">{cell.value.name}</span><Rate
-          value={cell.value.income.averageYield}
-        /></Link
-      >
-    {:else if cell.key === 'segment'}
-      <Link href={`/stocks/segments/${cell.value.slug}`}
-        ><span class="link">{cell.value.name}</span><Rate
-          value={cell.value.income.averageYield}
-        /></Link
-      >
-    {:else}
-      {cell.value}
-    {/if}
-  </svelte:fragment>
-
-  <Toolbar>
-    <ToolbarContent>
-      <ToolbarSearch persistent value="" shouldFilterRows bind:filteredRowIds />
-    </ToolbarContent>
-  </Toolbar>
-</DataTable>
-<Pagination bind:pageSize bind:page totalItems={filteredRowIds.length} pageSizeInputDisabled />
-
-<style>
-  .link {
-    margin-right: 0.5rem;
-  }
-</style>
+<DataTable {headers} {rows} />

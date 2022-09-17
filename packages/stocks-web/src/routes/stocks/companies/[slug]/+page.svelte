@@ -1,31 +1,49 @@
 <script lang="ts">
-  import { Breadcrumb, BreadcrumbItem } from 'carbon-components-svelte';
+  import Breadcrumb from '@/components/Breadcrumb/Breadcrumb.svelte';
+  import DataTable from '@/components/DataTable/DataTable.svelte';
+  import type { BreadcrumbConfig, Header, Rows } from '@/types';
   import type { CompanyQuery } from '@pibernetwork/stocks-model/src/types';
   export let data: { company: CompanyQuery };
   const { company } = data;
+
+  const { sector, subSector, segment, tickets } = company;
+
+  const breadcrumb: BreadcrumbConfig = [
+    { key: 'investments' },
+    { key: 'stocks' },
+    { key: 'sector', slug: sector.slug, label: sector.name },
+    { key: 'sub-sector', slug: subSector.slug, label: subSector.name },
+    { key: 'segment', slug: segment.slug, label: segment.name },
+    { key: 'company', slug: company.slug, label: company.name }
+  ];
+
+  const headers: Header = [
+    {
+      key: 'ticket',
+      label: 'Ticket',
+      type: 'link'
+    },
+    {
+      key: 'averageAmount',
+      label: 'Average Amount',
+      type: 'currency'
+    },
+    {
+      key: 'averageYield',
+      label: 'Average Yield',
+      type: 'rate'
+    }
+  ];
+
+  const rows: Rows = tickets.map((ticket) => {
+    return {
+      ticket: { value: ticket.name, href: `/stocks/tickets/${ticket.slug}` },
+      averageAmount: ticket.income.range.averageIncome,
+      averageYield: ticket.income.range.averageYield
+    };
+  });
 </script>
 
-<Breadcrumb noTrailingSlash>
-  <BreadcrumbItem href="/">Investments</BreadcrumbItem>
-  <BreadcrumbItem href="/stocks">Stocks</BreadcrumbItem>
-  <BreadcrumbItem href={`/stocks/sectors/${company.sector.slug}`}
-    >{company.sector.name}</BreadcrumbItem
-  >
-  <BreadcrumbItem href={`/stocks/sub-sectors/${company.subSector.slug}`}
-    >{company.subSector.name}</BreadcrumbItem
-  >
-  <BreadcrumbItem href={`/stocks/segments/${company.segment.slug}`}
-    >{company.segment.name}</BreadcrumbItem
-  >
-  <BreadcrumbItem href={`/stocks/companies/${company.slug}`} isCurrentPage
-    >{company.name}</BreadcrumbItem
-  >
-</Breadcrumb>
-<h1>Company {company.name}</h1>
+<Breadcrumb config={breadcrumb} />
 
-<h2>Tickets</h2>
-{#each company.tickets as ticket}
-  <div>
-    <a href="/stocks/tickets/{ticket.slug}">{ticket.name}</a>
-  </div>
-{/each}
+<DataTable {headers} {rows} />

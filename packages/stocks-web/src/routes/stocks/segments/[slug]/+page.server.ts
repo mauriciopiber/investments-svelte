@@ -24,6 +24,10 @@ export async function load({ params }: Page) {
         companies {
           name
           slug
+          income {
+            averageAmount
+            averageYield
+          }
           tickets {
             name
             slug

@@ -1,22 +1,43 @@
 <script lang="ts">
-  import { Breadcrumb, BreadcrumbItem } from 'carbon-components-svelte';
+  import Breadcrumb from '@/components/Breadcrumb/Breadcrumb.svelte';
+  import DataTable from '@/components/DataTable/DataTable.svelte';
+  import type { BreadcrumbConfig, Header, Rows } from '@/types';
   import type { SectorQuery } from '@pibernetwork/stocks-model/src/types';
   export let data: { sector: SectorQuery };
   const { sector } = data;
+
+  const breadcrumb: BreadcrumbConfig = [
+    { key: 'investments' },
+    { key: 'stocks' },
+    { key: 'sector', slug: sector.slug, label: sector.name }
+  ];
+
+  const headers: Header = [
+    {
+      label: 'Sub Sector',
+      key: 'subSector',
+      type: 'link'
+    },
+    {
+      key: 'averageAmount',
+      label: 'Average Amount',
+      type: 'currency'
+    },
+    {
+      key: 'averageYield',
+      label: 'Average Yield',
+      type: 'rate'
+    }
+  ];
+
+  const rows: Rows = sector.subSectors.map((subSector) => {
+    return {
+      subSector: { value: subSector.name, href: `/stocks/sub-sectors/${subSector.slug}` },
+      averageAmount: subSector.income.averageAmount,
+      averageYield: subSector.income.averageYield
+    };
+  });
 </script>
 
-<Breadcrumb noTrailingSlash>
-  <BreadcrumbItem href="/">Investments</BreadcrumbItem>
-  <BreadcrumbItem href="/stocks">Stocks</BreadcrumbItem>
-  <BreadcrumbItem href={`/stocks/sectors/${sector.slug}`} isCurrentPage
-    >{sector.name}</BreadcrumbItem
-  >
-</Breadcrumb>
-<h1>Sector {sector.name}</h1>
-
-<h2>Sub sectors</h2>
-{#each sector.subSectors as subSector}
-  <div>
-    <a href="/stocks/sub-sectors/{subSector.slug}">{subSector.name}</a>
-  </div>
-{/each}
+<Breadcrumb config={breadcrumb} />
+<DataTable {headers} {rows} />
