@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { clickOutside } from '@/directives/clickOutside';
   import type { Route } from '@/types';
   import DropdownLink from './DropdownLink.svelte';
 
@@ -36,7 +37,12 @@
     class="absolute z-10 w-44 font-normal bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
     class:hidden={!isOpen}
   >
-    <ul class="py-1 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
+    <ul
+      class="py-1 text-sm text-gray-700 dark:text-gray-400"
+      aria-labelledby="dropdownLargeButton"
+      use:clickOutside
+      on:click_outside={(isOpen && toggle) || undefined}
+    >
       {#each routes as route}
         <li>
           {#if route.url}

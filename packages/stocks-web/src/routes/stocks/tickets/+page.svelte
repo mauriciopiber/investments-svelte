@@ -2,74 +2,75 @@
   import type { TicketQuery } from '@pibernetwork/stocks-model/src/types';
   import Breadcrumb from '@/components/Breadcrumb/Breadcrumb.svelte';
   import DataTable from '@/components/DataTable/DataTable.svelte';
-  import type { Header, Row } from '@/types';
+  import type { Header, Rows } from '@/types';
   export let data: { tickets: TicketQuery[] };
   const { tickets } = data;
 
-  const headers: Header[] = [
+  const headers: Header = [
     {
       key: 'name',
-      value: 'Name'
+      label: 'Name'
     },
     {
       key: 'company',
-      value: 'Company'
+      label: 'Company',
+      type: 'link'
     },
     {
       key: 'sector',
-      value: 'Sector'
+      label: 'Sector',
+      type: 'link'
     },
     {
       key: 'subSector',
-      value: 'Sub Sector'
+      label: 'Sub Sector',
+      type: 'link'
     },
     {
       key: 'segment',
-      value: 'Segment'
+      label: 'Segment',
+      type: 'link'
     },
     {
       key: 'price',
-      value: 'Price'
+      label: 'Price',
+      type: 'currency'
     },
     {
       key: 'averageAmount',
-      value: 'Average Amount'
+      label: 'Average Amount',
+      type: 'currency'
     },
     {
       key: 'averageYield',
-      value: 'Average Yield'
+      label: 'Average Yield',
+      type: 'rate'
     }
   ];
 
-  const rows: Row[] = tickets.map((ticket) => {
+  const rows: Rows = tickets.map((ticket) => {
     return {
-      id: { value: ticket.slug },
-      name: { value: ticket.name },
-
+      id: ticket.slug,
+      name: ticket.name,
       sector: {
         value: ticket.company.sector.name,
-        href: `/stocks/sectors/${ticket.company.sector.slug}`,
-        type: 'link'
+        href: `/stocks/sectors/${ticket.company.sector.slug}`
       },
       subSector: {
         value: ticket.company.subSector.name,
-        href: `/stocks/sub-sectors/${ticket.company.subSector.slug}`,
-        type: 'link'
+        href: `/stocks/sub-sectors/${ticket.company.subSector.slug}`
       },
       segment: {
         value: ticket.company.segment.name,
-        href: `/stocks/segments/${ticket.company.segment.slug}`,
-        type: 'link'
+        href: `/stocks/segments/${ticket.company.segment.slug}`
       },
       company: {
-        type: 'link',
         href: `/stocks/companies/${ticket.company.slug}`,
         value: ticket.company.name
       },
-
-      averageAmount: { value: ticket.income.range.averageIncome, type: 'currency' },
-      averageYield: { value: ticket.income.range.averageYield, type: 'rate' },
-      price: { value: ticket.price, type: 'currency' }
+      averageAmount: ticket.income.range.averageIncome,
+      averageYield: ticket.income.range.averageYield,
+      price: ticket.price
     };
   });
 </script>

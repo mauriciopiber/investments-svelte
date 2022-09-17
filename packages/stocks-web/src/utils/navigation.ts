@@ -2,7 +2,7 @@
 
 import type { Route } from '@/types';
 
-const Routes: Route[] = [
+export const routes: Route[] = [
   {
     label: 'Portfólio',
     url: '/portfolio'
@@ -41,5 +41,3 @@ const Routes: Route[] = [
     url: '/filters'
   }
 ];
-
-export default Routes;

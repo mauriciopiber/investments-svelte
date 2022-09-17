@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { Header, Row } from '@/types';
+  import type { Header, Rows } from '@/types';
   import RowCell from './RowCell.svelte';
 
-  export let headers: Header[];
-  export let rows: Row[];
+  export let headers: Header;
+  export let rows: Rows;
 </script>
 
 <table
@@ -14,8 +14,8 @@
       <tr
         class="bg-red-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0"
       >
-        {#each headers as { value }}
-          <th class="p-3 text-left h-12 text-ellipsis overflow-hidden whitespace-nowrap">{value}</th
+        {#each headers as { label }}
+          <th class="p-3 text-left h-12 text-ellipsis overflow-hidden whitespace-nowrap">{label}</th
           >
         {/each}
       </tr>
@@ -24,8 +24,8 @@
   <tbody class="flex-1 sm:flex-none">
     {#each rows as row}
       <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0 ">
-        {#each headers as { key }}
-          <RowCell cell={row[key]} />
+        {#each headers as { key, type }}
+          <RowCell cell={row[key]} {type} />
         {/each}
       </tr>
     {/each}
