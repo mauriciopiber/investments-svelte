@@ -1,33 +1,28 @@
 <script lang="ts">
-  import { Breadcrumb, BreadcrumbItem } from 'carbon-components-svelte';
+  import Breadcrumb from '@/components/Breadcrumb/Breadcrumb.svelte';
   import Rate from '@/components/Layout/Rate.svelte';
   import Currency from '@/components/Layout/Currency.svelte';
   import type { TicketQuery } from '@pibernetwork/stocks-model/src/types';
+  import type { BreadcrumbConfig } from '@/types';
 
   export let data: { ticket: TicketQuery };
   const { ticket } = data;
+
+  const { company } = ticket;
+  const { sector, subSector, segment } = company;
+
+  const breadcrumb: BreadcrumbConfig = [
+    { key: 'investments' },
+    { key: 'stocks' },
+    { key: 'sector', slug: sector.slug, label: sector.name },
+    { key: 'sub-sector', slug: subSector.slug, label: subSector.name },
+    { key: 'segment', slug: segment.slug, label: segment.name },
+    { key: 'company', slug: company.slug, label: company.name },
+    { key: 'ticket', slug: ticket.slug, label: ticket.name }
+  ];
 </script>
 
-<Breadcrumb noTrailingSlash>
-  <BreadcrumbItem href="/">Investments</BreadcrumbItem>
-  <BreadcrumbItem href="/stocks">Stocks</BreadcrumbItem>
-  <BreadcrumbItem href={`/stocks/sectors/${ticket.company.sector.slug}`}
-    >{ticket.company.sector.name}</BreadcrumbItem
-  >
-  <BreadcrumbItem href={`/stocks/sub-sectors/${ticket.company.subSector.slug}`}
-    >{ticket.company.subSector.name}</BreadcrumbItem
-  >
-  <BreadcrumbItem href={`/stocks/segments/${ticket.company.segment.slug}`}
-    >{ticket.company.segment.name}</BreadcrumbItem
-  >
-  <BreadcrumbItem href={`/stocks/companies/${ticket.company.slug}`}
-    >{ticket.company.name}</BreadcrumbItem
-  >
-  <BreadcrumbItem href={`/stocks/tickets/${ticket.slug}`} isCurrentPage
-    >{ticket.name}</BreadcrumbItem
-  >
-</Breadcrumb>
-
+<Breadcrumb config={breadcrumb} />
 <h1>Ticket {ticket.name}</h1>
 
 <div>

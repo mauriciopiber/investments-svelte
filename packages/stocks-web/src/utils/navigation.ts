@@ -70,7 +70,11 @@ export const routes: Route[] = [
   }
 ];
 
-function getItem(key: string, slug: string | undefined): { href: string; label: string } {
+function getItem(
+  key: string,
+  label: string | undefined,
+  slug: string | undefined
+): { href: string; label: string } {
   switch (key) {
     case 'investments': {
       return {
@@ -90,10 +94,28 @@ function getItem(key: string, slug: string | undefined): { href: string; label: 
         href: SECTOR_URL
       };
     }
+    case 'sector': {
+      if (!label || !slug) {
+        throw new Error(`Missing label or slug for ${key}`);
+      }
+      return {
+        label,
+        href: `${SECTOR_URL}/${slug}`
+      };
+    }
     case 'sub-sectors': {
       return {
         label: SUBSECTOR_LABEL,
         href: SUBSECTOR_URL
+      };
+    }
+    case 'sub-sector': {
+      if (!label || !slug) {
+        throw new Error(`Missing label or slug for ${key}`);
+      }
+      return {
+        label,
+        href: `${SUBSECTOR_URL}/${slug}`
       };
     }
     case 'segments': {
@@ -102,16 +124,43 @@ function getItem(key: string, slug: string | undefined): { href: string; label: 
         href: SEGMENT_URL
       };
     }
+    case 'segment': {
+      if (!label || !slug) {
+        throw new Error(`Missing label or slug for ${key}`);
+      }
+      return {
+        label,
+        href: `${SEGMENT_URL}/${slug}`
+      };
+    }
     case 'companies': {
       return {
         label: COMPANY_LABEL,
         href: COMPANY_URL
       };
     }
+    case 'company': {
+      if (!label || !slug) {
+        throw new Error(`Missing label or slug for ${key}`);
+      }
+      return {
+        label,
+        href: `${COMPANY_URL}/${slug}`
+      };
+    }
     case 'tickets': {
       return {
         label: TICKET_LABEL,
         href: TICKET_URL
+      };
+    }
+    case 'ticket': {
+      if (!label || !slug) {
+        throw new Error(`Missing label or slug for ${key}`);
+      }
+      return {
+        label,
+        href: `${TICKET_URL}/${slug}`
       };
     }
     default:
@@ -122,8 +171,8 @@ function getItem(key: string, slug: string | undefined): { href: string; label: 
 export function createBreadcrumb(config: BreadcrumbConfig): Breadcrumb {
   const currentPage = config.length - 1;
 
-  return config.map((configItem, index) => {
-    const item = getItem(configItem.key, undefined);
+  return config.map(({ key, label, slug }, index) => {
+    const item = getItem(key, label, slug);
 
     if (index === 0) {
       return {

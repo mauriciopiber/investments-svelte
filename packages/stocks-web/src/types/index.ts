@@ -41,4 +41,4 @@ interface BreadcrumbItem {
 
 export type Breadcrumb = BreadcrumbItem[];
 
-export type BreadcrumbConfig = { key: string }[];
+export type BreadcrumbConfig = { key: string; slug?: string; label?: string }[];
