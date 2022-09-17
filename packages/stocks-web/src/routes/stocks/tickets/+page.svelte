@@ -9,7 +9,8 @@
   const headers: Header = [
     {
       key: 'name',
-      label: 'Name'
+      label: 'Name',
+      type: 'link'
     },
     {
       key: 'company',
@@ -51,7 +52,7 @@
   const rows: Rows = tickets.map((ticket) => {
     return {
       id: ticket.slug,
-      name: ticket.name,
+      name: { value: ticket.name, href: `/stocks/tickets/${ticket.slug}` },
       sector: {
         value: ticket.company.sector.name,
         href: `/stocks/sectors/${ticket.company.sector.slug}`
@@ -73,41 +74,18 @@
       price: ticket.price
     };
   });
+
+  const breadcrumb: { key: string }[] = [
+    { key: 'investments' },
+    { key: 'stocks' },
+    { key: 'sectors' },
+    { key: 'sub-sectors' },
+    { key: 'segments' },
+    { key: 'companies' },
+    { key: 'tickets' }
+  ];
 </script>
 
-<Breadcrumb
-  pages={[
-    {
-      href: '/',
-      title: 'Investments',
-      isRoot: true
-    },
-    {
-      href: '/stocks',
-      title: 'Stocks'
-    },
-    {
-      href: '/stocks/sectors',
-      title: 'Sectors'
-    },
-    {
-      href: '/stocks/sub-sectors',
-      title: 'Sub Sectors'
-    },
-    {
-      href: '/stocks/segments',
-      title: 'Segments'
-    },
-    {
-      href: '/stocks/companies',
-      title: 'Companies'
-    },
-    {
-      href: '/stocks/tickets',
-      title: 'Tickets',
-      isCurrentPage: true
-    }
-  ]}
-/>
+<Breadcrumb config={breadcrumb} />
 
 <DataTable {headers} {rows} />

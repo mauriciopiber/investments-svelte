@@ -24,16 +24,6 @@ export interface RowLink {
   value: string;
 }
 
-// interface RowCurrency {
-//   type: CurrencyType;
-//   value: number;
-// }
-
-// interface RowRate {
-//   type: RateType;
-//   value: number;
-// }
-
 export type RowCell = string | number | RowLink;
 
 export interface Row {
@@ -41,3 +31,14 @@ export interface Row {
 }
 
 export type Rows = Row[];
+
+interface BreadcrumbItem {
+  href: string;
+  label: string;
+  isRoot?: boolean;
+  isCurrentPage?: boolean;
+}
+
+export type Breadcrumb = BreadcrumbItem[];
+
+export type BreadcrumbConfig = { key: string }[];
