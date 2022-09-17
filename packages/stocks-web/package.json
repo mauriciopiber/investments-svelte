@@ -32,6 +32,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@iconify/svelte": "^3.0.0",
     "autoprefixer": "^10.4.10",
     "mongodb": "^4.9.1",
     "postcss": "^8.4.16",

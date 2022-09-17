@@ -16,7 +16,5 @@
 </svelte:head>
 
 <Breadcrumb config={breadcrumb} />
-<div>
-  <h2>Stocks</h2>
-  <Tree {sectors} />
-</div>
+
+<Tree {sectors} />

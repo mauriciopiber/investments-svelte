@@ -2,6 +2,9 @@
   import type { SectorQuery } from '@pibernetwork/stocks-model/src/types';
   import Income from '@/components/Stocks/Income.svelte';
   import SubSector from './SubSector.svelte';
+  import Icon from '@iconify/svelte';
+  import Toggle from './Toggle.svelte';
+
   export let sector: SectorQuery;
 
   const { subSectors, name, slug, income } = sector;
@@ -12,16 +15,16 @@
   }
 </script>
 
-<div class="bg-cyan-300">
+<div class="bg-sky-300 px-4 py-2 m-2 rounded-lg">
   <div class="flex">
-    <div>
+    <Toggle {isOpen} on:click={toggle} />
+    <div class="ml-4">
       <a href={`/stocks/sectors/${slug}`}>{name}</a>
     </div>
     <Income averageIncome={income.averageAmount} averageYield={income.averageYield} />
-    <div class="ml-6" on:click={toggle}>{(isOpen && 'Close companies') || 'Open companies'}</div>
   </div>
 
-  <div class="grid" class:hidden={!isOpen}>
+  <div class="grid mt-2" class:hidden={!isOpen}>
     {#each subSectors as subSector}
       <SubSector {subSector} />
     {/each}

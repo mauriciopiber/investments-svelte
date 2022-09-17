@@ -2,6 +2,7 @@
   import type { CompanyQuery } from '@pibernetwork/stocks-model/src/types';
   import Ticket from './Ticket.svelte';
   import Income from '@/components/Stocks/Income.svelte';
+  import Toggle from './Toggle.svelte';
   export let company: CompanyQuery;
 
   const { tickets, income } = company;
@@ -12,13 +13,13 @@
   }
 </script>
 
-<div class="bg-red-300">
+<div class="bg-red-300 my-1 px-4 py-1 rounded-lg">
   <div class="flex">
-    <div>
+    <Toggle {isOpen} on:click={toggle} />
+    <div class="mx-2">
       <a href={`/stocks/companies/${company.slug}`}>{company.name}</a>
     </div>
     <Income averageIncome={income.averageAmount} averageYield={income.averageYield} />
-    <div class="ml-6" on:click={toggle}>{(isOpen && 'Close tickets') || 'Open Tickets'}</div>
   </div>
 
   <div class="grid" class:hidden={!isOpen}>

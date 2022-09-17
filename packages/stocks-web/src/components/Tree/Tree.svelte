@@ -5,6 +5,11 @@
   export let sectors: SectorQuery[];
 </script>
 
-{#each sectors as sector}
-  <Sector {sector} />
-{/each}
+<div class="m-6">
+  <h2 class="text-2xl">Stocks</h2>
+  <div class="mt-6">
+    {#each sectors as sector}
+      <Sector {sector} />
+    {/each}
+  </div>
+</div>
