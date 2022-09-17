@@ -1,13 +1,14 @@
 import { SERVER_URL } from '$lib/Env';
 
-export async function fetchGraphql(query: string) {
+export async function fetchGraphql(query: string, variables: any = {}) {
   const request = await fetch(SERVER_URL, {
     method: 'POST',
     headers: {
       ['Content-Type']: 'application/json'
     },
     body: JSON.stringify({
-      query
+      query,
+      variables
     })
   });
 

@@ -12,6 +12,7 @@ import {
   TicketWithId,
   SubSectorWithId,
   PortfolioWithId,
+  InputFilter,
 } from "@pibernetwork/stocks-model/src/types";
 import { DataloaderService } from "./../utils/dataloader";
 import { ObjectId } from "mongodb";
@@ -52,6 +53,29 @@ const {
 
 export default {
   Query: {
+    async search(_: unknown, args: InputFilter) {
+      const { input } = args;
+
+      const query = input.reduce((filter, inputFilter) => {
+        const { key, range } = inputFilter;
+        return {
+          ...filter,
+          [key]: {
+            $gte: range.min,
+            $lte: range.max,
+          },
+        };
+      }, {});
+
+      const tickets: any[] = [];
+
+      const count = tickets.length + 5;
+      console.log(JSON.stringify(query));
+      return {
+        count,
+        tickets,
+      };
+    },
     async sector(_: unknown, args: { slug: string }) {
       return await sectorRepository.queryOne({ slug: { $eq: args.slug } });
     },

@@ -1,6 +1,7 @@
 <script lang="ts">
   export let min: number;
   export let max: number;
+  export let name: string;
 
   let minValue = min;
   let maxValue = max;
@@ -31,6 +32,7 @@
       step="1"
       {min}
       {max}
+      name={`${name}_min`}
       bind:value={minValue}
       on:input={minTrigger}
       class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer"
@@ -41,6 +43,7 @@
       step="1"
       {min}
       {max}
+      name={`${name}_max`}
       bind:value={maxValue}
       on:input={maxTrigger}
       class="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer"

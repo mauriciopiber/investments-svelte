@@ -91,7 +91,23 @@ const typeDefs = gql`
     range: Range
   }
 
+  input SearchRange {
+    min: Float
+    max: Float
+  }
+
+  input Search {
+    key: String
+    range: SearchRange
+  }
+
+  type SearchResponse {
+    count: Int
+    tickets: [Ticket]
+  }
+
   type Query {
+    search(input: [Search]): SearchResponse
     filters: [FilterRange]
     ticket(slug: String): Ticket
     tickets: [Ticket]

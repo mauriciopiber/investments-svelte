@@ -461,3 +461,7 @@ export interface Filter {
     max: number;
   };
 }
+
+export interface InputFilter {
+  input: Filter[];
+}
