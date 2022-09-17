@@ -92,6 +92,10 @@
   const breadcrumb: BreadcrumbConfig = [{ key: 'investments' }, { key: 'portfolio' }];
 </script>
 
+<svelte:head>
+  <title>Portfolio</title>
+</svelte:head>
+
 <Breadcrumb config={breadcrumb} />
 
 <DataTable {headers} {rows} />

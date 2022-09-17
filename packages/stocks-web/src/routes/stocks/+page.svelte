@@ -13,6 +13,10 @@
   const breadcrumb: BreadcrumbConfig = [{ key: 'investments' }, { key: 'stocks' }];
 </script>
 
+<svelte:head>
+  <title>Stocks</title>
+</svelte:head>
+
 <Breadcrumb config={breadcrumb} />
 <div>
   <h2>Stocks</h2>

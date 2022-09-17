@@ -58,6 +58,10 @@
   });
 </script>
 
+<svelte:head>
+  <title>Sub Sector - {subSector.name}</title>
+</svelte:head>
+
 <Breadcrumb config={breadcrumb} />
 
 <DataTable {headers} {rows} />

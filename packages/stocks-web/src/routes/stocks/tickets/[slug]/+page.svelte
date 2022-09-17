@@ -22,6 +22,10 @@
   ];
 </script>
 
+<svelte:head>
+  <title>Ticket - {ticket.name}</title>
+</svelte:head>
+
 <Breadcrumb config={breadcrumb} />
 <h1>Ticket {ticket.name}</h1>
 

@@ -39,5 +39,9 @@
   });
 </script>
 
+<svelte:head>
+  <title>Sector - {sector.name}</title>
+</svelte:head>
+
 <Breadcrumb config={breadcrumb} />
 <DataTable {headers} {rows} />

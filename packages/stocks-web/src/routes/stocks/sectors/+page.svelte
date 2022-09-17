@@ -47,6 +47,10 @@
   ];
 </script>
 
+<svelte:head>
+  <title>Sectors</title>
+</svelte:head>
+
 <Breadcrumb config={breadcrumb} />
 <DataTable {headers} {rows} />
 

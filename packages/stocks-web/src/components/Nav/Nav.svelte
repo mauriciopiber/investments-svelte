@@ -14,7 +14,8 @@
         class="mr-3 h-6 sm:h-10"
         alt="Flowbite Logo"
       /> -->
-      <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Stocks</span
+      <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"
+        >Investments</span
       >
     </a>
     <button

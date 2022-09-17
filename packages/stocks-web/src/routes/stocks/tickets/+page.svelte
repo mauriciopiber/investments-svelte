@@ -86,6 +86,10 @@
   ];
 </script>
 
+<svelte:head>
+  <title>Tickets</title>
+</svelte:head>
+
 <Breadcrumb config={breadcrumb} />
 
 <DataTable {headers} {rows} />

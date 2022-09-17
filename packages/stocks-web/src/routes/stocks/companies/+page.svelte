@@ -43,5 +43,9 @@
   });
 </script>
 
+<svelte:head>
+  <title>Companies</title>
+</svelte:head>
+
 <Breadcrumb config={breadcrumb} />
 <DataTable {headers} {rows} />

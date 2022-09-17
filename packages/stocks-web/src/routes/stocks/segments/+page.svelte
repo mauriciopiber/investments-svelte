@@ -42,5 +42,9 @@
   });
 </script>
 
+<svelte:head>
+  <title>Segments</title>
+</svelte:head>
+
 <Breadcrumb config={breadcrumb} />
 <DataTable {headers} {rows} />
