@@ -1,9 +1,11 @@
 import slug from "slug";
 import { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sector";
-import { StockRepository } from "@pibernetwork/stocks-model/src/repository/stock";
-import type { StockWithId } from "@pibernetwork/stocks-model/src/types";
+import { SourceRepository } from "@pibernetwork/stocks-model/src/repository/source";
+import type { StockSourceWithId } from "@pibernetwork/stocks-model/src/types";
+import dotenv from "dotenv";
+dotenv.config();
 
-const stockRepository = new StockRepository(process.env.DATABASE_CONNECTION);
+const stockRepository = new SourceRepository(process.env.DATABASE_CONNECTION);
 const sectorRepository = new SectorRepository(process.env.DATABASE_CONNECTION);
 
 async function isInsertedSector(sector: string): Promise<boolean> {
@@ -15,9 +17,12 @@ async function isInsertedSector(sector: string): Promise<boolean> {
 }
 
 export async function syncSectors() {
-  const stocks: StockWithId[] = await stockRepository.queryAll({});
+  const stocks: StockSourceWithId[] = await stockRepository.queryAll({});
 
   for (const { sector } of stocks) {
+    if (!sector) {
+      throw new Error();
+    }
     const uniqueSegment = await isInsertedSector(sector);
 
     if (uniqueSegment) {

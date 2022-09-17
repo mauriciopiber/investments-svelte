@@ -2,7 +2,6 @@
   import type { SectorQuery } from '@pibernetwork/stocks-model/src/types';
   import Income from '@/components/Stocks/Income.svelte';
   import SubSector from './SubSector.svelte';
-  import Icon from '@iconify/svelte';
   import Toggle from './Toggle.svelte';
 
   export let sector: SectorQuery;
@@ -21,7 +20,7 @@
     <div class="ml-4">
       <a href={`/stocks/sectors/${slug}`}>{name}</a>
     </div>
-    <Income averageIncome={income.averageAmount} averageYield={income.averageYield} />
+    <Income averageAmount={income.averageAmount} averageYield={income.averageYield} />
   </div>
 
   <div class="grid mt-2" class:hidden={!isOpen}>

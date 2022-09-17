@@ -3,8 +3,10 @@ import { CompanyRepository } from "@pibernetwork/stocks-model/src/repository/com
 import { SegmentRepository } from "@pibernetwork/stocks-model/src/repository/segment";
 import { SubSectorRepository } from "@pibernetwork/stocks-model/src/repository/sub-sector";
 import { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sector";
-import type { StockWithId } from "@pibernetwork/stocks-model/src/types";
-import { StockRepository } from "@pibernetwork/stocks-model/src/repository/stock";
+import type { StockSourceWithId } from "@pibernetwork/stocks-model/src/types";
+import { SourceRepository } from "@pibernetwork/stocks-model/src/repository/source";
+import dotenv from "dotenv";
+dotenv.config();
 
 const segmentRepository = new SegmentRepository(
   process.env.DATABASE_CONNECTION
@@ -26,11 +28,14 @@ async function isInsertedCompany(name: string): Promise<boolean> {
 }
 
 export async function syncCompanies() {
-  const stockRepository = new StockRepository(process.env.DATABASE_CONNECTION);
+  const stockRepository = new SourceRepository(process.env.DATABASE_CONNECTION);
 
-  const stocks: StockWithId[] = await stockRepository.queryAll({});
+  const stocks: StockSourceWithId[] = await stockRepository.queryAll({});
 
   for (const { sector, subSector, segment, company, name, code } of stocks) {
+    if (!sector || !subSector || !segment || !company || !name || !code) {
+      throw new Error();
+    }
     const insertedCompany = await isInsertedCompany(name);
 
     if (insertedCompany) {

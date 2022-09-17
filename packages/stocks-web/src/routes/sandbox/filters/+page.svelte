@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Filter, InputFilter, StockFilterTypes } from '@pibernetwork/stocks-model/src/types';
+  import type { Filter, TicketFilterTypes } from '@pibernetwork/stocks-model/src/types';
   import MultiRangeSlider from '@/components/Form/MultiRangeSlider.svelte';
   import Tickets from '@/components/Search/Tickets.svelte';
 
@@ -22,7 +22,7 @@
 
       const formInput = key.split('_');
 
-      const ticketKey = formInput[0] as StockFilterTypes;
+      const ticketKey = formInput[0] as TicketFilterTypes;
       const rangeKey = formInput[1] as 'min' | 'max';
 
       const rangeItem = data.find((item: Filter) => item.key === ticketKey);
@@ -45,27 +45,28 @@
 
     search = data;
   }
+
+  let testFilters = ['currentPrice', 'freeFloat'];
 </script>
 
-<div class="grid grid-cols-2">
-  <form
-    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
-    on:submit|preventDefault={handleOnSubmit}
-  >
+<div class="flex items-start">
+  <form class="grid grid-cols-1 lg:grid-cols-4" on:submit|preventDefault={handleOnSubmit}>
     <button type="submit">Submit</button>
     {#each filters as filter}
-      <div class="m-4 border-2 border-black border-solid rounded-md">
-        <div>
+      {#if testFilters.includes(filter.key)}
+        <div class="m-4 border-2 border-black border-solid rounded-md">
           <div>
-            <div class="m-2 text-sm overflow-hidden text-center">
-              {filter.key}
+            <div>
+              <div class="m-2 text-sm overflow-hidden text-center">
+                {filter.key}
+              </div>
+            </div>
+            <div>
+              <MultiRangeSlider name={filter.key} max={filter.range.max} min={filter.range.min} />
             </div>
           </div>
-          <div>
-            <MultiRangeSlider name={filter.key} max={filter.range.max} min={filter.range.min} />
-          </div>
         </div>
-      </div>
+      {/if}
     {/each}
   </form>
 

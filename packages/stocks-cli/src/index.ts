@@ -13,7 +13,7 @@ import { syncSegments } from "./actions/sync-segments";
 import { syncSubSectors } from "./actions/sync-sub-sectors";
 import { syncTickets } from "./actions/sync-tickets";
 import { syncIncome } from "./actions/sync-income";
-import { syncStocks } from "./actions/sync-stocks";
+import { syncSource } from "./actions/sync-source";
 import dotenv from "dotenv";
 import { dropDatabase } from "./actions/drop-database";
 import { syncDatabase } from "./actions/sync-database";
@@ -127,19 +127,13 @@ program
   .command("sync:stocks")
   .description("Sync database with crawler data")
   .option("-v, --verbose", "Show informations about execution")
-  .addOption(
-    new Option(
-      "-f, --filters <filter...>",
-      "Filter @see DividendsFilter"
-    ).default(defaultFilters)
-  )
 
   .action(async (options) => {
-    const { verbose, filters } = options;
+    const { verbose } = options;
 
     log.init(verbose);
 
-    await syncStocks(filters);
+    await syncSource();
     // Connection URL
   });
 

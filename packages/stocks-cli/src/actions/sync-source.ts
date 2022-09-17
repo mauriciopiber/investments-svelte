@@ -1,9 +1,9 @@
 import { parseSourceStock, loadStocksFromSource } from "src/utils/statusinvest";
-import type { Stock, StockSource } from "@pibernetwork/stocks-model/src/types";
-import type { StockFilters } from "src/types";
-import { StockRepository } from "@pibernetwork/stocks-model/src/repository/stock";
+import type { StockSource } from "@pibernetwork/stocks-model/src/types";
 
-export async function syncStocks(filters: StockFilters) {
+import { SourceRepository } from "@pibernetwork/stocks-model/src/repository/source";
+
+export async function syncSource() {
   const emptyStocks: StockSource[] = await loadStocksFromSource();
 
   const stocks: StockSource[] = [];
@@ -33,7 +33,7 @@ export async function syncStocks(filters: StockFilters) {
     console.log(`Stock ${sourceStock.ticket}: done`);
   }
 
-  const stockRepository = new StockRepository(process.env.DATABASE_CONNECTION);
+  const stockRepository = new SourceRepository(process.env.DATABASE_CONNECTION);
 
   await stockRepository.insertMany(stocks);
 

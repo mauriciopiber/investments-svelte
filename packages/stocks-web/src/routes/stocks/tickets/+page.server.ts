@@ -7,7 +7,7 @@ export async function load() {
       tickets {
         name
         slug
-        price
+        currentPrice
         company {
           name
           slug
@@ -31,22 +31,22 @@ export async function load() {
           incomeTotal
           incomeYield
           range {
-            averageIncome
+            averageAmount
             averageYield
             totalIncome
           }
           interest {
-            averageIncome
+            averageAmount
             averageYield
             totalIncome
           }
           dividends {
-            averageIncome
+            averageAmount
             averageYield
             totalIncome
           }
           others {
-            averageIncome
+            averageAmount
             averageYield
             totalIncome
           }

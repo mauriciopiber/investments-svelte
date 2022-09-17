@@ -4,7 +4,7 @@ export interface PartialIncome {
 }
 
 export interface AverageIncome {
-  averageIncome: number;
+  averageAmount: number;
   averageYield: number;
   totalIncome: number;
 }

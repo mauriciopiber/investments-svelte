@@ -51,7 +51,6 @@ import type {
 } from "@pibernetwork/stocks-model/src/types";
 import { filterStocks } from "src/stocks/filters";
 import log from "./../utils/log";
-import { parseNumber } from "./parseNumber";
 
 export async function loadStocksFromSource(): Promise<StockSource[]> {
   const statusInvestStocks: PartialStock[] = await loadStatusInvestCSV();

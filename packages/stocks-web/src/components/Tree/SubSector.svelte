@@ -19,7 +19,7 @@
     <div class="ml-4">
       <a href={`/stocks/sub-sectors/${slug}`}>{name}</a>
     </div>
-    <Income averageIncome={income.averageAmount} averageYield={income.averageYield} />
+    <Income averageAmount={income.averageAmount} averageYield={income.averageYield} />
   </div>
 
   <div class="grid mt-2" class:hidden={!isOpen}>

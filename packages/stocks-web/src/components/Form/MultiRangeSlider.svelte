@@ -29,7 +29,7 @@
   <div>
     <input
       type="range"
-      step="1"
+      step="0.01"
       {min}
       {max}
       name={`${name}_min`}
@@ -40,7 +40,7 @@
 
     <input
       type="range"
-      step="1"
+      step="0.01"
       {min}
       {max}
       name={`${name}_max`}
@@ -73,8 +73,6 @@
     <div>
       <input
         type="input"
-        maxlength="5"
-        disabled
         bind:value={minValue}
         on:input={minTrigger}
         class="w-28  py-2 text-center border border-gray-200 rounded-lg bg-gray-50 focus:border-yellow-400 focus:outline-none"
@@ -83,8 +81,6 @@
     <div>
       <input
         type="input"
-        maxlength="5"
-        disabled
         bind:value={maxValue}
         on:input={maxTrigger}
         class="w-28 py-2 text-center border border-gray-200 rounded-lg bg-gray-50 focus:border-yellow-400 focus:outline-none"

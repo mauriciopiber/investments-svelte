@@ -1,14 +1,14 @@
 <script lang="ts">
   import Rate from '@/components/Layout/Rate.svelte';
   import Currency from '@/components/Layout/Currency.svelte';
-  export let averageIncome: number;
+  export let averageAmount: number;
   export let averageYield: number;
 </script>
 
 <div class="income">
   <div class="items">
     <div class="item average">
-      <Currency value={averageIncome} />
+      <Currency value={averageAmount} />
     </div>
     <div class="item yield">
       <Rate value={averageYield} />

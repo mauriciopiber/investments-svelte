@@ -3,6 +3,7 @@ import type { SubSector } from "./sub-sector";
 import type { Segment } from "./segment";
 import type { Company } from "./company";
 import type { Ticket } from "./ticket";
+import type { Portfolio } from "./portfolio";
 
 export interface SectorQuery extends Sector {
   subSectors: SubSectorQuery[];
@@ -27,4 +28,8 @@ export interface CompanyQuery extends Company {
 
 export interface TicketQuery extends Ticket {
   company: CompanyQuery;
+}
+
+export interface PortfolioQuery extends Portfolio {
+  ticket: TicketQuery;
 }

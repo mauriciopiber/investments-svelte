@@ -48,19 +48,19 @@ function calculateAverageIncome(
     throw new Error(`Total price is not a number -> ${price}`);
   }
 
-  const averageIncome = totalIncome / rangeInYears;
+  const averageAmount = totalIncome / rangeInYears;
 
-  if (isNaN(averageIncome) || !Number.isFinite(averageIncome)) {
+  if (isNaN(averageAmount) || !Number.isFinite(averageAmount)) {
     throw new Error(`Average income income is not a number -> ${price}`);
   }
 
-  const averageYield = (price && (averageIncome * 100) / price / 100) || 0;
+  const averageYield = (price && (averageAmount * 100) / price / 100) || 0;
 
   if (isNaN(averageYield) || !Number.isFinite(averageYield)) {
     throw new Error(`Average yield is not a number -> ${totalIncome} ${price}`);
   }
   return {
-    averageIncome,
+    averageAmount,
     averageYield,
     totalIncome,
   };

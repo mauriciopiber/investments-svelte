@@ -33,7 +33,7 @@
       type: 'link'
     },
     {
-      key: 'price',
+      key: 'currentPrice',
       label: 'Price',
       type: 'currency'
     },
@@ -69,9 +69,9 @@
         href: `/stocks/companies/${ticket.company.slug}`,
         value: ticket.company.name
       },
-      averageAmount: ticket.income.range.averageIncome,
+      averageAmount: ticket.income.range.averageAmount,
       averageYield: ticket.income.range.averageYield,
-      price: ticket.price
+      currentPrice: ticket.currentPrice
     };
   });
 

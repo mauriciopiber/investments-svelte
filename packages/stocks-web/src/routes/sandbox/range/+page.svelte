@@ -7,7 +7,7 @@
   <div class="flex m-6">
     <div class="grow">
       <div class="mt-6">
-        <MultiRangeSlider min={1} max={100} />
+        <MultiRangeSlider name="test" min={1} max={100} />
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
-import { StockRepository } from "@pibernetwork/stocks-model/src/repository/stock";
+import { SourceRepository } from "@pibernetwork/stocks-model/src/repository/source";
 import type { StockSource } from "@pibernetwork/stocks-model/src/types";
 
-const stockRepository = new StockRepository(process.env.DATABASE_CONNECTION);
+const stockRepository = new SourceRepository(process.env.DATABASE_CONNECTION);
 
 type StockFilterTypes = keyof StockSource;
 

@@ -10,7 +10,7 @@ export async function load({ params }: Page) {
       ticket(slug: "${slug}") {
         name
         slug
-        price
+        currentPrice
         income {
           startDate
           endDate
@@ -18,22 +18,22 @@ export async function load({ params }: Page) {
           incomeTotal
           incomeYield
           range {
-            averageIncome
+            averageAmount
             averageYield
             totalIncome
           }
           interest {
-            averageIncome
+            averageAmount
             averageYield
             totalIncome
           }
           dividends {
-            averageIncome
+            averageAmount
             averageYield
             totalIncome
           }
           others {
-            averageIncome
+            averageAmount
             averageYield
             totalIncome
           }

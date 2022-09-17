@@ -39,7 +39,6 @@ export class DataloaderService {
       );
 
       if (!companyDb) {
-        console.log(companyIds, companies);
         throw new Error("Graphlql Error on map results to id");
       }
       return companyDb;
@@ -81,7 +80,7 @@ export class DataloaderService {
       portfoliosLoader: new DataLoader<ObjectId, PortfolioWithId>(
         async (keys: readonly ObjectId[]) => {
           const companies = await this.portfolioRepository.queryAllByIds(keys);
-          console.log(`Found ${companies.length} portfolios`);
+
           return this._mapResultToIds<PortfolioWithId>(keys, companies);
         }
       ),

@@ -4,7 +4,7 @@ import { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sect
 import { CompanyRepository } from "@pibernetwork/stocks-model/src/repository/company";
 import { TicketRepository } from "@pibernetwork/stocks-model/src/repository/tickets";
 import { PortfolioRepository } from "@pibernetwork/stocks-model/src/repository/portfolio";
-import { StockRepository } from "@pibernetwork/stocks-model/src/repository/stock";
+
 import {
   SectorWithId,
   SegmentWithId,
@@ -31,8 +31,6 @@ const ticketRepository = new TicketRepository(process.env.DATABASE_CONNECTION);
 const portfolioRepository = new PortfolioRepository(
   process.env.DATABASE_CONNECTION
 );
-
-const stockRepository = new StockRepository(process.env.DATABASE_CONNECTION);
 
 const dataLoaders = new DataloaderService(
   companyRepository,
@@ -67,10 +65,26 @@ export default {
         };
       }, {});
 
-      const tickets: any[] = [];
+      const andQuery = (Object.keys(query) as (keyof typeof query)[]).map(
+        (key) => {
+          return {
+            [key]: query[key],
+          };
+        }
+      );
 
-      const count = tickets.length + 5;
-      console.log(JSON.stringify(query));
+      const query2 =
+        (input.length > 0 && {
+          $and: andQuery,
+        }) ||
+        {};
+
+      console.log(JSON.stringify(query2));
+
+      const tickets: TicketWithId[] = await ticketRepository.queryAll(query2);
+
+      const count = tickets.length;
+
       return {
         count,
         tickets,
@@ -85,7 +99,7 @@ export default {
       return sectors;
     },
     async filters() {
-      return await stockRepository.getFilterRanges();
+      return await ticketRepository.getFilterRanges();
     },
     async subSector(_: unknown, args: { slug: string }) {
       return await subSectorRepository.queryOne({ slug: { $eq: args.slug } });

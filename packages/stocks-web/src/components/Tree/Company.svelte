@@ -19,7 +19,7 @@
     <div class="mx-2">
       <a href={`/stocks/companies/${company.slug}`}>{company.name}</a>
     </div>
-    <Income averageIncome={income.averageAmount} averageYield={income.averageYield} />
+    <Income averageAmount={income.averageAmount} averageYield={income.averageYield} />
   </div>
 
   <div class="grid" class:hidden={!isOpen}>

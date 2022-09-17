@@ -8,6 +8,8 @@ import type {
   PartialIncome,
   TicketWithId,
 } from "@pibernetwork/stocks-model/src/types";
+import dotenv from "dotenv";
+dotenv.config();
 
 export async function syncIncome() {
   const segmentRepository = new SegmentRepository(
@@ -136,7 +138,7 @@ function calculateIncomeFromTickets(tickets: TicketWithId[]): PartialIncome {
   );
 
   const ticketsAmount = tickets.reduce(
-    (amount, ticket) => amount + ticket.income.range.averageIncome,
+    (amount, ticket) => amount + ticket.income.range.averageAmount,
     0
   );
 

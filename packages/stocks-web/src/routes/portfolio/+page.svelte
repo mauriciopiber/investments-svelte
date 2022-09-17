@@ -13,7 +13,7 @@
       label: 'Name'
     },
     {
-      key: 'price',
+      key: 'currentPrice',
       label: 'Price',
       type: 'currency'
     },
@@ -69,11 +69,11 @@
       id: ticket.name,
       name: ticket.name,
       current,
-      price: ticket.price,
-      currentAmount: current * ticket.price,
+      currentPrice: ticket.currentPrice,
+      currentAmount: current * ticket.currentPrice,
       objective,
       objectiveMissing,
-      objectiveAmount: objectiveMissing * ticket.price,
+      objectiveAmount: objectiveMissing * ticket.currentPrice,
       company: { value: ticket.company.name, href: `/stocks/companies/${ticket.company.slug}` },
       segment: {
         value: ticket.company.segment.name,

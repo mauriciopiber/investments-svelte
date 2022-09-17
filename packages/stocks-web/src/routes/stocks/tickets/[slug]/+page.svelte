@@ -33,7 +33,7 @@
   <h2>{ticket.company.name}</h2>
 </div>
 <div>
-  <Currency value={ticket.price} />
+  <Currency value={ticket.currentPrice} />
 </div>
 <div class="income">
   <h2>Total provents in {ticket.income.rangeInYears} years</h2>
@@ -47,7 +47,7 @@
 <div class="income">
   <h2>Average yearly provents in {ticket.income.rangeInYears} years</h2>
   <div class="income__item">
-    <Currency value={ticket.income.range.averageIncome} />
+    <Currency value={ticket.income.range.averageAmount} />
   </div>
   <div class="income__item">
     <Rate value={ticket.income.range.averageYield} />

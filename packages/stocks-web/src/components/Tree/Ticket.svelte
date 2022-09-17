@@ -8,7 +8,7 @@
 <div class="flex bg-rose-200 p-4 m-2 rounded-lg">
   <a href={`/stocks/ticket/${ticket.slug}`}>{ticket.name}</a>
   <Income
-    averageIncome={ticket.income.range.averageIncome}
+    averageAmount={ticket.income.range.averageAmount}
     averageYield={ticket.income.range.averageYield}
   />
 </div>

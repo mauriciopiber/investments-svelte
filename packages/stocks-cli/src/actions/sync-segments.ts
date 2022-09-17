@@ -2,8 +2,10 @@ import slug from "slug";
 import { SegmentRepository } from "@pibernetwork/stocks-model/src/repository/segment";
 import { SubSectorRepository } from "@pibernetwork/stocks-model/src/repository/sub-sector";
 import { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sector";
-import type { StockWithId } from "@pibernetwork/stocks-model/src/types";
-import { StockRepository } from "@pibernetwork/stocks-model/src/repository/stock";
+import type { StockSourceWithId } from "@pibernetwork/stocks-model/src/types";
+import { SourceRepository } from "@pibernetwork/stocks-model/src/repository/source";
+import dotenv from "dotenv";
+dotenv.config();
 
 const segmentRepository = new SegmentRepository(
   process.env.DATABASE_CONNECTION
@@ -44,9 +46,9 @@ async function isInsertedSegment(
 }
 
 export async function syncSegments() {
-  const stockRepository = new StockRepository(process.env.DATABASE_CONNECTION);
+  const stockRepository = new SourceRepository(process.env.DATABASE_CONNECTION);
 
-  const stocks: StockWithId[] = await stockRepository.queryAll({});
+  const stocks: StockSourceWithId[] = await stockRepository.queryAll({});
 
   const segmentsFromStocks = stocks.map((stock) => ({
     sector: stock.sector,
@@ -55,9 +57,11 @@ export async function syncSegments() {
   }));
 
   for (const { sector, subSector, segment } of segmentsFromStocks) {
+    if (!sector || !subSector || !segment) {
+      throw new Error();
+    }
     const uniqueSegment = await isInsertedSegment(sector, subSector, segment);
 
-    console.log(uniqueSegment);
     if (uniqueSegment) {
       continue;
     }

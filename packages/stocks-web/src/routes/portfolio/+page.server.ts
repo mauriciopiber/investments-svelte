@@ -10,7 +10,7 @@ export async function load() {
         averagePrice
         ticket {
           name
-          price
+          currentPrice
           company {
             name
             slug

@@ -1,5 +1,5 @@
 import type { Collection, MongoClient, Filter, ObjectId } from "mongodb";
-import type { Ticket, TicketWithId } from "./../types";
+import type { Ticket, TicketFilterTypes, TicketWithId } from "./../types";
 import { MongoRepository } from "./../abstracts/repository";
 
 export class TicketRepository extends MongoRepository<Ticket> {
@@ -25,7 +25,7 @@ export class TicketRepository extends MongoRepository<Ticket> {
     await this.collection.insertOne(ticket);
   }
 
-  async queryAll(filters: Filter<Ticket>): Promise<TicketWithId[]> {
+  async queryAll(filters: Filter<any>): Promise<TicketWithId[]> {
     console.log("tickets - query all", filters);
     await this.init();
     if (!this.collection) {
@@ -65,5 +65,123 @@ export class TicketRepository extends MongoRepository<Ticket> {
       return;
     }
     this.client.close();
+  }
+
+  async queryAggregate(aggregate: any): Promise<any> {
+    await this.init();
+    if (!this.collection) {
+      throw new Error("Missing connection for Stock Repository");
+    }
+    return await this.collection
+      .aggregate(aggregate)
+
+      .toArray();
+  }
+
+  async getFilterRanges() {
+    const stockKeys = await this.queryAggregate([
+      {
+        $unset: [
+          "_id",
+          "ticket",
+          "segment",
+          "sector",
+          "subSector",
+          "companyId",
+          "slug",
+          "url",
+          "name",
+          "code",
+          "dividends",
+          "segmentoDeListagem",
+          "company",
+          "income",
+        ],
+      },
+      { $project: { arrayofkeyvalue: { $objectToArray: "$$ROOT" } } },
+      { $unwind: "$arrayofkeyvalue" },
+      { $group: { _id: null, allKeys: { $addToSet: "$arrayofkeyvalue.k" } } },
+      { $sort: { allKeys: 1 } },
+    ]);
+
+    const stockItem = stockKeys[0];
+
+    // console.log(stockItem);
+    const { allKeys } = stockItem as { allKeys: TicketFilterTypes[] };
+
+    const filters = [];
+
+    for (const key of allKeys) {
+      try {
+        const range = await this.getRange(key);
+
+        filters.push({
+          key,
+          range,
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    console.log(filters);
+
+    return filters;
+  }
+
+  excludeStocks = {
+    $match: {
+      pessoaFisica: { $gt: 1000 },
+      liquidezMediaDiaria: { $gt: 1000 * 100 },
+      patrimonioLiquido: { $ne: null, $gt: 0 },
+      currentPrice: { $ne: null, $gt: 0 },
+      valorDeFirma: { $ne: null, $gt: 0 },
+      valorDeMercado: { $ne: null, $gt: 0 },
+      freeFloat: { $ne: null, $gt: 0, $lte: 100 },
+    },
+  };
+
+  async getRange(key: TicketFilterTypes) {
+    const orderByMin = await this.queryAggregate([
+      // this.excludeStocks,
+      {
+        $match: {
+          [key]: { $ne: null },
+        },
+      },
+      {
+        $sort: { [key]: 1 },
+      },
+      {
+        $limit: 1,
+      },
+    ]);
+
+    const orderByMax = await this.queryAggregate([
+      // this.excludeStocks,
+      {
+        $match: {
+          [key]: { $ne: null },
+        },
+      },
+      {
+        $sort: { [key]: -1 },
+      },
+      {
+        $limit: 1,
+      },
+    ]);
+
+    const minStock = orderByMin[0];
+
+    const maxStock = orderByMax[0];
+
+    const minValue = minStock[key];
+    const maxValue = maxStock[key];
+
+    return {
+      min: minValue,
+      max: maxValue,
+    };
   }
 }

@@ -4,11 +4,11 @@ import { CompanyRepository } from "@pibernetwork/stocks-model/src/repository/com
 import { SegmentRepository } from "@pibernetwork/stocks-model/src/repository/segment";
 import { SubSectorRepository } from "@pibernetwork/stocks-model/src/repository/sub-sector";
 import { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sector";
-import { StockRepository } from "@pibernetwork/stocks-model/src/repository/stock";
+import { SourceRepository } from "@pibernetwork/stocks-model/src/repository/source";
 
 export async function dropDatabase(dropStocks = false) {
   if (dropStocks) {
-    const stockRepository = new StockRepository(
+    const stockRepository = new SourceRepository(
       process.env.DATABASE_CONNECTION
     );
     await stockRepository.deleteMany();

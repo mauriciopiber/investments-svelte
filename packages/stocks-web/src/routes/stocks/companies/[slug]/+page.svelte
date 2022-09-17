@@ -38,7 +38,7 @@
   const rows: Rows = tickets.map((ticket) => {
     return {
       ticket: { value: ticket.name, href: `/stocks/tickets/${ticket.slug}` },
-      averageAmount: ticket.income.range.averageIncome,
+      averageAmount: ticket.income.range.averageAmount,
       averageYield: ticket.income.range.averageYield
     };
   });

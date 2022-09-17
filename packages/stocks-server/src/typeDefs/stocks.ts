@@ -2,7 +2,7 @@ import { gql } from "apollo-server";
 
 const typeDefs = gql`
   type IncomeAverage {
-    averageIncome: Float
+    averageAmount: Float
     averageYield: Float
     totalIncome: Float
   }
@@ -27,7 +27,7 @@ const typeDefs = gql`
   type Ticket {
     name: String
     slug: String
-    price: Float
+    currentPrice: Float
     company: Company
     income: Income
   }

@@ -15,7 +15,7 @@ export async function load({ params }: Page) {
           slug
           income {
             range {
-              averageIncome
+              averageAmount
             averageYield
             }
           }

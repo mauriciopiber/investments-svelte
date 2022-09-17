@@ -11,6 +11,7 @@
           count
           tickets {
             name
+            slug
           }
         }
       }
@@ -34,6 +35,13 @@
   <p>loading</p>
 {:then response}
   <div>{response.count}</div>
-{:catch}
-  <p style="color: red">error</p>
+  <div class="grid grid-cols-4">
+    {#each response.data as ticket}
+      <div>
+        <a href={`/stocks/tickets/${ticket.slug}`}>{ticket.name}</a>
+      </div>
+    {/each}
+  </div>
+{:catch e}
+  <p style="color: red">{e.message}</p>
 {/await}
