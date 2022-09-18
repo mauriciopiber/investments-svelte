@@ -13,19 +13,26 @@
       label: 'Name'
     },
     {
+      key: 'averagePrice',
+      label: 'P. Price'
+    },
+    {
       key: 'currentPrice',
-      label: 'Price',
-      type: 'currency'
+      label: 'C. Price'
+    },
+    {
+      key: 'intrinsicValue',
+      label: 'I. Price'
+    },
+    {
+      key: 'intrinsicRate',
+      label: 'I. Rate'
     },
     {
       key: 'current',
       label: 'Current'
     },
-    {
-      key: 'currentAmount',
-      label: 'Current Amount',
-      type: 'currency'
-    },
+
     {
       key: 'objective',
       label: 'Objective'
@@ -34,11 +41,7 @@
       key: 'objectiveMissing',
       label: 'Objective Missing'
     },
-    {
-      key: 'objectiveAmount',
-      label: 'Objective Amount',
-      type: 'currency'
-    },
+
     {
       key: 'company',
       label: 'Company',
@@ -62,12 +65,13 @@
   ];
 
   const rows: Rows = portfolios.map((portfolio) => {
-    const { ticket, current, objective } = portfolio;
+    const { ticket, current, objective, averagePrice } = portfolio;
 
     const objectiveMissing = objective - current;
     return {
       id: ticket.name,
       name: ticket.name,
+      averagePrice,
       current,
       currentPrice: ticket.currentPrice,
       currentAmount: current * ticket.currentPrice,
@@ -86,7 +90,9 @@
       subSector: {
         value: ticket.company.subSector.name,
         href: `/stocks/sub-sectors/${ticket.company.subSector.slug}`
-      }
+      },
+      intrinsicValue: ticket.intrinsicValue || 0,
+      intrinsicRate: ticket.intrinsicRate || 0
     };
   });
   const breadcrumb: BreadcrumbConfig = [{ key: 'investments' }, { key: 'portfolio' }];

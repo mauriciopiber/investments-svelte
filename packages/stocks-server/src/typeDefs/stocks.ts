@@ -5,8 +5,8 @@ const typeDefs = gql`
   scalar Rate
 
   type IncomeAverage {
-    averageAmount: Float
-    averageYield: Float
+    averageAmount: Currency
+    averageYield: Rate
     totalIncome: Float
   }
 
@@ -19,8 +19,8 @@ const typeDefs = gql`
     startDate: String
     endDate: String
     rangeInYears: Float
-    incomeTotal: Float
-    incomeYield: Float
+    incomeTotal: Currency
+    incomeYield: Rate
     range: IncomeAverage
     interest: IncomeAverage
     dividends: IncomeAverage
@@ -87,6 +87,8 @@ const typeDefs = gql`
     instituicional: Int
     pessoaJuridica: Int
     pessoaFisica: Int
+    intrinsicValue: Currency
+    intrinsicRate: Rate
   }
 
   type Company {
@@ -130,7 +132,7 @@ const typeDefs = gql`
     ticket: Ticket
     objective: Int
     current: Int
-    averagePrice: Float
+    averagePrice: Currency
   }
 
   input Sort {

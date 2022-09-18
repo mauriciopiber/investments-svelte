@@ -26,7 +26,6 @@ export class TicketRepository extends MongoRepository<Ticket> {
   }
 
   async queryAll(filters: Filter<any>): Promise<TicketWithId[]> {
-    console.log("tickets - query all", filters);
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Ticket Repository");
@@ -38,7 +37,6 @@ export class TicketRepository extends MongoRepository<Ticket> {
   }
 
   async queryOne(filters: Filter<Ticket>): Promise<TicketWithId | null> {
-    console.log("tickets - query one", filters);
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Sector Repository");
@@ -47,7 +45,6 @@ export class TicketRepository extends MongoRepository<Ticket> {
   }
 
   async queryAllByIds(ids: readonly ObjectId[]): Promise<TicketWithId[]> {
-    console.log(`${this.collectionName} - query by ids`, ids.length);
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Company Repository");
@@ -65,6 +62,16 @@ export class TicketRepository extends MongoRepository<Ticket> {
       return;
     }
     this.client.close();
+  }
+
+  async updateOne(_id: ObjectId, values: Partial<Ticket>) {
+    await this.init();
+
+    if (!this.collection) {
+      throw new Error("Missing connection for Company Repository");
+    }
+
+    await this.collection.updateOne({ _id }, { $set: values });
   }
 
   async queryAggregate(aggregate: any): Promise<any> {
@@ -106,7 +113,6 @@ export class TicketRepository extends MongoRepository<Ticket> {
 
     const stockItem = stockKeys[0];
 
-    // console.log(stockItem);
     const { allKeys } = stockItem as { allKeys: TicketFilterTypes[] };
 
     const filters = [];
@@ -123,8 +129,6 @@ export class TicketRepository extends MongoRepository<Ticket> {
         console.error(e);
       }
     }
-
-    console.log(filters);
 
     return filters;
   }

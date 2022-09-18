@@ -3,7 +3,10 @@ import { TicketRepository } from "@pibernetwork/stocks-model/src/repository/tick
 import { PortfolioRepository } from "@pibernetwork/stocks-model/src/repository/portfolio";
 import dotenv from "dotenv";
 dotenv.config();
-type Share = Omit<Portfolio, "ticketId"> & { ticket: string };
+
+type Share = Pick<Portfolio, "current" | "objective" | "averagePrice"> & {
+  ticket: string;
+};
 
 const portfolioRepository = new PortfolioRepository(
   process.env.DATABASE_CONNECTION
@@ -39,6 +42,7 @@ export async function syncPortfolio() {
     const portfolio: Portfolio = {
       ticketId: ticketWithId._id,
       current,
+
       objective,
       averagePrice,
     };

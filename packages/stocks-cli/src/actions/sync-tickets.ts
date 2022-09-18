@@ -17,10 +17,45 @@ const companyRepository = new CompanyRepository(
 );
 const ticketRepository = new TicketRepository(process.env.DATABASE_CONNECTION);
 
+function calculateGraham(
+  patrimonioLiquidoPorNumeroDeAcoes: number | null | undefined,
+  lucroLiquidoPorNumeroDeAcoes: number | null | undefined,
+  currentPrice: number | null
+) {
+  if (typeof patrimonioLiquidoPorNumeroDeAcoes !== "number") {
+    throw new Error(`Missing VPA for Graham`);
+  }
+
+  if (typeof lucroLiquidoPorNumeroDeAcoes !== "number") {
+    throw new Error("Missing LPA for Graham");
+  }
+
+  if (typeof currentPrice !== "number") {
+    throw new Error("Missing Current Price for Graham");
+  }
+
+  const valuation =
+    22.5 * patrimonioLiquidoPorNumeroDeAcoes * lucroLiquidoPorNumeroDeAcoes;
+
+  if (valuation <= 0) {
+    return {
+      intrinsicValue: 0,
+      intrinsicRate: 0,
+    };
+  }
+  const intrinsicValue = Math.sqrt(valuation);
+
+  const diffIntrinsicValue = currentPrice - intrinsicValue;
+  const rateDiffIntrinsicValue = (diffIntrinsicValue * 100) / currentPrice;
+
+  return {
+    intrinsicValue,
+    intrinsicRate: rateDiffIntrinsicValue,
+  };
+}
+
 export async function syncTickets(rangeInYears: number) {
   const stocks: StockSourceWithId[] = await stockRepository.queryAll({});
-
-  const ticketModels: Ticket[] = [];
 
   for (const stock of stocks) {
     const companyModel = await companyRepository.queryOne({
@@ -47,6 +82,12 @@ export async function syncTickets(rangeInYears: number) {
       stock.dividends,
       stock.currentPrice,
       rangeInYears
+    );
+
+    const intrinsic = calculateGraham(
+      stock.patrimonioLiquidoPorNumeroDeAcoes,
+      stock.lucroLiquidoPorNumeroDeAcoes,
+      stock.currentPrice
     );
 
     const ticket: Ticket = {
@@ -165,12 +206,20 @@ export async function syncTickets(rangeInYears: number) {
       instituicional: stock.instituicional || null,
       pessoaJuridica: stock.pessoaJuridica || null,
       pessoaFisica: stock.pessoaFisica || null,
+      ...intrinsic,
     };
 
-    ticketModels.push(ticket);
-  }
+    const ticketDb = await ticketRepository.queryOne({
+      name: { $eq: ticket.name },
+    });
 
-  await ticketRepository.insertMany(ticketModels);
+    if (ticketDb) {
+      await ticketRepository.updateOne(ticketDb._id, ticket);
+      continue;
+    }
+
+    await ticketRepository.insertOne(ticket);
+  }
 
   await ticketRepository.close();
   await companyRepository.close();

@@ -34,8 +34,15 @@
     },
     {
       key: 'currentPrice',
-      label: 'Price',
-      type: 'currency'
+      label: 'Price'
+    },
+    {
+      key: 'intrinsicValue',
+      label: 'Intrinsic Value'
+    },
+    {
+      key: 'intrinsicRate',
+      label: 'intrinsic Rate'
     },
     {
       key: 'averageAmount',
@@ -71,7 +78,9 @@
       },
       averageAmount: ticket.income.range.averageAmount,
       averageYield: ticket.income.range.averageYield,
-      currentPrice: ticket.currentPrice
+      currentPrice: ticket.currentPrice,
+      intrinsicRate: ticket.intrinsicRate || '-',
+      intrinsicValue: ticket.intrinsicValue || '-'
     };
   });
 

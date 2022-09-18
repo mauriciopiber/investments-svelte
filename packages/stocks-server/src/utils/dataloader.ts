@@ -30,18 +30,18 @@ export class DataloaderService {
   ) {}
 
   _mapResultToIds<T extends Document>(
-    companyIds: readonly ObjectId[],
-    companies: T[]
+    _ids: readonly ObjectId[],
+    documents: T[]
   ): T[] {
-    return companyIds.map((companyId) => {
-      const companyDb = companies.find(
+    return _ids.map((companyId) => {
+      const documentsDb = documents.find(
         (company: T) => company._id.equals(companyId) || false
       );
 
-      if (!companyDb) {
+      if (!documentsDb) {
         throw new Error("Graphlql Error on map results to id");
       }
-      return companyDb;
+      return documentsDb;
     });
   }
 

@@ -8,6 +8,8 @@ export async function load() {
         name
         slug
         currentPrice
+        intrinsicRate
+        intrinsicValue
         company {
           name
           slug

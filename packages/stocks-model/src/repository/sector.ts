@@ -37,7 +37,6 @@ export class SectorRepository extends MongoRepository<Sector> {
   }
 
   async queryAllByIds(ids: readonly ObjectId[]): Promise<SectorWithId[]> {
-    console.log("sectors - query by ids", ids.length);
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Company Repository");
@@ -51,7 +50,6 @@ export class SectorRepository extends MongoRepository<Sector> {
   }
 
   async queryAll(filters: Filter<Sector>): Promise<SectorWithId[]> {
-    console.log("sectors - query all", filters);
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Sector Repository");
@@ -63,7 +61,6 @@ export class SectorRepository extends MongoRepository<Sector> {
   }
 
   async queryOne(filters: Filter<Sector>): Promise<SectorWithId | null> {
-    console.log("sectors - query one", filters);
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Sector Repository");

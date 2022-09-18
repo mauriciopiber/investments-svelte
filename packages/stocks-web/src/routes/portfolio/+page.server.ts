@@ -11,6 +11,8 @@ export async function load() {
         ticket {
           name
           currentPrice
+          intrinsicValue
+          intrinsicRate
           company {
             name
             slug

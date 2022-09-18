@@ -53,25 +53,3 @@
 
 <Breadcrumb config={breadcrumb} />
 <DataTable {headers} {rows} />
-
-<!--
-<h1>Sectors</h1>
-<DataTable sortable size="short" {headers} {rows} {pageSize} {page}>
-  <svelte:fragment slot="cell" let:cell>
-    {#if cell.key === 'averageAmount'}
-      <Currency value={cell.value} />
-    {:else if cell.key === 'averageYield'}
-      <Rate value={cell.value} />
-    {:else if cell.key === 'slug'}
-      <Link href={`/stocks/sectors/${cell.value}`}><CenterCircle size={20} /></Link>
-    {:else}
-      {cell.value}
-    {/if}
-  </svelte:fragment>
-  <Toolbar>
-    <ToolbarContent>
-      <ToolbarSearch persistent value="" shouldFilterRows bind:filteredRowIds />
-    </ToolbarContent>
-  </Toolbar>
-</DataTable>
-<Pagination bind:pageSize bind:page totalItems={filteredRowIds.length} pageSizeInputDisabled /> -->

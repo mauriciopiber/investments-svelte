@@ -84,6 +84,9 @@ export interface Indicators {
 
   dividaBruta: number | null;
 
+  intrinsicValue: number | null;
+  intrinsicRate: number | null;
+
   disponibilidade: number | null;
   dividaLiquida: number | null;
   valorDeMercado: number | null;

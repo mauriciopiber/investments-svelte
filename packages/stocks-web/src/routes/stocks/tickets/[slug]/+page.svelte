@@ -6,7 +6,7 @@
   export let data: { ticket: TicketQuery; indicatorsGroups: IndicatorGroup[] };
   const { ticket, indicatorsGroups } = data;
 
-  const { company } = ticket;
+  const { company, income } = ticket;
   const { sector, subSector, segment } = company;
 
   const breadcrumb: BreadcrumbConfig = [
@@ -27,7 +27,7 @@
 <Breadcrumb config={breadcrumb} />
 <h1>Ticket {ticket.name}</h1>
 
-<div class="grid grid-cols-10">
+<div class={`grid grid-cols-9`}>
   {#each indicatorsGroups as indicatorGroup}
     <div class="m-4">
       <div class="text-3xl">{indicatorGroup.name}</div>
@@ -42,6 +42,53 @@
       </div>
     </div>
   {/each}
+  <div class="m-4">
+    <div class="text-3xl">Dividends</div>
+    <div>
+      <div>Range</div>
+      <div>{income.rangeInYears} years</div>
+    </div>
+    <div>
+      <div>Income Total</div>
+      <div>{income.incomeTotal}</div>
+    </div>
+    <div>
+      <div>Income Yield</div>
+      <div>{income.incomeYield}</div>
+    </div>
+    <div>
+      <div>Range Average</div>
+      <div>{income.range.averageAmount}</div>
+    </div>
+    <div>
+      <div>Range Yield</div>
+      <div>{income.range.averageYield}</div>
+    </div>
+    <div>
+      <div>Dividends Average</div>
+      <div>{income.dividends.averageAmount}</div>
+    </div>
+    <div>
+      <div>Dividends Yield</div>
+      <div>{income.dividends.averageYield}</div>
+    </div>
+    <div>
+      <div>JCP Average</div>
+      <div>{income.interest.averageAmount}</div>
+    </div>
+    <div>
+      <div>JCP Yield</div>
+      <div>{income.interest.averageYield}</div>
+    </div>
+    <div>
+      <div>Others Average</div>
+      <div>{income.interest.averageAmount}</div>
+    </div>
+    <div>
+      <div>Others Yield</div>
+      <div>{income.interest.averageYield}</div>
+    </div>
+  </div>
 </div>
 
 <!--

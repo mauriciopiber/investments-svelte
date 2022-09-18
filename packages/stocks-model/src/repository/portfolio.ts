@@ -17,7 +17,6 @@ export class PortfolioRepository extends MongoRepository<Portfolio> {
   }
 
   async queryAllByIds(ids: readonly ObjectId[]): Promise<PortfolioWithId[]> {
-    console.log("portfolios - query by ids", ids.length);
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Company Repository");
