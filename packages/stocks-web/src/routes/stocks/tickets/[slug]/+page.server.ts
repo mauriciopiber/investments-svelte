@@ -15,6 +15,57 @@ export async function load({ params }: Page) {
         minMonth
         maxYear
         minYear
+        freeFloat
+
+        tagAlong
+        liquidezMediaDiaria
+        participacaoIbov
+
+        dividendsYield
+        precoAtualPorLucroPorAcao
+        pegRatio
+        precoAtualPorValorPatrimonialPorAcao
+        valorDeFirmaPorEBITDA
+        valorDeFirmaPorEBIT
+        precoAtualPorEBITDA
+        precoAtualPorEBIT
+        patrimonioLiquidoPorNumeroDeAcoes
+        precoAtualPorAtivos
+        lucroLiquidoPorNumeroDeAcoes
+        precoAtualPorReceitaLiquidaPorAcao
+        precoAtualPorAtivoCirculanteMenosPassivoCirculante
+        precoAtualPorAtivosCirculanesLiquidosPorAcao
+        dividaLiquidaPorPatrimonioLiquido
+        dividaLiquidaPorEBITDA
+        dividaLiquidaPorEBIT
+        patrimonioLiquidoPorAtivos
+        passivosPorAtivos
+        ativoCirculantePorPassivoCirculante
+        lucroBrutoPorReceitaLiquida
+        EBITDAPorReceitaLiquida
+        EBITPorReceitaLiquida
+        lucroLiquidoPorReceitaLiquida
+        lucroLiquidoPorPatrimonioLiquido
+        lucroLiquidoPorAtivoTotal
+        ebitMenosImpostosPorPatrimonioLiquidoMaisEndividamento
+        receitaLiquidaPorTotalMedioDeAtivos
+        compoundAnnualGrowthRateReceita5Anos
+        compoundAnnualGrowthRateLucro5Anos
+        patrimonioLiquido
+        ativos
+        ativoCirculante
+        dividaBruta
+        disponibilidade
+        dividaLiquida
+        valorDeMercado
+        valorDeFirma
+        quantidadeDePapeis
+        segmentoDeListagem
+        freeFloat
+        investidores
+        instituicional
+        pessoaJuridica
+        pessoaFisica
         income {
           startDate
           endDate

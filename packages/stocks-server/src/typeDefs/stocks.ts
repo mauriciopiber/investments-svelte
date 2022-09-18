@@ -1,6 +1,9 @@
 import { gql } from "apollo-server";
 
 const typeDefs = gql`
+  scalar Currency
+  scalar Rate
+
   type IncomeAverage {
     averageAmount: Float
     averageYield: Float
@@ -27,13 +30,63 @@ const typeDefs = gql`
   type Ticket {
     name: String
     slug: String
-    currentPrice: Float
+    currentPrice: Currency
     company: Company
     income: Income
-    maxMonth: Float
-    minMonth: Float
-    maxYear: Float
-    minYear: Float
+    maxMonth: Currency
+    minMonth: Currency
+    maxYear: Currency
+    minYear: Currency
+
+    tagAlong: Rate
+    liquidezMediaDiaria: Currency
+    participacaoIbov: Rate
+
+    dividendsYield: Rate
+    precoAtualPorLucroPorAcao: Float
+    pegRatio: Float
+    precoAtualPorValorPatrimonialPorAcao: Float
+    valorDeFirmaPorEBITDA: Float
+    valorDeFirmaPorEBIT: Float
+    precoAtualPorEBITDA: Float
+    precoAtualPorEBIT: Float
+    patrimonioLiquidoPorNumeroDeAcoes: Float
+    precoAtualPorAtivos: Float
+    lucroLiquidoPorNumeroDeAcoes: Float
+    precoAtualPorReceitaLiquidaPorAcao: Float
+    precoAtualPorAtivoCirculanteMenosPassivoCirculante: Float
+    precoAtualPorAtivosCirculanesLiquidosPorAcao: Float
+    dividaLiquidaPorPatrimonioLiquido: Float
+    dividaLiquidaPorEBITDA: Float
+    dividaLiquidaPorEBIT: Float
+    patrimonioLiquidoPorAtivos: Float
+    passivosPorAtivos: Float
+    ativoCirculantePorPassivoCirculante: Float
+    lucroBrutoPorReceitaLiquida: Rate
+    EBITDAPorReceitaLiquida: Rate
+    EBITPorReceitaLiquida: Rate
+    lucroLiquidoPorReceitaLiquida: Rate
+    lucroLiquidoPorPatrimonioLiquido: Rate
+    lucroLiquidoPorAtivoTotal: Rate
+    ebitMenosImpostosPorPatrimonioLiquidoMaisEndividamento: Rate
+    receitaLiquidaPorTotalMedioDeAtivos: Float
+    compoundAnnualGrowthRateReceita5Anos: Rate
+    compoundAnnualGrowthRateLucro5Anos: Rate
+    patrimonioLiquido: Currency
+    ativos: Currency
+    ativoCirculante: Currency
+    dividaBruta: Currency
+    disponibilidade: Currency
+    dividaLiquida: Currency
+    valorDeMercado: Currency
+    valorDeFirma: Currency
+    quantidadeDePapeis: Float
+    segmentoDeListagem: String
+    freeFloat: Rate
+    investidores: Int
+    instituicional: Int
+    pessoaJuridica: Int
+    pessoaFisica: Int
   }
 
   type Company {

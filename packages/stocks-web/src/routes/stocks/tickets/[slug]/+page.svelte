@@ -1,7 +1,5 @@
 <script lang="ts">
   import Breadcrumb from '@/components/Breadcrumb/Breadcrumb.svelte';
-  import Rate from '@/components/Layout/Rate.svelte';
-  import Currency from '@/components/Layout/Currency.svelte';
   import type { IndicatorGroup, TicketQuery } from '@pibernetwork/stocks-model/src/types';
   import type { BreadcrumbConfig } from '@/types';
 
@@ -29,20 +27,24 @@
 <Breadcrumb config={breadcrumb} />
 <h1>Ticket {ticket.name}</h1>
 
-{#each indicatorsGroups as indicatorGroup}
-  <div>
-    <div>{indicatorGroup.name}</div>
-    <div>
-      {#each indicatorGroup.indicators as indicator}
-        <div>
-          <div>{indicator.label}</div>
-          <div>{ticket[indicator.key]}</div>
-        </div>
-      {/each}
-    </div>
-  </div>
-{/each}
+<div class="grid grid-cols-10">
+  {#each indicatorsGroups as indicatorGroup}
+    <div class="m-4">
+      <div class="text-3xl">{indicatorGroup.name}</div>
 
+      <div class="flex flex-col">
+        {#each indicatorGroup.indicators as indicator}
+          <div class="m-1">
+            <div>{indicator.label}</div>
+            <div>{ticket[indicator.key]}</div>
+          </div>
+        {/each}
+      </div>
+    </div>
+  {/each}
+</div>
+
+<!--
 {JSON.stringify(indicatorsGroups)}
 <div>
   <h2>{ticket.company.name}</h2>
@@ -78,8 +80,7 @@
 </div>
 <div>
   <h2>{ticket.company.segment.name}</h2>
-</div>
-
+</div> -->
 <style>
   .income {
     display: flex;
