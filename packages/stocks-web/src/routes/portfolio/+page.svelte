@@ -13,20 +13,30 @@
       label: 'Name'
     },
     {
-      key: 'averagePrice',
-      label: 'P. Price'
-    },
-    {
       key: 'currentPrice',
       label: 'C. Price'
     },
     {
+      key: 'averagePrice',
+      label: 'A. Price'
+    },
+
+    {
       key: 'intrinsicValue',
-      label: 'I. Price'
+      label: 'G. Price'
     },
     {
       key: 'intrinsicRate',
-      label: 'I. Rate'
+      label: 'G. Rate'
+    },
+
+    {
+      key: 'liquidationAmount',
+      label: 'L. Amount'
+    },
+    {
+      key: 'liquidationRate',
+      label: 'L. Rate'
     },
     {
       key: 'current',
@@ -39,7 +49,27 @@
     },
     {
       key: 'objectiveMissing',
-      label: 'Objective Missing'
+      label: 'O. Missing'
+    },
+    {
+      key: 'investmentAmount',
+      label: 'Inv. Amount'
+    },
+    {
+      key: 'averageYield',
+      label: 'A. Yield'
+    },
+    {
+      key: 'averageAmount',
+      label: 'A. Amount'
+    },
+    {
+      key: 'currentDividends',
+      label: 'C. Dividends'
+    },
+    {
+      key: 'objectiveDividends',
+      label: 'O. Dividends'
     },
 
     {
@@ -65,13 +95,34 @@
   ];
 
   const rows: Rows = portfolios.map((portfolio) => {
-    const { ticket, current, objective, averagePrice } = portfolio;
+    const {
+      ticket,
+      current,
+      objective,
+      averagePrice,
+      liquidationAmount,
+      liquidationRate,
+      investmentAmount,
+      currentDividends,
+      objectiveDividends
+    } = portfolio;
+
+    const { income } = ticket;
+    const { range } = income;
+    const { averageAmount, averageYield } = range;
 
     const objectiveMissing = objective - current;
     return {
       id: ticket.name,
       name: ticket.name,
+      liquidationAmount,
+      liquidationRate,
+      investmentAmount,
+      currentDividends,
+      objectiveDividends,
       averagePrice,
+      averageYield,
+      averageAmount,
       current,
       currentPrice: ticket.currentPrice,
       currentAmount: current * ticket.currentPrice,

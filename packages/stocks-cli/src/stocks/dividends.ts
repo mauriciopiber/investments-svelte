@@ -1,10 +1,10 @@
-import type { StockDividends } from "../types";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import isBetween from "dayjs/plugin/isBetween";
 import type {
   AverageIncome,
   Income,
+  StockDividends,
 } from "@pibernetwork/stocks-model/src/types";
 import { parseRate } from "./../utils/parseRate";
 

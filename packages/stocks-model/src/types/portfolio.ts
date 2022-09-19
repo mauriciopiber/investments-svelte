@@ -5,11 +5,11 @@ export interface Portfolio {
   current: number;
   objective: number;
   averagePrice: number;
-  // // intrinsic
-  // intrinsicValue: number;
-  // intrinsicRate: number;
-  // // liquidation
-  // liquidationValue: number;
-  // liquidationRate: number;
+
+  liquidationAmount: number;
+  liquidationRate: number;
+  investmentAmount: number;
+  objectiveDividends: number;
+  currentDividends: number;
 }
 export type PortfolioWithId = WithId<Portfolio>;

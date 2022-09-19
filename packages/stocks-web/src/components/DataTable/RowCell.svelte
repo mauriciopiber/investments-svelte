@@ -16,7 +16,7 @@
   }
 </script>
 
-<td class="border-grey-light border hover:bg-gray-100 p-3 h-12">
+<td class="border-grey-light border hover:bg-gray-100 p-2 h-12">
   {#if type === 'link'}
     <a href={valueLink.href}>{valueLink.value}</a>
   {:else}

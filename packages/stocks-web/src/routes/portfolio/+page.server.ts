@@ -8,11 +8,22 @@ export async function load() {
         current
         objective
         averagePrice
+        liquidationAmount
+        liquidationRate
+        investmentAmount
+        objectiveDividends
+        currentDividends
         ticket {
           name
           currentPrice
           intrinsicValue
           intrinsicRate
+          income {
+            range {
+              averageYield
+              averageAmount
+            }
+          }
           company {
             name
             slug

@@ -15,8 +15,9 @@ const portfolioRepository = new PortfolioRepository(
 const ticketRepository = new TicketRepository(process.env.DATABASE_CONNECTION);
 
 export async function syncPortfolio() {
+  await portfolioRepository.deleteMany();
   const shares: Share[] = [
-    { ticket: "BBAS3", current: 18, objective: 450, averagePrice: 38.95 },
+    { ticket: "BBAS3", current: 18, objective: 450, averagePrice: 39.31 },
     { ticket: "BBSE3", current: 34, objective: 425, averagePrice: 29.14 },
     { ticket: "BMGB4", current: 99, objective: 6720, averagePrice: 2.77 },
     { ticket: "BRAP3", current: 20, objective: 310, averagePrice: 20.83 },
@@ -26,7 +27,7 @@ export async function syncPortfolio() {
     { ticket: "ITUB3", current: 25, objective: 700, averagePrice: 21.23 },
     { ticket: "KLBN3", current: 198, objective: 7225, averagePrice: 3.94 },
     { ticket: "PETR3", current: 26, objective: 250, averagePrice: 36.13 },
-    { ticket: "SYNE3", current: 50, objective: 430, averagePrice: 1.97 },
+    { ticket: "SYNE3", current: 50, objective: 430, averagePrice: 4.58 },
     { ticket: "VALE3", current: 17, objective: 180, averagePrice: 65.73 },
   ];
 
@@ -39,12 +40,29 @@ export async function syncPortfolio() {
       throw new Error("Missing portfolio ticket");
     }
 
+    const { income, currentPrice } = ticketWithId;
+    const { range } = income;
+    const { averageAmount } = range;
+
+    const currentInvestment = current * averagePrice;
+    const objectiveMissing = objective - current;
+
+    const liquidationAmount = current * currentPrice;
+    const liquidationRate = (liquidationAmount * 100) / currentInvestment - 100;
+    const investmentAmount = objectiveMissing * currentPrice;
+    const objectiveDividends = objective * averageAmount;
+    const currentDividends = current * averageAmount;
+
     const portfolio: Portfolio = {
       ticketId: ticketWithId._id,
       current,
-
       objective,
       averagePrice,
+      liquidationAmount,
+      liquidationRate,
+      investmentAmount,
+      objectiveDividends,
+      currentDividends,
     };
 
     await portfolioRepository.insertOne(portfolio);

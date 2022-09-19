@@ -133,6 +133,11 @@ const typeDefs = gql`
     objective: Int
     current: Int
     averagePrice: Currency
+    liquidationAmount: Currency
+    liquidationRate: Rate
+    investmentAmount: Currency
+    objectiveDividends: Currency
+    currentDividends: Currency
   }
 
   input Sort {

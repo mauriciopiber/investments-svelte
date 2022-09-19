@@ -1,8 +1,6 @@
 import log from "./utils/log";
 import { Command, Option } from "commander";
-import { dividendsByWallet } from "./actions/dividends-by-wallet";
-import { dividendsByGoal } from "./actions/dividends-by-goal";
-import { parseCommandFilters } from "./commands/filters";
+
 import { syncCompanies } from "./actions/sync-companies";
 import { syncSectors } from "./actions/sync-sector";
 import { syncSegments } from "./actions/sync-segments";
@@ -19,65 +17,11 @@ dotenv.config();
 const program = new Command();
 
 const defaultRange = 6;
-const defaultTarget = 1000;
 
 program
   .name("Stocks")
   .description("CLI to analyze stocks on Brazilian Market")
   .version("0.1.0");
-
-program
-  .command("wallet")
-  .description("Get all dividends by wallet")
-  .addOption(
-    new Option(
-      "-t, --target <value>",
-      "Value of dividends you want to get from stock by month"
-    ).default(defaultTarget)
-  )
-
-  .addOption(
-    new Option(
-      "-r, --range <value>",
-      "Range in years to be used to calculate average dividends by year"
-    ).default(defaultRange)
-  )
-  .action(async (options) => {
-    const { range, target } = options;
-
-    await dividendsByWallet(range, target);
-  });
-
-program
-  .command("goal")
-  .description("Get all dividends by Goal")
-  .addOption(
-    new Option(
-      "-t, --target <value>",
-      "Value of dividends you want to get from stock by month"
-    ).default(defaultTarget)
-  )
-  .addOption(
-    new Option(
-      "-r, --range",
-      "Range in years to be used to calculate average dividends by year"
-    ).default(defaultRange)
-  )
-  .addOption(
-    new Option(
-      "-f, --filters <filter...>",
-      "Filter @see DividendsFilter"
-    ).default([])
-  )
-
-  .action(async (options) => {
-    const { /*wallet,*/ filters, target, range } = options;
-
-    const stocksFilter = await parseCommandFilters(filters);
-    // const useWallet = wallet || false;
-
-    await dividendsByGoal(stocksFilter, range, target);
-  });
 
 program
   .command("sync:stocks")
