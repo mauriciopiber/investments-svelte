@@ -11,6 +11,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (_, res) => {
+  res.status(301).redirect("/graphql");
+});
+
 const httpServer = http.createServer(app);
 
 const startApolloServer = async (app: Express, httpServer: http.Server) => {

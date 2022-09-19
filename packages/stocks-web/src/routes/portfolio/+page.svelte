@@ -10,7 +10,8 @@
   const headers: Header = [
     {
       key: 'name',
-      label: 'Name'
+      label: 'Name',
+      type: 'link'
     },
     {
       key: 'currentPrice',
@@ -113,8 +114,7 @@
 
     const objectiveMissing = objective - current;
     return {
-      id: ticket.name,
-      name: ticket.name,
+      name: { value: ticket.name, href: `/stocks/tickets/${ticket.slug}` },
       liquidationAmount,
       liquidationRate,
       investmentAmount,

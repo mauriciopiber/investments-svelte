@@ -9,6 +9,7 @@ import type {
 import slug from "slug";
 import { calculateDividends } from "src/stocks/dividends";
 import dotenv from "dotenv";
+import { isNumber } from "$utils/isNumber";
 dotenv.config();
 
 const stockRepository = new SourceRepository(process.env.DATABASE_CONNECTION);
@@ -34,10 +35,17 @@ function calculateGraham(
     throw new Error("Missing Current Price for Graham");
   }
 
+  if (currentPrice === 0) {
+    return {
+      intrinsicValue: 0,
+      intrinsicRate: 0,
+    };
+  }
+
   const valuation =
     22.5 * patrimonioLiquidoPorNumeroDeAcoes * lucroLiquidoPorNumeroDeAcoes;
 
-  if (valuation <= 0) {
+  if (!isNumber(valuation) || valuation <= 0) {
     return {
       intrinsicValue: 0,
       intrinsicRate: 0,
@@ -47,6 +55,12 @@ function calculateGraham(
 
   const diffIntrinsicValue = currentPrice - intrinsicValue;
   const rateDiffIntrinsicValue = (diffIntrinsicValue * 100) / currentPrice;
+
+  if (!isNumber(rateDiffIntrinsicValue)) {
+    throw new Error(
+      `Rate diff is not a number: ${rateDiffIntrinsicValue} ${diffIntrinsicValue} ${currentPrice} ${intrinsicValue}`
+    );
+  }
 
   return {
     intrinsicValue,

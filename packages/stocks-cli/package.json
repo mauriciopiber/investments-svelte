@@ -47,6 +47,7 @@
     "test:headed": "pnpm playwright test --headed",
     "release": "changeset publish",
     "update": "pnpm update -i -L",
-    "validate": "pnpm run format && pnpm run lint && pnpm run check"
+    "validate": "pnpm run format && pnpm run lint && pnpm run check",
+    "sync:tickets": "pnpm run build && node dist/index.cjs sync:tickets"
   }
 }

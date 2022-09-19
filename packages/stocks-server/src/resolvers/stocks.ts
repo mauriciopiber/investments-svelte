@@ -311,14 +311,6 @@ export default {
             },
           ],
         },
-
-        // quantidadeDePapeis
-        // segmentoDeListagem
-        // freeFloat
-        // investidores
-        // instituicional
-        // pessoaJuridica
-        // pessoaFisica
       ];
 
       return indicators;
@@ -326,32 +318,28 @@ export default {
     async search(_: unknown, args: InputFilter) {
       const { input } = args;
 
-      const query = input.reduce((filter, inputFilter) => {
-        const { key, range } = inputFilter;
-        return {
-          ...filter,
-          [key]: {
-            $gte: range.min,
-            $lte: range.max,
-          },
-        };
-      }, {});
+      const queryKeys = input.map((filter) => {
+        const { key, range } = filter;
+        const { min, max, nullable } = range;
 
-      const andQuery = (Object.keys(query) as (keyof typeof query)[]).map(
-        (key) => {
-          return {
-            [key]: query[key],
-          };
+        const clauses = [];
+
+        clauses.push({ [key]: { $gte: min, $lte: max } });
+        if (nullable) {
+          clauses.push({ [key]: { $eq: null } });
         }
-      );
 
-      const query2 =
-        (input.length > 0 && {
-          $and: andQuery,
+        return {
+          $or: clauses,
+        };
+      });
+
+      const query =
+        (queryKeys.length > 0 && {
+          $and: queryKeys,
         }) ||
         {};
-
-      const tickets: TicketWithId[] = await ticketRepository.queryAll(query2);
+      const tickets: TicketWithId[] = await ticketRepository.queryAll(query);
 
       const count = tickets.length;
 

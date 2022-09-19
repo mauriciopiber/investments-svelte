@@ -29,6 +29,7 @@ export async function syncPortfolio() {
     { ticket: "PETR3", current: 26, objective: 250, averagePrice: 36.13 },
     { ticket: "SYNE3", current: 50, objective: 430, averagePrice: 4.58 },
     { ticket: "VALE3", current: 17, objective: 180, averagePrice: 65.73 },
+    { ticket: "PSSA3", current: 0, objective: 400, averagePrice: 0 },
   ];
 
   for (const { current, objective, averagePrice, ticket } of shares) {
@@ -48,7 +49,10 @@ export async function syncPortfolio() {
     const objectiveMissing = objective - current;
 
     const liquidationAmount = current * currentPrice;
-    const liquidationRate = (liquidationAmount * 100) / currentInvestment - 100;
+    const liquidationRate =
+      (currentInvestment > 0 &&
+        (liquidationAmount * 100) / currentInvestment - 100) ||
+      0;
     const investmentAmount = objectiveMissing * currentPrice;
     const objectiveDividends = objective * averageAmount;
     const currentDividends = current * averageAmount;

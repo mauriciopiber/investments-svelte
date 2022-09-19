@@ -7,6 +7,7 @@ export interface Filter {
   range: {
     min: number;
     max: number;
+    nullable?: boolean;
   };
 }
 

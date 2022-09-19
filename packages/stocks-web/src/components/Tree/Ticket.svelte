@@ -5,7 +5,7 @@
 </script>
 
 <div class="flex bg-rose-200 p-4 m-2 rounded-lg">
-  <a href={`/stocks/ticket/${ticket.slug}`}>{ticket.name}</a>
+  <a href={`/stocks/tickets/${ticket.slug}`}>{ticket.name}</a>
   <div class="flex">
     <div class="mx-1">
       {ticket.income.range.averageAmount}

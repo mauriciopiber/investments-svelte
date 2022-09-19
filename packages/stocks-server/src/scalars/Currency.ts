@@ -20,7 +20,7 @@ function generateCurrency(value: unknown): string {
     currencyDisplay: "symbol",
   };
 
-  const formattedValue = new Intl.NumberFormat("en-US", formatConfig)
+  const formattedValue = new Intl.NumberFormat("pt-BR", formatConfig)
     .format(value)
     .replace(/^(\D+)/, "$1 ");
 

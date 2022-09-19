@@ -20,17 +20,27 @@
     for (let field of formData) {
       const [key, value] = field;
 
+      console.log(key, value);
+
       const formInput = key.split('_');
 
       const ticketKey = formInput[0] as TicketFilterTypes;
-      const rangeKey = formInput[1] as 'min' | 'max';
+      const rangeKey = formInput[1] as 'min' | 'max' | 'nullable';
 
       const rangeItem = data.find((item: Filter) => item.key === ticketKey);
 
       const numberValue = parseFloat(value as string);
 
       if (rangeItem) {
-        rangeItem.range[rangeKey] = numberValue;
+        if (rangeKey === 'nullable') {
+          rangeItem.range['nullable'] = true;
+        }
+        if (rangeKey === 'min') {
+          rangeItem.range['min'] = numberValue;
+        }
+        if (rangeKey === 'max') {
+          rangeItem.range['max'] = numberValue;
+        }
         continue;
       }
 
@@ -38,36 +48,31 @@
         key: ticketKey,
         range: {
           min: rangeKey === 'min' ? numberValue : 0,
-          max: rangeKey === 'max' ? numberValue : 0
-        }
+          max: rangeKey === 'max' ? numberValue : 0,
+          nullable: rangeKey === 'nullable' ? true : false,
+        },
       });
     }
 
+    console.log(data);
     search = data;
   }
 
-  let testFilters = ['currentPrice', 'freeFloat'];
+  let excludeFilters = ['intrinsicRate', 'intrinsicValue', 'participacaoIbov'];
 </script>
 
 <div class="flex items-start">
-  <form class="grid grid-cols-1 lg:grid-cols-4" on:submit|preventDefault={handleOnSubmit}>
+  <form on:submit|preventDefault={handleOnSubmit}>
     <button type="submit">Submit</button>
-    {#each filters as filter}
-      {#if testFilters.includes(filter.key)}
-        <div class="m-4 border-2 border-black border-solid rounded-md">
-          <div>
-            <div>
-              <div class="m-2 text-sm overflow-hidden text-center">
-                {filter.key}
-              </div>
-            </div>
-            <div>
-              <MultiRangeSlider name={filter.key} max={filter.range.max} min={filter.range.min} />
-            </div>
+    <div class="grid grid-cols-2">
+      {#each filters as filter}
+        {#if !excludeFilters.includes(filter.key)}
+          <div class="m-4 border-2 border-black border-solid rounded-md">
+            <MultiRangeSlider name={filter.key} max={filter.range.max} min={filter.range.min} />
           </div>
-        </div>
-      {/if}
-    {/each}
+        {/if}
+      {/each}
+    </div>
   </form>
 
   <div>

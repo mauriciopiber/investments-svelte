@@ -158,6 +158,7 @@ const typeDefs = gql`
   input SearchRange {
     min: Float
     max: Float
+    nullable: Boolean
   }
 
   input Search {

@@ -7,6 +7,7 @@ import type {
   StockDividends,
 } from "@pibernetwork/stocks-model/src/types";
 import { parseRate } from "./../utils/parseRate";
+import { isNumber } from "$utils/isNumber";
 
 dayjs.extend(isBetween);
 dayjs.extend(customParseFormat);
@@ -28,22 +29,22 @@ function calculateAverageIncome(
   rangeInYears: number,
   price: number
 ): AverageIncome {
-  if (isNaN(totalIncome) || !Number.isFinite(totalIncome)) {
+  if (!isNumber(totalIncome)) {
     throw new Error(`Total income is not a number -> ${totalIncome}}`);
   }
-  if (isNaN(price) || !Number.isFinite(price)) {
+  if (!isNumber(price)) {
     throw new Error(`Total price is not a number -> ${price}`);
   }
 
   const averageAmount = totalIncome / rangeInYears;
 
-  if (isNaN(averageAmount) || !Number.isFinite(averageAmount)) {
+  if (!isNumber(averageAmount)) {
     throw new Error(`Average income income is not a number -> ${price}`);
   }
 
   const averageYield = (price && (averageAmount * 100) / price) || 0;
 
-  if (isNaN(averageYield) || !Number.isFinite(averageYield)) {
+  if (!isNumber(averageYield)) {
     throw new Error(`Average yield is not a number -> ${totalIncome} ${price}`);
   }
   return {

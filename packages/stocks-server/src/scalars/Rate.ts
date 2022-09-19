@@ -17,7 +17,7 @@ function generateRate(value: unknown): string {
 
   const valueFormatted = `${roundValue
     .toString()
-    .padStart(5, "0")
+    .padStart(4, "0")
     .replace(".", ",")}%`;
   return valueFormatted;
 }

@@ -7,7 +7,7 @@
     "lint": "eslint --ignore-path .gitignore ./src && prettier --check ./src",
     "check": "tsc --noEmit",
     "format": "prettier --write ./src",
-    "dev": "nodemon --exec ts-node src/index.ts",
+    "dev": "nodemon --watch ../stocks-model --watch . --exec ts-node src/index.ts",
     "validate": "pnpm run format && pnpm run lint && pnpm run check"
   },
   "keywords": [],

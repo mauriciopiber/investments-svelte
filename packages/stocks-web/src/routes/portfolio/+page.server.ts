@@ -15,6 +15,7 @@ export async function load() {
         currentDividends
         ticket {
           name
+          slug
           currentPrice
           intrinsicValue
           intrinsicRate
