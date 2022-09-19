@@ -7,7 +7,7 @@ import type {
   StockSourceWithId,
 } from "@pibernetwork/stocks-model/src/types";
 import slug from "slug";
-import { calculateDividendsV2 } from "src/stocks/dividends";
+import { calculateDividends } from "src/stocks/dividends";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -78,7 +78,7 @@ export async function syncTickets(rangeInYears: number) {
 
     // console.log(rangeInYears);
 
-    const income: Income = calculateDividendsV2(
+    const income: Income = calculateDividends(
       stock.dividends,
       stock.currentPrice,
       rangeInYears

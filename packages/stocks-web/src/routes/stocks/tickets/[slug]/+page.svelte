@@ -72,6 +72,7 @@
       <div>Dividends Yield</div>
       <div>{income.dividends.averageYield}</div>
     </div>
+
     <div>
       <div>JCP Average</div>
       <div>{income.interest.averageAmount}</div>
@@ -80,13 +81,14 @@
       <div>JCP Yield</div>
       <div>{income.interest.averageYield}</div>
     </div>
+
     <div>
       <div>Others Average</div>
-      <div>{income.interest.averageAmount}</div>
+      <div>{income.others.averageAmount}</div>
     </div>
     <div>
       <div>Others Yield</div>
-      <div>{income.interest.averageYield}</div>
+      <div>{income.others.averageYield}</div>
     </div>
   </div>
 </div>

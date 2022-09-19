@@ -11,8 +11,8 @@ const typeDefs = gql`
   }
 
   type IncomePartial {
-    averageAmount: Float
-    averageYield: Float
+    averageAmount: Currency
+    averageYield: Rate
   }
 
   type Income {

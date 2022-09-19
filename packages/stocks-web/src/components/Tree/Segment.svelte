@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { SegmentQuery } from '@pibernetwork/stocks-model/src/types';
   import Company from './Company.svelte';
-  import Income from '@/components/Stocks/Income.svelte';
+
   import Toggle from './Toggle.svelte';
   export let segment: SegmentQuery;
 
@@ -19,7 +19,14 @@
     <div class="ml-4">
       <a href={`/stocks/segments/${slug}`}>{name}</a>
     </div>
-    <Income averageAmount={income.averageAmount} averageYield={income.averageYield} />
+    <div class="flex">
+      <div class="mx-1">
+        {income.averageAmount}
+      </div>
+      <div class="mx-1">
+        {income.averageYield}
+      </div>
+    </div>
   </div>
 
   <div class="grid" class:hidden={!isOpen}>

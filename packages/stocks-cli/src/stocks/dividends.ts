@@ -1,4 +1,4 @@
-import type { AverageDividends, StockDividends } from "../types";
+import type { StockDividends } from "../types";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import isBetween from "dayjs/plugin/isBetween";
@@ -12,19 +12,6 @@ dayjs.extend(isBetween);
 dayjs.extend(customParseFormat);
 const DIVIDENDS = "Dividendo";
 const INTEREST = "Juros Sobre Capital Próprio";
-
-export function calculateAverageDividends(
-  dividendsData: StockDividends[],
-  currentPrice: number,
-  rangeInYears: number
-): AverageDividends {
-  const average = calculateDividends(dividendsData, rangeInYears);
-
-  return {
-    averageValue: average,
-    averageYield: (average * 100) / currentPrice,
-  };
-}
 
 function calculateTotalIncome(incomes: StockDividends[]): number {
   if (incomes.length <= 0) {
@@ -54,7 +41,7 @@ function calculateAverageIncome(
     throw new Error(`Average income income is not a number -> ${price}`);
   }
 
-  const averageYield = (price && (averageAmount * 100) / price / 100) || 0;
+  const averageYield = (price && (averageAmount * 100) / price) || 0;
 
   if (isNaN(averageYield) || !Number.isFinite(averageYield)) {
     throw new Error(`Average yield is not a number -> ${totalIncome} ${price}`);
@@ -104,7 +91,7 @@ function calculateDividendsIncome(
   return calculateAverageIncome(totalDividends, rangeInYears, price);
 }
 
-export function calculateDividendsV2(
+export function calculateDividends(
   dividendsData: StockDividends[],
   currentPrice: number,
   rangeInYears: number
@@ -140,25 +127,4 @@ export function calculateDividendsV2(
     ),
     others: calculateOthersIncome(incomeInRange, rangeInYears, currentPrice),
   };
-}
-
-function calculateDividends(
-  dividendsData: StockDividends[],
-  rangeInYears: number
-): number {
-  const dividendsLimit = dayjs().subtract(rangeInYears, "year");
-
-  const lastDividends = dividendsData.filter((dividends) => {
-    const { paymentDate } = dividends;
-    const formattedPaymentDate = dayjs(paymentDate, "DD/MM/YYYY");
-
-    return dividendsLimit <= formattedPaymentDate;
-  });
-
-  const totalDividends = lastDividends.reduce((totalDividends, dividends) => {
-    const { value } = dividends;
-    return totalDividends + value;
-  }, 0);
-
-  return totalDividends > 0 ? totalDividends / rangeInYears : 0;
 }

@@ -3,7 +3,7 @@
   import type { Route } from '@/types';
   import DropdownLink from './DropdownLink.svelte';
 
-  export let isOpen: boolean = false;
+  export let isOpen = false;
   export let routes: Route[];
 
   function toggle() {

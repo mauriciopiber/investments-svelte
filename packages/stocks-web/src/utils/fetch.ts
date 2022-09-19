@@ -1,6 +1,10 @@
 import { SERVER_URL } from '$lib/Env';
+import type { Filter } from '@pibernetwork/stocks-model/src/types';
 
-export async function fetchGraphql(query: string, variables: any = {}) {
+export async function fetchGraphql(
+  query: string,
+  variables: { [key: string]: string | number | Filter[] } = {}
+) {
   const request = await fetch(SERVER_URL, {
     method: 'POST',
     headers: {

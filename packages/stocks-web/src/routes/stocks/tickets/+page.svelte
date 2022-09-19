@@ -46,13 +46,19 @@
     },
     {
       key: 'averageAmount',
-      label: 'Average Amount',
-      type: 'currency'
+      label: 'Average Amount'
     },
     {
       key: 'averageYield',
-      label: 'Average Yield',
-      type: 'rate'
+      label: 'Average Yield'
+    },
+    {
+      key: 'incomeAmount',
+      label: 'Income Amount'
+    },
+    {
+      key: 'incomeRate',
+      label: 'Income Rate'
     }
   ];
 
@@ -76,6 +82,8 @@
         href: `/stocks/companies/${ticket.company.slug}`,
         value: ticket.company.name
       },
+      incomeAmount: ticket.income.incomeTotal,
+      incomeRate: ticket.income.incomeYield,
       averageAmount: ticket.income.range.averageAmount,
       averageYield: ticket.income.range.averageYield,
       currentPrice: ticket.currentPrice,
