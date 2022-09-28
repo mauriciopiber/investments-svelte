@@ -14,11 +14,15 @@ export const TYPES = {
   },
   Ticket: {
     Repository: Symbol.for("TicketRepository"),
+    Service: Symbol.for("TicketService"),
   },
   Portfolio: {
     Repository: Symbol.for("PortfolioRepository"),
   },
   StocksSource: {
     Repository: Symbol.for("StocksSourceRepository"),
+  },
+  Profile: {
+    Repository: Symbol.for("ProfileRepository"),
   },
 };

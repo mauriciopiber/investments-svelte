@@ -35,4 +35,12 @@ export abstract class MongoRepository<T extends Document> {
     await this.collection.deleteMany({});
     return;
   }
+
+  async count() {
+    await this.init();
+    if (!this.collection) {
+      throw new Error("Missing connection");
+    }
+    return this.collection.count({});
+  }
 }

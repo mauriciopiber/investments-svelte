@@ -1,4 +1,10 @@
-import type { Collection, MongoClient, Filter, ObjectId } from "mongodb";
+import type {
+  Collection,
+  MongoClient,
+  Filter,
+  ObjectId,
+  SortDirection,
+} from "mongodb";
 import type {
   Repository,
   RepositoryWithFilter,
@@ -34,14 +40,30 @@ export class TicketRepository
     await this.collection.insertOne(ticket);
   }
 
-  async queryAll(filters: Filter<any>): Promise<TicketWithId[]> {
+  async queryAll(
+    filters: Filter<Ticket>,
+    skip?: number,
+    limit?: number,
+    sortKey?: string,
+    sortDirection?: SortDirection
+  ): Promise<TicketWithId[]> {
     await this.init();
     if (!this.collection) {
       throw new Error("Missing connection for Ticket Repository");
     }
+
+    if (!sortKey || !sortDirection) {
+      return await this.collection
+        .find(filters)
+        .skip(skip || 0)
+        .limit(limit || 1000)
+        .toArray();
+    }
     return await this.collection
       .find(filters)
-      .sort({ "income.range.averageYield": -1 })
+      .sort({ [sortKey]: sortDirection })
+      .skip(skip || 0)
+      .limit(limit || 1000)
       .toArray();
   }
 

@@ -9,6 +9,8 @@ import type {
   StockSource,
   Portfolio,
   RepositoryWithFilter,
+  Profile,
+  Service,
 } from "../types";
 import { createContainer } from "./inversify.config";
 import { TYPES } from "./types";
@@ -36,6 +38,10 @@ export const companyRepository = container.get<Repository<Company>>(
   TYPES.Company.Repository
 );
 
+export const ticketService = container.get<Service<Ticket>>(
+  TYPES.Ticket.Service
+);
+
 export const ticketRepository = container.get<RepositoryWithFilter<Ticket>>(
   TYPES.Ticket.Repository
 );
@@ -46,4 +52,8 @@ export const sourceRepository = container.get<Repository<StockSource>>(
 
 export const portfolioRepository = container.get<Repository<Portfolio>>(
   TYPES.Portfolio.Repository
+);
+
+export const profileRepository = container.get<Repository<Profile>>(
+  TYPES.Profile.Repository
 );

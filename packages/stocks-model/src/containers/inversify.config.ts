@@ -6,10 +6,12 @@ import type {
   Company,
   Connection,
   Portfolio,
+  Profile,
   Repository,
   RepositoryWithFilter,
   Sector,
   Segment,
+  Service,
   StockSource,
   SubSector,
   Ticket,
@@ -21,6 +23,8 @@ import { SourceRepository } from "../repository/source";
 import { SubSectorRepository } from "../repository/sub-sector";
 import { SectorRepository } from "../repository/sector";
 import { PortfolioRepository } from "../repository/portfolio";
+import { ProfileRepository } from "../repository/profile";
+import { TicketsService } from "../services/tickets";
 
 function createContainer(connectionUrl: string | null | undefined) {
   if (!connectionUrl) {
@@ -60,6 +64,12 @@ function createContainer(connectionUrl: string | null | undefined) {
   container
     .bind<Repository<StockSource>>(TYPES.StocksSource.Repository)
     .to(SourceRepository);
+
+  container
+    .bind<Repository<Profile>>(TYPES.Profile.Repository)
+    .to(ProfileRepository);
+
+  container.bind<Service<Ticket>>(TYPES.Ticket.Service).to(TicketsService);
 
   return container;
 }
