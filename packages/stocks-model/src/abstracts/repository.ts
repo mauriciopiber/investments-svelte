@@ -3,14 +3,8 @@ import { inject, injectable } from "inversify";
 import { TYPES } from "src/containers/types";
 import type { Connection } from "$utils/mongoDbConnectionV2";
 
-interface Repository<T> {
-  queryAll: () => Promise<T>;
-}
-
 @injectable()
-export abstract class MongoRepository<T extends Document>
-  implements Repository<T>
-{
+export abstract class MongoRepository<T extends Document> {
   collection: Collection<T> | null = null;
   client: MongoClient | null = null;
   collectionName: string | null = null;
@@ -31,10 +25,6 @@ export abstract class MongoRepository<T extends Document>
       const collection = db.collection<T>(this.collectionName);
       this.collection = collection;
     }
-  }
-
-  async queryAll() {
-    throw new Error("Not implemented yet");
   }
 
   async deleteMany() {
