@@ -3,8 +3,17 @@ import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
 import http from "http";
 import express, { Express } from "express";
 import cors from "cors";
-import resolvers from "./resolvers/stocks";
-import typeDefs from "./typeDefs/stocks";
+import Tickets from "./services/tickets";
+
+import path from "path";
+import { mergeResolvers, mergeTypeDefs } from "@graphql-tools/merge";
+import { loadFilesSync } from "@graphql-tools/load-files";
+
+const resolversFiles = loadFilesSync(path.join(__dirname, "./resolvers"));
+const resolvers = mergeResolvers(resolversFiles);
+
+const typesFiles = loadFilesSync(path.join(__dirname, "./typeDefs"));
+const typeDefs = mergeTypeDefs(typesFiles);
 
 const app = express();
 
@@ -22,6 +31,11 @@ const startApolloServer = async (app: Express, httpServer: http.Server) => {
     typeDefs,
     resolvers,
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    dataSources: () => ({
+      tickets: new Tickets(),
+      // OR
+      // users: new Users(UserModel)
+    }),
   });
 
   await server.start();

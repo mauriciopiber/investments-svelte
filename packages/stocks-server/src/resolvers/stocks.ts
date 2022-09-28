@@ -4,8 +4,6 @@ import { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sect
 import { CompanyRepository } from "@pibernetwork/stocks-model/src/repository/company";
 import { TicketRepository } from "@pibernetwork/stocks-model/src/repository/tickets";
 import { PortfolioRepository } from "@pibernetwork/stocks-model/src/repository/portfolio";
-import CurrencyScalar from "../scalars/Currency";
-import RateScalar from "../scalars/Rate";
 
 import {
   SectorWithId,
@@ -19,6 +17,7 @@ import {
 } from "@pibernetwork/stocks-model/src/types";
 import { DataloaderService } from "./../utils/dataloader";
 import { ObjectId } from "mongodb";
+import { DataSource } from "src/types";
 
 const segmentRepository = new SegmentRepository(
   process.env.DATABASE_CONNECTION
@@ -53,8 +52,6 @@ const {
 } = dataLoaders.getLoaders();
 
 export default {
-  Currency: CurrencyScalar,
-  Rate: RateScalar,
   Query: {
     async indicatorsGroups() {
       const indicators: IndicatorGroup[] = [
@@ -380,7 +377,12 @@ export default {
     async ticket(_: unknown, args: { slug: string }) {
       return await ticketRepository.queryOne({ slug: { $eq: args.slug } });
     },
-    async tickets() {
+    async tickets(
+      _: unknown,
+      __: unknown,
+      { dataSources: { tickets } }: { dataSources: DataSource }
+    ) {
+      console.log(tickets.queryAll());
       return await ticketRepository.queryAll({});
     },
     async portfolios() {
