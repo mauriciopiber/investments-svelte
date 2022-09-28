@@ -26,78 +26,91 @@ export const COMPANY_URL = '/stocks/companies';
 export const TICKET_LABEL = 'Tickets';
 export const TICKET_URL = '/stocks/tickets';
 
+export const SITEMAP_LABEL = 'Sitemap';
+export const SITEMAP_URL = '/sitemap';
+
 export const routes: Route[] = [
   {
     label: PORTFOLIO_LABEL,
-    url: PORTFOLIO_URL
+    url: PORTFOLIO_URL,
   },
   {
     label: STOCKS_LABEL,
     pages: [
       {
         label: STOCKS_LABEL,
-        url: STOCKS_URL
+        url: STOCKS_URL,
       },
       {
         label: SECTOR_LABEL,
-        url: SECTOR_URL
+        url: SECTOR_URL,
       },
       {
         label: SUBSECTOR_LABEL,
-        url: SUBSECTOR_URL
+        url: SUBSECTOR_URL,
       },
       {
         label: SEGMENT_LABEL,
-        url: SEGMENT_URL
+        url: SEGMENT_URL,
       },
       {
         label: COMPANY_LABEL,
-        url: COMPANY_URL
+        url: COMPANY_URL,
       },
       {
         label: TICKET_LABEL,
-        url: TICKET_URL
-      }
-    ]
+        url: TICKET_URL,
+      },
+    ],
   },
   {
     label: 'Status',
-    url: '/sandbox/status'
+    url: '/sandbox/status',
   },
   {
     label: 'Filters',
-    url: '/sandbox/filters'
-  }
+    url: '/sandbox/filters',
+  },
+  {
+    label: SITEMAP_LABEL,
+    url: SITEMAP_URL,
+  },
 ];
 
 function getItem(
   key: string,
   label: string | undefined,
-  slug: string | undefined
+  slug: string | undefined,
 ): { href: string; label: string } {
   switch (key) {
+    case 'sitemap': {
+      return {
+        label: SITEMAP_LABEL,
+        href: SITEMAP_URL,
+      };
+    }
     case 'investments': {
       return {
         label: HOME_LABEL,
-        href: HOME_URL
+        href: HOME_URL,
       };
     }
     case 'portfolio': {
       return {
         label: PORTFOLIO_LABEL,
-        href: PORTFOLIO_URL
+        href: PORTFOLIO_URL,
       };
     }
     case 'stocks': {
       return {
         label: STOCKS_LABEL,
-        href: STOCKS_URL
+        href: STOCKS_URL,
       };
     }
     case 'sectors': {
       return {
         label: SECTOR_LABEL,
-        href: SECTOR_URL
+        href: SECTOR_URL,
       };
     }
     case 'sector': {
@@ -106,13 +119,13 @@ function getItem(
       }
       return {
         label,
-        href: `${SECTOR_URL}/${slug}`
+        href: `${SECTOR_URL}/${slug}`,
       };
     }
     case 'sub-sectors': {
       return {
         label: SUBSECTOR_LABEL,
-        href: SUBSECTOR_URL
+        href: SUBSECTOR_URL,
       };
     }
     case 'sub-sector': {
@@ -121,13 +134,13 @@ function getItem(
       }
       return {
         label,
-        href: `${SUBSECTOR_URL}/${slug}`
+        href: `${SUBSECTOR_URL}/${slug}`,
       };
     }
     case 'segments': {
       return {
         label: SEGMENT_LABEL,
-        href: SEGMENT_URL
+        href: SEGMENT_URL,
       };
     }
     case 'segment': {
@@ -136,13 +149,13 @@ function getItem(
       }
       return {
         label,
-        href: `${SEGMENT_URL}/${slug}`
+        href: `${SEGMENT_URL}/${slug}`,
       };
     }
     case 'companies': {
       return {
         label: COMPANY_LABEL,
-        href: COMPANY_URL
+        href: COMPANY_URL,
       };
     }
     case 'company': {
@@ -151,13 +164,13 @@ function getItem(
       }
       return {
         label,
-        href: `${COMPANY_URL}/${slug}`
+        href: `${COMPANY_URL}/${slug}`,
       };
     }
     case 'tickets': {
       return {
         label: TICKET_LABEL,
-        href: TICKET_URL
+        href: TICKET_URL,
       };
     }
     case 'ticket': {
@@ -166,7 +179,7 @@ function getItem(
       }
       return {
         label,
-        href: `${TICKET_URL}/${slug}`
+        href: `${TICKET_URL}/${slug}`,
       };
     }
     default:
@@ -183,14 +196,14 @@ export function createBreadcrumb(config: BreadcrumbConfig): Breadcrumb {
     if (index === 0) {
       return {
         ...item,
-        isRoot: true
+        isRoot: true,
       };
     }
 
     if (index === currentPage) {
       return {
         ...item,
-        isCurrentPage: true
+        isCurrentPage: true,
       };
     }
 
