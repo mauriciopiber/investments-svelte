@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import log from "./utils/log";
 import { Command, Option } from "commander";
 

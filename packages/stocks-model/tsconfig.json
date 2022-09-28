@@ -5,6 +5,9 @@
     "baseUrl": "./",
     "paths": {
       "$utils/*": ["src/utils/*"]
-    }
+    },
+    "types": ["reflect-metadata"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   }
 }

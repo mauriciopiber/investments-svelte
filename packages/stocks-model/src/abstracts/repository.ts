@@ -1,30 +1,40 @@
-import mongoDbConnection from "../utils/mongoDbConnection";
 import type { Collection, MongoClient, Document } from "mongodb";
+import { inject, injectable } from "inversify";
+import { TYPES } from "src/containers/types";
+import type { Connection } from "$utils/mongoDbConnectionV2";
 
-export abstract class MongoRepository<T extends Document> {
-  connection: string | null | undefined;
+interface Repository<T> {
+  queryAll: () => Promise<T>;
+}
+
+@injectable()
+export abstract class MongoRepository<T extends Document>
+  implements Repository<T>
+{
   collection: Collection<T> | null = null;
   client: MongoClient | null = null;
   collectionName: string | null = null;
+  private _connection: Connection;
 
-  constructor(connection: string | null | undefined) {
-    this.connection = connection;
+  constructor(@inject(TYPES.Connection) connection: Connection) {
+    this._connection = connection;
   }
 
   async init() {
-    if (typeof this.connection !== "string") {
-      throw new Error(`Missing connection ${this.connection}`);
-    }
     if (!this.collectionName) {
       throw new Error("Missing collection name");
     }
+
     if (!this.collection) {
-      const { getInstance } = mongoDbConnection;
-      this.client = await getInstance(this.connection);
-      const db = this.client.db("investments");
+      const client = await this._connection.getClient();
+      const db = client.db("investments");
       const collection = db.collection<T>(this.collectionName);
       this.collection = collection;
     }
+  }
+
+  async queryAll() {
+    throw new Error("Not implemented yet");
   }
 
   async deleteMany() {

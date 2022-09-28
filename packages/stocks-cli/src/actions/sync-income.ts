@@ -1,98 +1,113 @@
-import { CompanyRepository } from "@pibernetwork/stocks-model/src/repository/company";
-import { TicketRepository } from "@pibernetwork/stocks-model/src/repository/tickets";
-
-import { SegmentRepository } from "@pibernetwork/stocks-model/src/repository/segment";
-import { SubSectorRepository } from "@pibernetwork/stocks-model/src/repository/sub-sector";
-import { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sector";
+import "reflect-metadata";
 import type {
   PartialIncome,
   TicketWithId,
+  Segment,
 } from "@pibernetwork/stocks-model/src/types";
 import dotenv from "dotenv";
 dotenv.config();
 
+import { createContainer } from "@pibernetwork/stocks-model/src/containers/inversify.config";
+import type { Connection } from "@pibernetwork/stocks-model/src/utils/mongoDbConnectionV2";
+import { TYPES } from "@pibernetwork/stocks-model/src/containers/types";
+import type { MongoRepository } from "@pibernetwork/stocks-model/src/abstracts/repository";
+
+const container = createContainer(process.env.DATABASE_CONNECTION);
+
+const connection = container.get<Connection>(TYPES.Connection);
+
 export async function syncIncome() {
-  const segmentRepository = new SegmentRepository(
-    process.env.DATABASE_CONNECTION
-  );
-  const subSectorRepository = new SubSectorRepository(
-    process.env.DATABASE_CONNECTION
-  );
-  const sectorRepository = new SectorRepository(
-    process.env.DATABASE_CONNECTION
-  );
-  const companyRepository = new CompanyRepository(
-    process.env.DATABASE_CONNECTION
-  );
-  const ticketRepository = new TicketRepository(
-    process.env.DATABASE_CONNECTION
+  await connection.init();
+
+  const segmentRepository = container.get<MongoRepository<Segment>>(
+    TYPES.SegmentRepository
   );
 
-  const sectors = await sectorRepository.queryAll({});
+  console.log(await segmentRepository.queryAll());
 
-  for (const sector of sectors) {
-    const sectorPartialIncome: PartialIncome[] = [];
-    const subSectors = await subSectorRepository.queryAll({
-      sectorId: { $eq: sector._id },
-    });
+  // const segmentRepository = new SegmentRepository(
+  //   process.env.DATABASE_CONNECTION
+  // );
+  // const subSectorRepository = new SubSectorRepository(
+  //   process.env.DATABASE_CONNECTION
+  // );
+  // const sectorRepository = new SectorRepository(
+  //   process.env.DATABASE_CONNECTION
+  // );
+  // const companyRepository = new CompanyRepository(
+  //   process.env.DATABASE_CONNECTION
+  // );
+  // const ticketRepository = new TicketRepository(
+  //   process.env.DATABASE_CONNECTION
+  // );
 
-    for (const subSector of subSectors) {
-      const subSectorPartialIncomes: PartialIncome[] = [];
+  // const sectors = await sectorRepository.queryAll({});
 
-      const segments = await segmentRepository.queryAll({
-        subSectorId: { $eq: subSector._id },
-      });
+  // for (const sector of sectors) {
+  //   const sectorPartialIncome: PartialIncome[] = [];
+  //   const subSectors = await subSectorRepository.queryAll({
+  //     sectorId: { $eq: sector._id },
+  //   });
 
-      for (const segment of segments) {
-        const segmentPartialIncomes: PartialIncome[] = [];
-        const companies = await companyRepository.queryAll({
-          segmentId: { $eq: segment._id },
-        });
+  //   for (const subSector of subSectors) {
+  //     const subSectorPartialIncomes: PartialIncome[] = [];
 
-        for (const company of companies) {
-          const tickets = await ticketRepository.queryAll({
-            companyId: { $eq: company._id },
-          });
+  //     const segments = await segmentRepository.queryAll({
+  //       subSectorId: { $eq: subSector._id },
+  //     });
 
-          const incomeCompany = calculateIncomeFromTickets(tickets);
-          segmentPartialIncomes.push(incomeCompany);
+  //     for (const segment of segments) {
+  //       const segmentPartialIncomes: PartialIncome[] = [];
+  //       const companies = await companyRepository.queryAll({
+  //         segmentId: { $eq: segment._id },
+  //       });
 
-          await companyRepository.updateOne(company._id, {
-            income: incomeCompany,
-          });
-        }
+  //       for (const company of companies) {
+  //         const tickets = await ticketRepository.queryAll({
+  //           companyId: { $eq: company._id },
+  //         });
 
-        const incomeSegment = calculateIncome(segmentPartialIncomes);
+  //         const incomeCompany = calculateIncomeFromTickets(tickets);
+  //         segmentPartialIncomes.push(incomeCompany);
 
-        await segmentRepository.updateOne(segment._id, {
-          income: incomeSegment,
-        });
+  //         await companyRepository.updateOne(company._id, {
+  //           income: incomeCompany,
+  //         });
+  //       }
 
-        subSectorPartialIncomes.push(incomeSegment);
-      }
+  //       const incomeSegment = calculateIncome(segmentPartialIncomes);
 
-      const incomeSubSector = calculateIncome(subSectorPartialIncomes);
+  //       await segmentRepository.updateOne(segment._id, {
+  //         income: incomeSegment,
+  //       });
 
-      await subSectorRepository.updateOne(subSector._id, {
-        income: incomeSubSector,
-      });
+  //       subSectorPartialIncomes.push(incomeSegment);
+  //     }
 
-      sectorPartialIncome.push(incomeSubSector);
-    }
+  //     const incomeSubSector = calculateIncome(subSectorPartialIncomes);
 
-    const incomeSector = calculateIncome(sectorPartialIncome);
+  //     await subSectorRepository.updateOne(subSector._id, {
+  //       income: incomeSubSector,
+  //     });
 
-    await sectorRepository.updateOne(sector._id, {
-      income: incomeSector,
-    });
-  }
+  //     sectorPartialIncome.push(incomeSubSector);
+  //   }
 
-  await companyRepository.close();
+  //   const incomeSector = calculateIncome(sectorPartialIncome);
 
-  await segmentRepository.close();
-  await subSectorRepository.close();
-  await sectorRepository.close();
-  await ticketRepository.close();
+  //   await sectorRepository.updateOne(sector._id, {
+  //     income: incomeSector,
+  //   });
+  // }
+
+  // await companyRepository.close();
+
+  // await segmentRepository.close();
+  // await subSectorRepository.close();
+  // await sectorRepository.close();
+  // await ticketRepository.close();
+
+  await connection.close();
 }
 
 function calculateIncome(incomes: PartialIncome[]): PartialIncome {
