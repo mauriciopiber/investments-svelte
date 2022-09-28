@@ -1,4 +1,24 @@
 export const TYPES = {
   Connection: Symbol.for("Connection"),
-  SegmentRepository: Symbol.for("SegmentRepository"),
+  Sector: {
+    Repository: Symbol.for("SectorRepository"),
+  },
+  SubSector: {
+    Repository: Symbol.for("SubSectorRepository"),
+  },
+  Segment: {
+    Repository: Symbol.for("SegmentRepository"),
+  },
+  Company: {
+    Repository: Symbol.for("CompanyRepository"),
+  },
+  Ticket: {
+    Repository: Symbol.for("TicketRepository"),
+  },
+  Portfolio: {
+    Repository: Symbol.for("PortfolioRepository"),
+  },
+  StocksSource: {
+    Repository: Symbol.for("StocksSourceRepository"),
+  },
 };

@@ -1,9 +1,12 @@
 import type { Collection, ObjectId, MongoClient, Filter } from "mongodb";
-import type { Sector, SectorWithId } from "./../types";
+import type { Repository, Sector, SectorWithId } from "./../types";
 
 import { MongoRepository } from "./../abstracts/repository";
 
-export class SectorRepository extends MongoRepository<Sector> {
+export class SectorRepository
+  extends MongoRepository<Sector>
+  implements Repository<Sector>
+{
   collection: Collection<Sector> | null = null;
   client: MongoClient | null = null;
   collectionName = "sectors";

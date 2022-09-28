@@ -1,20 +1,17 @@
 import type { Portfolio } from "@pibernetwork/stocks-model/src/types";
-import { TicketRepository } from "@pibernetwork/stocks-model/src/repository/tickets";
-import { PortfolioRepository } from "@pibernetwork/stocks-model/src/repository/portfolio";
-import dotenv from "dotenv";
-dotenv.config();
 
 type Share = Pick<Portfolio, "current" | "objective" | "averagePrice"> & {
   ticket: string;
 };
 
-const portfolioRepository = new PortfolioRepository(
-  process.env.DATABASE_CONNECTION
-);
-
-const ticketRepository = new TicketRepository(process.env.DATABASE_CONNECTION);
+import {
+  connection,
+  portfolioRepository,
+  ticketRepository,
+} from "@pibernetwork/stocks-model/src/containers/root";
 
 export async function syncPortfolio() {
+  await connection.init();
   await portfolioRepository.deleteMany();
   const shares: Share[] = [
     { ticket: "BBAS3", current: 18, objective: 450, averagePrice: 39.31 },
@@ -72,5 +69,5 @@ export async function syncPortfolio() {
     await portfolioRepository.insertOne(portfolio);
   }
 
-  await ticketRepository.close();
+  await connection.close();
 }

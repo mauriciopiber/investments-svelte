@@ -1,19 +1,14 @@
 import slug from "slug";
-import { SegmentRepository } from "@pibernetwork/stocks-model/src/repository/segment";
-import { SubSectorRepository } from "@pibernetwork/stocks-model/src/repository/sub-sector";
-import { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sector";
-import type { StockSourceWithId } from "@pibernetwork/stocks-model/src/types";
-import { SourceRepository } from "@pibernetwork/stocks-model/src/repository/source";
-import dotenv from "dotenv";
-dotenv.config();
 
-const segmentRepository = new SegmentRepository(
-  process.env.DATABASE_CONNECTION
-);
-const subSectorRepository = new SubSectorRepository(
-  process.env.DATABASE_CONNECTION
-);
-const sectorRepository = new SectorRepository(process.env.DATABASE_CONNECTION);
+import type { StockSourceWithId } from "@pibernetwork/stocks-model/src/types";
+
+import {
+  connection,
+  segmentRepository,
+  sectorRepository,
+  subSectorRepository,
+  sourceRepository,
+} from "@pibernetwork/stocks-model/src/containers/root";
 
 async function isInsertedSegment(
   sector: string,
@@ -46,9 +41,8 @@ async function isInsertedSegment(
 }
 
 export async function syncSegments() {
-  const stockRepository = new SourceRepository(process.env.DATABASE_CONNECTION);
-
-  const stocks: StockSourceWithId[] = await stockRepository.queryAll({});
+  await connection.init();
+  const stocks: StockSourceWithId[] = await sourceRepository.queryAll({});
 
   const segmentsFromStocks = stocks.map((stock) => ({
     sector: stock.sector,
@@ -93,8 +87,5 @@ export async function syncSegments() {
     });
   }
 
-  await segmentRepository.close();
-  await subSectorRepository.close();
-  await sectorRepository.close();
-  // console.log("Done");
+  await connection.close();
 }

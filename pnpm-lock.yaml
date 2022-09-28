@@ -75,6 +75,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ^5.36.2
       '@typescript-eslint/parser': ^5.36.2
       dataloader: ^2.1.0
+      dotenv: ^16.0.2
       eslint: ^8.23.0
       eslint-config-prettier: ^8.5.0
       eslint-plugin-prettier: ^4.2.1
@@ -85,6 +86,7 @@ importers:
       typescript: ^4.8.3
     dependencies:
       dataloader: 2.1.0
+      dotenv: 16.0.2
       inversify: 6.0.1
       mongodb: 4.9.1
       reflect-metadata: 0.1.13

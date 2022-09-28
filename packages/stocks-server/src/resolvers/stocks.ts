@@ -1,9 +1,11 @@
-import { SegmentRepository } from "@pibernetwork/stocks-model/src/repository/segment";
-import { SubSectorRepository } from "@pibernetwork/stocks-model/src/repository/sub-sector";
-import { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sector";
-import { CompanyRepository } from "@pibernetwork/stocks-model/src/repository/company";
-import { TicketRepository } from "@pibernetwork/stocks-model/src/repository/tickets";
-import { PortfolioRepository } from "@pibernetwork/stocks-model/src/repository/portfolio";
+import {
+  sectorRepository,
+  segmentRepository,
+  subSectorRepository,
+  companyRepository,
+  portfolioRepository,
+  ticketRepository,
+} from "@pibernetwork/stocks-model/src/containers/root";
 
 import {
   SectorWithId,
@@ -18,21 +20,6 @@ import {
 import { DataloaderService } from "./../utils/dataloader";
 import { ObjectId } from "mongodb";
 import { DataSource } from "src/types";
-
-const segmentRepository = new SegmentRepository(
-  process.env.DATABASE_CONNECTION
-);
-const subSectorRepository = new SubSectorRepository(
-  process.env.DATABASE_CONNECTION
-);
-const sectorRepository = new SectorRepository(process.env.DATABASE_CONNECTION);
-const companyRepository = new CompanyRepository(
-  process.env.DATABASE_CONNECTION
-);
-const ticketRepository = new TicketRepository(process.env.DATABASE_CONNECTION);
-const portfolioRepository = new PortfolioRepository(
-  process.env.DATABASE_CONNECTION
-);
 
 const dataLoaders = new DataloaderService(
   companyRepository,

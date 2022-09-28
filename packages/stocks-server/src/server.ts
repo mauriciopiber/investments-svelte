@@ -15,6 +15,8 @@ const resolvers = mergeResolvers(resolversFiles);
 const typesFiles = loadFilesSync(path.join(__dirname, "./typeDefs"));
 const typeDefs = mergeTypeDefs(typesFiles);
 
+import { connection } from "@pibernetwork/stocks-model/src/containers/root";
+
 const app = express();
 
 app.use(cors());
@@ -27,6 +29,7 @@ app.get("/", (_, res) => {
 const httpServer = http.createServer(app);
 
 const startApolloServer = async (app: Express, httpServer: http.Server) => {
+  await connection.init();
   const server = new ApolloServer({
     typeDefs,
     resolvers,

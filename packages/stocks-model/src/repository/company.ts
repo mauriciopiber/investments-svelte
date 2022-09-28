@@ -5,11 +5,14 @@ import type {
   Filter,
   ObjectId,
 } from "mongodb";
-import type { Company, CompanyWithId } from "../types";
+import type { Company, CompanyWithId, Repository } from "../types";
 
 import { MongoRepository } from "./../abstracts/repository";
 
-export class CompanyRepository extends MongoRepository<Company> {
+export class CompanyRepository
+  extends MongoRepository<Company>
+  implements Repository<Company>
+{
   collection: Collection<Company> | null = null;
   client: MongoClient | null = null;
 

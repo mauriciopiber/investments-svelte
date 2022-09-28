@@ -1,7 +1,7 @@
 // Connection URL
 import { MongoClient } from "mongodb";
-
-type GetInstance = (url: string | null) => Promise<MongoClient>;
+import { injectable } from "inversify";
+import type { Connection } from "../types";
 
 const config = {
   connectTimeoutMS: 5000,
@@ -9,31 +9,40 @@ const config = {
   useUnifiedTopology: true,
 };
 
-interface MongoDbSingleton {
-  getInstance: GetInstance;
-}
-
-function singleMongoDb(): MongoDbSingleton {
-  let connectionInstance: MongoClient;
-
-  async function getInstance(url: string | null) {
-    if (!url) {
-      throw new Error("Missing URL");
-    }
-    if (connectionInstance) {
-      return connectionInstance;
-    }
-
-    const client = new MongoClient(url, config);
-    await client.connect();
-
-    connectionInstance = client;
-    return client;
+@injectable()
+class MongoDbConnection implements Connection {
+  url: string;
+  connectionInstance: MongoClient | null = null;
+  constructor(url: string) {
+    this.url = url;
   }
 
-  return {
-    getInstance,
-  };
+  async init() {
+    if (this.connectionInstance) {
+      return;
+    }
+    const client = new MongoClient(this.url, config);
+    await client.connect();
+
+    this.connectionInstance = client;
+  }
+
+  async getClient(): Promise<MongoClient> {
+    this.init();
+
+    if (!this.connectionInstance) {
+      throw new Error("Missing connection instance");
+    }
+    return this.connectionInstance;
+  }
+
+  async close(): Promise<void> {
+    if (!this.connectionInstance) {
+      throw new Error("Missing connection instance");
+    }
+
+    await this.connectionInstance.close();
+  }
 }
 
-export default singleMongoDb();
+export default MongoDbConnection;

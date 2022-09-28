@@ -1,11 +1,26 @@
-// file inversify.config.ts
 import "reflect-metadata";
 import { Container } from "inversify";
 import { TYPES } from "./types";
-import MongoDbConnection, { Connection } from "../utils/mongoDbConnectionV2";
-import type { MongoRepository } from "../abstracts/repository";
-import type { Segment } from "../types";
-import { SegmentRepository } from "src/repository/segment";
+import MongoDbConnection from "../utils/mongoDbConnection";
+import type {
+  Company,
+  Connection,
+  Portfolio,
+  Repository,
+  RepositoryWithFilter,
+  Sector,
+  Segment,
+  StockSource,
+  SubSector,
+  Ticket,
+} from "../types";
+import { SegmentRepository } from "../repository/segment";
+import { CompanyRepository } from "../repository/company";
+import { TicketRepository } from "../repository/tickets";
+import { SourceRepository } from "../repository/source";
+import { SubSectorRepository } from "../repository/sub-sector";
+import { SectorRepository } from "../repository/sector";
+import { PortfolioRepository } from "../repository/portfolio";
 
 function createContainer(connectionUrl: string | null | undefined) {
   if (!connectionUrl) {
@@ -19,8 +34,32 @@ function createContainer(connectionUrl: string | null | undefined) {
     .inSingletonScope();
 
   container
-    .bind<MongoRepository<Segment>>(TYPES.SegmentRepository)
+    .bind<Repository<Sector>>(TYPES.Sector.Repository)
+    .to(SectorRepository);
+
+  container
+    .bind<Repository<SubSector>>(TYPES.SubSector.Repository)
+    .to(SubSectorRepository);
+
+  container
+    .bind<Repository<Segment>>(TYPES.Segment.Repository)
     .to(SegmentRepository);
+
+  container
+    .bind<Repository<Company>>(TYPES.Company.Repository)
+    .to(CompanyRepository);
+
+  container
+    .bind<RepositoryWithFilter<Ticket>>(TYPES.Ticket.Repository)
+    .to(TicketRepository);
+
+  container
+    .bind<Repository<Portfolio>>(TYPES.Portfolio.Repository)
+    .to(PortfolioRepository);
+
+  container
+    .bind<Repository<StockSource>>(TYPES.StocksSource.Repository)
+    .to(SourceRepository);
 
   return container;
 }

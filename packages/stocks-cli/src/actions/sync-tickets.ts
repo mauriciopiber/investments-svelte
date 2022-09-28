@@ -1,6 +1,3 @@
-import { CompanyRepository } from "@pibernetwork/stocks-model/src/repository/company";
-import { TicketRepository } from "@pibernetwork/stocks-model/src/repository/tickets";
-import { SourceRepository } from "@pibernetwork/stocks-model/src/repository/source";
 import type {
   Ticket,
   Income,
@@ -8,15 +5,14 @@ import type {
 } from "@pibernetwork/stocks-model/src/types";
 import slug from "slug";
 import { calculateDividends } from "src/stocks/dividends";
-import dotenv from "dotenv";
 import { isNumber } from "$utils/isNumber";
-dotenv.config();
 
-const stockRepository = new SourceRepository(process.env.DATABASE_CONNECTION);
-const companyRepository = new CompanyRepository(
-  process.env.DATABASE_CONNECTION
-);
-const ticketRepository = new TicketRepository(process.env.DATABASE_CONNECTION);
+import {
+  connection,
+  companyRepository,
+  ticketRepository,
+  sourceRepository,
+} from "@pibernetwork/stocks-model/src/containers/root";
 
 function calculateGraham(
   patrimonioLiquidoPorNumeroDeAcoes: number | null | undefined,
@@ -69,7 +65,8 @@ function calculateGraham(
 }
 
 export async function syncTickets(rangeInYears: number) {
-  const stocks: StockSourceWithId[] = await stockRepository.queryAll({});
+  await connection.init();
+  const stocks: StockSourceWithId[] = await sourceRepository.queryAll({});
 
   for (const stock of stocks) {
     const companyModel = await companyRepository.queryOne({
@@ -235,6 +232,5 @@ export async function syncTickets(rangeInYears: number) {
     await ticketRepository.insertOne(ticket);
   }
 
-  await ticketRepository.close();
-  await companyRepository.close();
+  await connection.close();
 }

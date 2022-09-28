@@ -1,9 +1,12 @@
 import type { Collection, ObjectId, MongoClient, Filter } from "mongodb";
 
-import type { SubSector, SubSectorWithId } from "./../types";
+import type { Repository, SubSector, SubSectorWithId } from "./../types";
 import { MongoRepository } from "./../abstracts/repository";
 
-export class SubSectorRepository extends MongoRepository<SubSector> {
+export class SubSectorRepository
+  extends MongoRepository<SubSector>
+  implements Repository<SubSector>
+{
   collection: Collection<SubSector> | null = null;
   client: MongoClient | null = null;
   collectionName = "subsectors";

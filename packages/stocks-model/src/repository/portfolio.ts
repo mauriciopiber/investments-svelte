@@ -1,8 +1,11 @@
 import type { Collection, MongoClient, Filter, ObjectId } from "mongodb";
-import type { Portfolio, PortfolioWithId } from "../types";
+import type { Portfolio, PortfolioWithId, Repository } from "../types";
 import { MongoRepository } from "../abstracts/repository";
 
-export class PortfolioRepository extends MongoRepository<Portfolio> {
+export class PortfolioRepository
+  extends MongoRepository<Portfolio>
+  implements Repository<Portfolio>
+{
   collection: Collection<Portfolio> | null = null;
   client: MongoClient | null = null;
   collectionName = "portfolios";
@@ -27,6 +30,16 @@ export class PortfolioRepository extends MongoRepository<Portfolio> {
       })
       .sort({ "income.averageYield": -1 })
       .toArray();
+  }
+
+  async updateOne(_id: ObjectId, values: Partial<Portfolio>) {
+    await this.init();
+
+    if (!this.collection) {
+      throw new Error("Missing connection for Company Repository");
+    }
+
+    await this.collection.updateOne({ _id }, { $set: values });
   }
 
   async insertOne(portfolio: Portfolio) {

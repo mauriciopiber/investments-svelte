@@ -1,7 +1,7 @@
 import type { Collection, MongoClient, Document } from "mongodb";
 import { inject, injectable } from "inversify";
-import { TYPES } from "src/containers/types";
-import type { Connection } from "$utils/mongoDbConnectionV2";
+import { TYPES } from "../containers/types";
+import type { Connection } from "../types";
 
 @injectable()
 export abstract class MongoRepository<T extends Document> {
@@ -32,6 +32,7 @@ export abstract class MongoRepository<T extends Document> {
     if (!this.collection) {
       throw new Error("Missing connection");
     }
-    return await this.collection.deleteMany({});
+    await this.collection.deleteMany({});
+    return;
   }
 }

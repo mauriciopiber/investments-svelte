@@ -1,8 +1,17 @@
 import type { Collection, MongoClient, Filter, ObjectId } from "mongodb";
-import type { Ticket, TicketFilterTypes, TicketWithId } from "./../types";
+import type {
+  Repository,
+  RepositoryWithFilter,
+  Ticket,
+  TicketFilterTypes,
+  TicketWithId,
+} from "./../types";
 import { MongoRepository } from "./../abstracts/repository";
 
-export class TicketRepository extends MongoRepository<Ticket> {
+export class TicketRepository
+  extends MongoRepository<Ticket>
+  implements RepositoryWithFilter<Ticket>
+{
   collection: Collection<Ticket> | null = null;
   client: MongoClient | null = null;
   collectionName = "tickets";

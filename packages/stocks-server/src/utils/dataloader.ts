@@ -1,41 +1,42 @@
 import {
+  Company,
   CompanyWithId,
+  Portfolio,
   PortfolioWithId,
+  Repository,
+  Sector,
   SectorWithId,
+  Segment,
   SegmentWithId,
+  SubSector,
   SubSectorWithId,
+  Ticket,
   TicketWithId,
 } from "@pibernetwork/stocks-model/src/types";
+import { WithId } from "mongodb";
 
 import DataLoader from "dataloader";
 
-import type { CompanyRepository } from "@pibernetwork/stocks-model/src/repository/company";
-import type { SectorRepository } from "@pibernetwork/stocks-model/src/repository/sector";
-
 import { Document, ObjectId } from "mongodb";
 import { DataLoaders } from "src/types/dataloader";
-import { SubSectorRepository } from "@pibernetwork/stocks-model/src/repository/sub-sector";
-import { SegmentRepository } from "@pibernetwork/stocks-model/src/repository/segment";
-import { TicketRepository } from "@pibernetwork/stocks-model/src/repository/tickets";
-import { PortfolioRepository } from "@pibernetwork/stocks-model/src/repository/portfolio";
 
 export class DataloaderService {
   constructor(
-    private companyRepository: CompanyRepository,
-    private sectorRepository: SectorRepository,
-    private subSectorRepository: SubSectorRepository,
-    private segmentRepository: SegmentRepository,
-    private ticketRepository: TicketRepository,
-    private portfolioRepository: PortfolioRepository
+    private companyRepository: Repository<Company>,
+    private sectorRepository: Repository<Sector>,
+    private subSectorRepository: Repository<SubSector>,
+    private segmentRepository: Repository<Segment>,
+    private ticketRepository: Repository<Ticket>,
+    private portfolioRepository: Repository<Portfolio>
   ) {}
 
   _mapResultToIds<T extends Document>(
     _ids: readonly ObjectId[],
-    documents: T[]
-  ): T[] {
+    documents: WithId<T>[]
+  ): WithId<T>[] {
     return _ids.map((companyId) => {
       const documentsDb = documents.find(
-        (company: T) => company._id.equals(companyId) || false
+        (company: WithId<T>) => company._id.equals(companyId) || false
       );
 
       if (!documentsDb) {

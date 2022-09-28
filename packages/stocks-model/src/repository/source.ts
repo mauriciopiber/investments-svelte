@@ -5,14 +5,39 @@ import type {
   Filter,
   WithId,
 } from "mongodb";
-import type { StockSource } from "../types";
+import type { Repository, StockSource, StockSourceWithId } from "../types";
 import { MongoRepository } from "../abstracts/repository";
 
-export class SourceRepository extends MongoRepository<StockSource> {
+export class SourceRepository
+  extends MongoRepository<StockSource>
+  implements Repository<StockSource>
+{
   collection: Collection<StockSource> | null = null;
   client: MongoClient | null = null;
 
   collectionName = "stocks";
+
+  async insertOne(stockSource: StockSource) {
+    await this.init();
+
+    if (!this.collection) {
+      throw new Error("Missing connection for Segment Repository");
+    }
+    await this.collection.insertOne(stockSource);
+  }
+
+  async queryAllByIds(ids: readonly ObjectId[]): Promise<StockSourceWithId[]> {
+    await this.init();
+    if (!this.collection) {
+      throw new Error("Missing connection for Company Repository");
+    }
+    return await this.collection
+      .find({
+        _id: { $in: ids },
+      })
+      .sort({ "income.averageYield": -1 })
+      .toArray();
+  }
 
   async insertMany(sectors: StockSource[]) {
     await this.init();
