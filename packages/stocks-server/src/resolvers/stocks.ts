@@ -35,7 +35,13 @@ export default {
       return await sectorRepository.queryOne({ slug: { $eq: args.slug } });
     },
     async sectors() {
-      const sectors = await sectorRepository.queryAll({});
+      const sectors = await sectorRepository.queryAll(
+        {},
+        null,
+        null,
+        null,
+        null
+      );
 
       return sectors;
     },
@@ -46,23 +52,23 @@ export default {
       return await subSectorRepository.queryOne({ slug: { $eq: args.slug } });
     },
     async subSectors() {
-      return await subSectorRepository.queryAll({});
+      return await subSectorRepository.queryAll({}, null, null, null, null);
     },
     async segment(_: unknown, args: { slug: string }) {
       return await segmentRepository.queryOne({ slug: { $eq: args.slug } });
     },
     async segments() {
-      return await segmentRepository.queryAll({});
+      return await segmentRepository.queryAll({}, null, null, null, null);
     },
     async company(_: unknown, args: { slug: string }) {
       return await companyRepository.queryOne({ slug: { $eq: args.slug } });
     },
     async companies() {
-      return await companyRepository.queryAll({});
+      return await companyRepository.queryAll({}, null, null, null, null);
     },
 
     async portfolios() {
-      return await portfolioRepository.queryAll({});
+      return await portfolioRepository.queryAll({}, null, null, null, null);
     },
     async portfolio(_: unknown, args: { _id: ObjectId }) {
       return await portfolioRepository.queryOne({ _id: { $eq: args._id } });
@@ -70,9 +76,15 @@ export default {
   },
   Sector: {
     async subSectors(parent: SectorWithId) {
-      const subSectors = await subSectorRepository.queryAll({
-        sectorId: { $eq: parent._id },
-      });
+      const subSectors = await subSectorRepository.queryAll(
+        {
+          sectorId: { $eq: parent._id },
+        },
+        null,
+        null,
+        null,
+        null
+      );
 
       return subSectors;
     },
@@ -82,18 +94,30 @@ export default {
       return sectorsLoader.load(parent.sectorId);
     },
     async segments(parent: SubSectorWithId) {
-      const segments = await segmentRepository.queryAll({
-        subSectorId: { $eq: parent._id },
-      });
+      const segments = await segmentRepository.queryAll(
+        {
+          subSectorId: { $eq: parent._id },
+        },
+        null,
+        null,
+        null,
+        null
+      );
 
       return segments;
     },
   },
   Segment: {
     async companies(parent: SegmentWithId) {
-      const companies = await companyRepository.queryAll({
-        segmentId: { $eq: parent._id },
-      });
+      const companies = await companyRepository.queryAll(
+        {
+          segmentId: { $eq: parent._id },
+        },
+        null,
+        null,
+        null,
+        null
+      );
       return companies;
     },
     async subSector(parent: SegmentWithId) {

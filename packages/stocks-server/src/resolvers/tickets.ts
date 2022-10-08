@@ -314,7 +314,13 @@ export default {
           $and: queryKeys,
         }) ||
         {};
-      const tickets: TicketWithId[] = await ticketRepository.queryAll(query);
+      const tickets: TicketWithId[] = await ticketRepository.queryAll(
+        query,
+        null,
+        null,
+        null,
+        null
+      );
 
       const count = tickets.length;
 
@@ -338,9 +344,15 @@ export default {
 
   Company: {
     async tickets(parent: CompanyWithId) {
-      const tickets = await ticketRepository.queryAll({
-        companyId: { $eq: parent._id },
-      });
+      const tickets = await ticketRepository.queryAll(
+        {
+          companyId: { $eq: parent._id },
+        },
+        null,
+        null,
+        null,
+        null
+      );
       return tickets;
     },
   },

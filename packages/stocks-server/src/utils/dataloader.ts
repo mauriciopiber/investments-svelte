@@ -74,8 +74,10 @@ export class DataloaderService {
       ),
       ticketsLoader: new DataLoader<ObjectId, TicketWithId>(
         async (keys: readonly ObjectId[]) => {
-          const companies = await this.ticketRepository.queryAllByIds(keys);
-          return this._mapResultToIds<TicketWithId>(keys, companies);
+          console.log("tickets");
+          const tickets = await this.ticketRepository.queryAllByIds(keys);
+          console.log(keys, tickets);
+          return this._mapResultToIds<TicketWithId>(keys, tickets);
         }
       ),
       portfoliosLoader: new DataLoader<ObjectId, PortfolioWithId>(

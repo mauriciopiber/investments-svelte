@@ -42,10 +42,10 @@ export class TicketRepository
 
   async queryAll(
     filters: Filter<Ticket>,
-    skip?: number,
-    limit?: number,
-    sortKey?: string,
-    sortDirection?: SortDirection
+    skip: number | null,
+    limit: number | null,
+    sortKey: string | null,
+    sortDirection: SortDirection | null
   ): Promise<TicketWithId[]> {
     await this.init();
     if (!this.collection) {

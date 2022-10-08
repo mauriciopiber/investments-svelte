@@ -28,10 +28,10 @@ export interface Repository<T> {
   queryOne: (filters: Filter<T>) => Promise<WithId<T> | null>;
   queryAll: (
     filters: Filter<T>,
-    skip?: number,
-    limit?: number,
-    sortKey?: string,
-    sortDirection?: SortDirection
+    skip: number | null,
+    limit: number | null,
+    sortKey: string | null,
+    sortDirection: SortDirection | null
   ) => Promise<WithId<T>[]>;
   init: () => Promise<void>;
   deleteMany: () => Promise<void>;

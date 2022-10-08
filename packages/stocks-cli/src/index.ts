@@ -25,7 +25,7 @@ program
   .version("0.1.0");
 
 program
-  .command("sync:stocks")
+  .command("sync:source")
   .description("Sync database with crawler data")
   .option("-v, --verbose", "Show informations about execution")
 
@@ -122,7 +122,7 @@ program
   });
 
 program
-  .command("sync:portfolio")
+  .command("sync:portfolios")
   .description("Sync portfolio collection")
 
   .action(async () => {
