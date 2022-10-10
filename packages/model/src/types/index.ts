@@ -18,6 +18,7 @@ export * from "./portfolio";
 export * from "./income";
 export * from "./indicator";
 export * from "./profile";
+export * from "./strategy";
 
 export interface Repository<T> {
   collectionName: string;

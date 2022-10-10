@@ -3,84 +3,84 @@
   import Breadcrumb from '@/components/Breadcrumb/Breadcrumb.svelte';
   import DataTable from '@/components/DataTable/DataTable.svelte';
   import type { Header, Rows } from '@/types';
-  export let data: { tickets: TicketQuery[] };
+  export let data: { tickets: { items: TicketQuery[] } };
   const { tickets } = data;
 
   const headers: Header = [
     {
       key: 'name',
       label: 'Name',
-      type: 'link'
+      type: 'link',
     },
     {
       key: 'company',
       label: 'Company',
-      type: 'link'
+      type: 'link',
     },
     {
       key: 'sector',
       label: 'Sector',
-      type: 'link'
+      type: 'link',
     },
     {
       key: 'subSector',
       label: 'Sub Sector',
-      type: 'link'
+      type: 'link',
     },
     {
       key: 'segment',
       label: 'Segment',
-      type: 'link'
+      type: 'link',
     },
     {
       key: 'currentPrice',
-      label: 'Price'
+      label: 'Price',
     },
     {
       key: 'intrinsicValue',
-      label: 'Intrinsic Value'
+      label: 'Intrinsic Value',
     },
     {
       key: 'intrinsicRate',
-      label: 'intrinsic Rate'
+      label: 'intrinsic Rate',
     },
     {
       key: 'averageAmount',
-      label: 'Average Amount'
+      label: 'Average Amount',
     },
     {
       key: 'averageYield',
-      label: 'Average Yield'
+      label: 'Average Yield',
     },
     {
       key: 'incomeAmount',
-      label: 'Income Amount'
+      label: 'Income Amount',
     },
     {
       key: 'incomeRate',
-      label: 'Income Rate'
-    }
+      label: 'Income Rate',
+    },
   ];
 
-  const rows: Rows = tickets.map((ticket) => {
+  const rows: Rows = tickets.items.map((ticket) => {
     return {
       id: ticket.slug,
       name: { value: ticket.name, href: `/stocks/tickets/${ticket.slug}` },
       sector: {
         value: ticket.company.sector.name,
-        href: `/stocks/sectors/${ticket.company.sector.slug}`
+        href: `/stocks/sectors/${ticket.company.sector.slug}`,
       },
       subSector: {
         value: ticket.company.subSector.name,
-        href: `/stocks/sub-sectors/${ticket.company.subSector.slug}`
+        href: `/stocks/sub-sectors/${ticket.company.subSector.slug}`,
       },
       segment: {
         value: ticket.company.segment.name,
-        href: `/stocks/segments/${ticket.company.segment.slug}`
+        href: `/stocks/segments/${ticket.company.segment.slug}`,
       },
       company: {
         href: `/stocks/companies/${ticket.company.slug}`,
-        value: ticket.company.name
+        value: ticket.company.name,
       },
       incomeAmount: ticket.income.incomeTotal,
       incomeRate: ticket.income.incomeYield,
@@ -88,7 +88,7 @@
       averageYield: ticket.income.range.averageYield,
       currentPrice: ticket.currentPrice,
       intrinsicRate: ticket.intrinsicRate || '-',
-      intrinsicValue: ticket.intrinsicValue || '-'
+      intrinsicValue: ticket.intrinsicValue || '-',
     };
   });
 
@@ -99,7 +99,7 @@
     { key: 'sub-sectors' },
     { key: 'segments' },
     { key: 'companies' },
-    { key: 'tickets' }
+    { key: 'tickets' },
   ];
 </script>
 

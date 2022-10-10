@@ -29,6 +29,9 @@ export const TICKET_URL = '/stocks/tickets';
 export const SITEMAP_LABEL = 'Sitemap';
 export const SITEMAP_URL = '/sitemap';
 
+export const STRATEGY_LABEL = 'Strategy';
+export const STRATEGY_URL = '/strategy';
+
 export const routes: Route[] = [
   {
     label: PORTFOLIO_LABEL,
@@ -74,6 +77,10 @@ export const routes: Route[] = [
   {
     label: SITEMAP_LABEL,
     url: SITEMAP_URL,
+  },
+  {
+    label: STRATEGY_LABEL,
+    url: STRATEGY_URL,
   },
 ];
 
